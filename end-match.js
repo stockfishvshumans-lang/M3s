@@ -1,0 +1,2 @@
+// Polished - one endMatch
+window.endMatch=function(r){if(window.GameMachine.current==='ending')return;window.GameMachine.transition('ending');window.TimerRegistry.clearAll();if(r==='defeated')window.ViewManager.show('defeat-modal');else window.ViewManager.show('victory-modal');};window.safeExit=function(){window.TimerRegistry.clearAll();window.GameMachine.transition('home');};

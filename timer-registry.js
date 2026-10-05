@@ -1,0 +1,2 @@
+// Polished - single registry, no leaks
+window.TimerRegistry={ids:new Set(),add(fn,ms){const id=setInterval(fn,ms);this.ids.add(id);return id;},addTimeout(fn,ms){const gen=window.GameMachine.gen;const id=setTimeout(()=>{if(window.GameMachine.gen!==gen)return;fn();},ms);this.ids.add(id);return id;},clearAll(){this.ids.forEach(id=>{clearInterval(id);clearTimeout(id);});this.ids.clear();}};
