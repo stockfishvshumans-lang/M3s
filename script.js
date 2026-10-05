@@ -137,8 +137,10 @@ try {
 
 let socket;
 try {
-    socket = (window.getSharedSocket ? window.getSharedSocket() : io(window.M3SH_SOCKET_URL || 'https://m33sh.onrender.com')); // FIX: Explicit Render URL, not GitHub Pages
-} catch (e) {}
+    socket = (window.getSharedSocket ? window.getSharedSocket() : io(window.M3SH_SOCKET_URL || 'https://m33sh.onrender.com'));
+} catch (error) {
+    console.error("Socket initialization failed:", error);
+}
 
 // --- 2. GLOBAL VARIABLES ---
 
@@ -150,6 +152,11 @@ let currentUser = null; 
 let pendingGameMode = 'solo'; 
 let scoreInterval = null;
 let myDocId = null; 
+let reportTransitionTimeout = null;
+let homeTransitionTimeout = null;
+let homeTransitionId = 0;
+let gameTransitionTimeout = null;
+let quizAdvanceTimeout = null;
 
 let autoStartTimer = null; 
 let isAutoStarting = false;
@@ -707,7 +714,7 @@ window.logoutUser = function() {
         if(typeof clearSession === 'function') clearSession();
         
         // 2. Kill the game engine (stops music, timers, arrays)
-        if(typeof window.cleanupGame === 'function') window.cleanupGame();
+        if(typeof window.cleanupGame === 'function') window.cleanupGame({ unsubscribe: true });
         
         // 3. Snap back to the Main Menu View
         if(typeof window.switchView === 'function') {
@@ -1777,8 +1784,8 @@ window.togglePause = function() { 
     } else { 
         m.classList.add("hidden"); 
         if(window.inputField) window.inputField.focus(); 
-        state.lastTime = performance.now(); 
-        window.gameLoopId = requestAnimationFrame(gameLoop);
+state.lastTime = performance.now(); 
+window.gameLoopId = requestAnimationFrame(gameLoop);
     } 
 };
 
@@ -1839,7 +1846,7 @@ window.cancelMission = function() {
 // ==========================================
 // 🧹 SYSTEM TEARDOWN & MEMORY CLEANUP
 // ==========================================
-window.cleanupGame = function() {
+window.cleanupGame = function(options = {}) {
     console.log("🧹 Executing Deep System Cleanup...");
     
     state.isPlaying = false;
@@ -1852,17 +1859,36 @@ window.cleanupGame = function() {
         window.gameLoopId = null;
     }
     
-    // Kill ALL Interval Zombies
-    const intervalsToKill = [
-        scoreInterval, state.gameTimer, state.lockTimer, 
-        state.vsInterval, state.partySyncInterval, 
-        state.petAttackTimer, autoStartTimer
-    ];
-    intervalsToKill.forEach(interval => {
-        if (interval) clearInterval(interval);
-    });
+    [scoreInterval, state.gameTimer, state.lockTimer, state.vsInterval,
+        state.partySyncInterval, state.petAttackTimer, autoStartTimer]
+        .forEach(interval => {
+            if (interval) clearInterval(interval);
+        });
+    scoreInterval = null;
+    state.gameTimer = null;
+    state.lockTimer = null;
+    state.vsInterval = null;
+    state.partySyncInterval = null;
+    state.petAttackTimer = null;
+    autoStartTimer = null;
+    isAutoStarting = false;
+    state.inputLocked = false;
+    state.petData = null;
 
-    if (state.gameMode !== 'classroom') {
+    if (typeof reportTransitionTimeout !== 'undefined' && reportTransitionTimeout) {
+        clearTimeout(reportTransitionTimeout);
+        reportTransitionTimeout = null;
+    }
+    if (gameTransitionTimeout) {
+        clearTimeout(gameTransitionTimeout);
+        gameTransitionTimeout = null;
+    }
+    if (quizAdvanceTimeout) {
+        clearTimeout(quizAdvanceTimeout);
+        quizAdvanceTimeout = null;
+    }
+
+    if (options.unsubscribe) {
         if (typeof roomUnsub === 'function') { roomUnsub(); roomUnsub = null; }
         if (typeof dashboardUnsub !== 'undefined' && dashboardUnsub) { 
             dashboardUnsub(); dashboardUnsub = null; 
@@ -1873,7 +1899,7 @@ window.cleanupGame = function() {
         window.ctx.clearRect(0, 0, window.canvas.width, window.canvas.height);
     }
 
-    document.body.classList.remove('overdrive-active', 'in-combat', 'dashboard-active', 'classroom-mode');
+    document.body.classList.remove('overdrive-active', 'in-combat', 'dashboard-active', 'classroom-mode', 'critical-health');
     
     state.meteors = [];
     state.lasers = [];
@@ -1881,7 +1907,6 @@ window.cleanupGame = function() {
     state.floatingTexts = [];
     state.shockwaves = [];
     state.bossActive = false;
-    state.matchConcluded = false; 
 };
 
 // ==========================================
@@ -1895,7 +1920,26 @@ window.goHome = async function(skipConfirm = false) {
     }
 
     console.log("🚀 Initiating Soft Reset Sequence...");
-    
+    const transitionId = ++homeTransitionId;
+    if (homeTransitionTimeout) {
+        clearTimeout(homeTransitionTimeout);
+        homeTransitionTimeout = null;
+    }
+
+    const roomId = currentRoomId;
+    const roomMode = state.gameMode;
+    const wasHost = isHost;
+    const studentId = (currentUser && currentUser.uid) || myDocId || myName;
+
+    window.cleanupGame({ unsubscribe: true });
+    if (typeof clearSession === 'function') clearSession();
+    document.body.classList.remove('overdrive-active', 'in-combat', 'dashboard-active', 'classroom-mode');
+
+    const reportModal = document.getElementById('report-modal');
+    if (reportModal) reportModal.classList.add('hidden');
+    const outro = document.getElementById('cinematic-outro');
+    if (outro) outro.classList.add('hidden');
+
     const warpDoor = document.getElementById("cyber-warp-door");
     if (warpDoor) {
         warpDoor.classList.remove('hidden');
@@ -1904,39 +1948,58 @@ window.goHome = async function(skipConfirm = false) {
         if(window.Sound) window.Sound.playTone(150, 'sawtooth', 0.6); 
     }
 
-    if (typeof currentRoomId !== 'undefined' && currentRoomId) {
+    if (roomId && socket) {
         try {
-            if (typeof isHost !== 'undefined' && isHost && state.gameMode !== 'classroom') {
-                await updateDoc(doc(db, "rooms", currentRoomId), { gameState: 'closed', status: 'archived' });
-            } else if (!isHost && state.gameMode !== 'classroom') {
-                const roomRef = doc(db, "rooms", currentRoomId);
-                const roomSnap = await getDoc(roomRef);
-                if(roomSnap.exists()) {
-                    let players = roomSnap.data().players || [];
-                    players = players.filter(p => p.name !== myName);
-                    await updateDoc(roomRef, { players: players });
-                }
-                if(socket) socket.emit('leave_room', { room: currentRoomId });
-            }
-        } catch(e) { console.warn("Cleanup sync skipped:", e); }
+            socket.emit('leave_room', { room: roomId });
+        } catch (error) {
+            console.warn("Socket room exit failed; local cleanup completed:", error);
+        }
     }
+    currentRoomId = null;
+    myDocId = null;
+    window.myDocId = null;
+    isHost = false;
+    state.gameMode = 'solo';
+    state.matchConcluded = false;
 
-    if(typeof clearSession === 'function') clearSession();
-
-    window.cleanupGame();
-
-    setTimeout(() => {
-        window.switchView('start-modal');
-        
-        if(window.updateOrbsVisibility) window.updateOrbsVisibility();
-        if(window.Sound) window.Sound.playBGM('menu');
-
+    homeTransitionTimeout = setTimeout(() => {
+        if (transitionId !== homeTransitionId) return;
+        homeTransitionTimeout = null;
         if (warpDoor) {
             warpDoor.classList.remove('active');
-            setTimeout(() => warpDoor.classList.add('hidden'), 500);
+            warpDoor.classList.add('hidden');
         }
-    }, 1000);
+        window.switchView('start-modal');
+        if(window.updateOrbsVisibility) window.updateOrbsVisibility();
+        if(window.Sound) window.Sound.playBGM('menu');
+    }, warpDoor ? 300 : 0);
+
+    if (roomId && db) {
+        try {
+            if (roomMode === 'classroom' && !wasHost) {
+                await updateDoc(doc(db, "rooms", roomId, "students", studentId), { status: 'offline' });
+            } else if (wasHost) {
+                await updateDoc(doc(db, "rooms", roomId), { gameState: 'closed', status: 'archived' });
+            } else {
+                const roomRef = doc(db, "rooms", roomId);
+                const roomSnap = await getDoc(roomRef);
+                if (roomSnap.exists()) {
+                    const players = roomSnap.data().players || [];
+                    const updatedPlayers = players.filter(player =>
+                        player.uid ? player.uid !== studentId : player.name !== myName
+                    );
+                    await updateDoc(roomRef, { players: updatedPlayers });
+                }
+            }
+        } catch (error) {
+            console.warn("Room exit sync failed; local cleanup completed:", error);
+        }
+    }
 };
+
+window.closeReport = function() { window.goHome(true); };
+window.closeVictory = function() { window.goHome(true); };
+window.closeDefeat = function() { window.goHome(true); };
 
 window.abortStudent = function() {
     if(confirm("Disconnect from Classroom?")) {
@@ -1984,7 +2047,7 @@ window.confirmMission = async function() {
             
             await setDoc(doc(db, "rooms", code), { 
                 host: myName, 
-                players: [{name: myName}], 
+players: [{name: myName, uid: currentUser ? currentUser.uid : null}], 
                 gameState: 'waiting', 
                 mode: state.gameMode, // Saves 'vs' or 'party' correctly to DB
                 settings: { ops: state.selectedOps, diff: state.difficulty }
@@ -2029,8 +2092,8 @@ function enterClassroomLobby(code, roomName) {
     // 3. START LISTENING TO ROOM UPDATES
     roomUnsub = onSnapshot(doc(db, "rooms", code), (snap) => {
         if(!snap.exists()) {
+            window.goHome(true);
             alert("Classroom disbanded by the Teacher.");
-            window.goHome();
             return;
         }
         
@@ -2068,7 +2131,9 @@ function enterClassroomLobby(code, roomName) {
                     // 🛡️ THE LOCK: Paandarin lang ang makina kung patay talaga
                     if (!window.gameLoopId) {
                         state.lastTime = performance.now(); // Reset time to prevent massive jump
-                        window.gameLoopId = requestAnimationFrame(gameLoop);
+                        window.gameLoopId = state.isPlaying && !state.isPaused
+                            ? requestAnimationFrame(gameLoop)
+                            : null;
                     }
                     return; 
                 }
@@ -2256,6 +2321,7 @@ function enterLobbyUI(code) {
         document.getElementById("client-wait-msg").classList.remove("hidden");
     }
 
+    if (roomUnsub) roomUnsub();
     roomUnsub = onSnapshot(doc(db, "rooms", code), (snap) => {
         if(!snap.exists()) return;
         let data = snap.data(); 
@@ -2428,7 +2494,8 @@ window.beginGameplay = function() {
                     // 🟢 FIX: TAWAGIN ANG GAMEOVER PARA LUMABAS ANG DEBRIEF SCREEN!
                     state.floatingTexts.push({ x: window.canvas.width/2, y: window.canvas.height/2, text: "TIME UP! SECURING DATA...", color: "#ffd700", life: 3.0 });
                     
-                    setTimeout(() => {
+                    gameTransitionTimeout = setTimeout(() => {
+                        gameTransitionTimeout = null;
                         window.gameOver(); // Trigger screen transition
                     }, 1000);
                 }
@@ -2491,7 +2558,7 @@ window.beginGameplay = function() {
         }, 2000); 
     }
     
-    requestAnimationFrame(gameLoop);
+    window.gameLoopId = requestAnimationFrame(gameLoop);
 };
 
 // Aliasing the global function just in case older code calls it directly
@@ -3136,8 +3203,11 @@ window.playOutroSequence = function(isWin) {
     if(window.Sound) window.Sound.playTone(100, 'sawtooth', 1.0); // Power down sound
 
     // 2. Wait 3 Seconds, then Show Report
-    setTimeout(() => {
-        outro.classList.add('hidden'); // Hide Outro
+if (reportTransitionTimeout) clearTimeout(reportTransitionTimeout);
+reportTransitionTimeout = setTimeout(() => {
+    reportTransitionTimeout = null;
+    if (state.isPlaying) return;
+    outro.classList.add('hidden'); // Hide Outro
         
         // Show the actual Report Modal
         const reportModal = document.getElementById("report-modal");
@@ -3154,10 +3224,8 @@ window.gameOver = function() {
     if (state.matchConcluded) return; 
     state.matchConcluded = true;
     document.body.classList.remove('in-combat');
-    if (typeof scoreInterval !== 'undefined' && scoreInterval) clearInterval(scoreInterval);
-    if (state.gameTimer) clearInterval(state.gameTimer);
+    window.cleanupGame();
     if (window.Sound) window.Sound.stopBGM();
-    state.isPlaying = false; 
     if(window.inputField) window.inputField.blur();
     if (state.gameMode === 'vs' || state.gameMode === 'party') {
         if (socket && currentRoomId) {
@@ -3181,8 +3249,8 @@ window.gameOver = function() {
             const playAgainBtn = winModal.querySelector(".secondary");
             if(playAgainBtn) {
                 playAgainBtn.style.display = "block";
-                playAgainBtn.innerText = "RETURN TO LOBBY";
-                playAgainBtn.onclick = () => { try{window.returnToLobby();}catch(e){window.goHome(true);} };
+                playAgainBtn.innerText = "RETURN TO BASE";
+                playAgainBtn.onclick = () => window.goHome(true);
             }
         }
         return; 
@@ -3191,7 +3259,9 @@ window.gameOver = function() {
     try { document.getElementById("class-curtain")?.classList.add("hidden"); } catch(e){}
     try { document.getElementById("curtain-countdown")?.classList.add("hidden"); } catch(e){}
     try { if(window.Sound) window.Sound.playTone(100, 'sawtooth', 1.0); } catch(e){}
-    setTimeout(() => {
+    reportTransitionTimeout = setTimeout(() => {
+        reportTransitionTimeout = null;
+        if (!state.matchConcluded || state.isPlaying) return;
         const reportModal = document.getElementById("report-modal");
         if(!reportModal) return;
         reportModal.classList.remove("hidden");
@@ -3225,27 +3295,40 @@ window.switchView = function(targetViewId) {
         'teacher-dashboard', 'report-modal', 'win-modal', 'agent-dashboard-modal',
         'shop-modal', 'codex-modal', 'leaderboard-modal', 'quiz-forge-menu-modal',
         'quiz-flashcard-modal', 'pause-modal', 'campaign-modal', 'reward-modal',
-        'training-modal', 'intervention-report-modal', 'cctv-modal'
+        'training-modal', 'intervention-report-modal', 'cctv-modal',
+        'boot-overlay', 'cinematic-intro', 'story-overlay', 'cinematic-outro',
+        'cyber-warp-door', 'class-curtain', 'start-countdown', 'curtain-countdown',
+        'glitch-overlay'
     ];
 
-    // 1. Hide everything completely and strip inline display styles
+    // 1. Hide every registered view; visibility is controlled by .hidden.
     allViews.forEach(viewId => {
         const el = document.getElementById(viewId);
-        if (el) {
-            el.classList.add('hidden');
-            el.style.display = ''; // Kills inline styles that override classes
-        }
+        if (el) el.classList.add('hidden');
     });
 
-    // 2. Unhide the target view
+    // Also hide modal surfaces not yet registered above.
+    document.querySelectorAll('.modal').forEach(el => {
+        if (el.id !== targetViewId) el.classList.add('hidden');
+    });
+
     const targetEl = document.getElementById(targetViewId);
     if (targetEl) {
         targetEl.classList.remove('hidden');
-        
-        // 3. Specific handling for the game canvas to ensure it renders correctly
-        if (targetViewId === 'game-wrapper') {
+        if (targetEl.classList.contains('modal')) {
+            targetEl.style.display = 'flex';
+        } else if (targetViewId === 'game-wrapper') {
             targetEl.style.display = 'block';
             if (typeof window.fixGameResolution === 'function') window.fixGameResolution();
+        } else {
+            targetEl.style.removeProperty('display');
+        }
+
+        if (targetViewId === 'start-modal') {
+            const authSection = document.getElementById('auth-section');
+            const profileSection = document.getElementById('profile-section');
+            if (authSection) authSection.classList.toggle('hidden', !!currentUser);
+            if (profileSection) profileSection.classList.toggle('hidden', !currentUser);
         }
     }
 };
@@ -3261,16 +3344,7 @@ window.closeClassEntirely = function() {
         exitBtn.innerText = "EXITING..."; 
     }
     
-    // I-update ang Firebase bago mag-reload
-    if (typeof currentRoomId !== 'undefined' && currentRoomId) {
-        updateDoc(doc(db, "rooms", currentRoomId), { status: 'archived' }).then(() => {
-            window.goHome(true); 
-        }).catch(() => { 
-            window.goHome(true); 
-        }); 
-    } else {
-        window.goHome(true);
-    }
+    window.goHome(true);
 };
 
 // Siguraduhing tumatawag din sa Reload ang Pause Menu Quit Button
@@ -3287,13 +3361,13 @@ window.quitFromPause = function() {
 function gameVictory(reason) {
     if (state.matchConcluded) return; // Prevent double firing
     state.matchConcluded = true;
-
-    state.isPlaying = false; 
+    window.cleanupGame();
     if(window.inputField) window.inputField.blur();
     
     if(window.Sound) window.Sound.powerup(); 
     
     const winModal = document.getElementById("win-modal");
+    if (!winModal) return;
     const winTitle = winModal.querySelector("h1");
     const winSub = winModal.querySelector(".subtitle");
     const winContent = winModal.querySelector(".modal-content");
@@ -3324,20 +3398,7 @@ function gameVictory(reason) {
             playAgainBtn.innerText = "RETURN TO BASE"; // Pinalitan natin ang text
             playAgainBtn.onclick = () => {
                 if(window.Sound) window.Sound.click();
-                winModal.classList.add("hidden");
-                
-                // Sabihin sa server na umalis na siya sa room bago mag-exit
-                if (currentRoomId && !isHost) {
-                    const roomRef = doc(db, "rooms", currentRoomId);
-                    getDoc(roomRef).then(snap => {
-                        if(snap.exists()) {
-                            let players = snap.data().players || [];
-                            players = players.filter(p => p.name !== myName);
-                            updateDoc(roomRef, { players: players });
-                        }
-                    });
-                }
-                window.goHome(true); // 🟢 Master Exit Triggered!
+                window.goHome(true);
             };
         }
     }
@@ -3543,10 +3604,13 @@ window.triggerDamageGlitch = function() {
 
 
 function gameLoop(time) {
-    if(!state.isPlaying || state.isPaused) return;
+    if(!state.isPlaying || state.isPaused) {
+        window.gameLoopId = null;
+        return;
+    }
 
     if (time < window.hitStopEnd) {
-        requestAnimationFrame(gameLoop);
+        window.gameLoopId = requestAnimationFrame(gameLoop);
         return; 
     }
 
@@ -3763,7 +3827,9 @@ function gameLoop(time) {
     window.ctx.globalAlpha=1.0; 
     window.ctx.restore();
 
-    window.gameLoopId = requestAnimationFrame(gameLoop);
+    window.gameLoopId = state.isPlaying && !state.isPaused
+        ? requestAnimationFrame(gameLoop)
+        : null;
     
 
 }
@@ -5559,7 +5625,8 @@ window.joinRoom = async function() {
             isHost = false;
             
             // Generate or fetch Student ID
-            window.myDocId = currentUser ? currentUser.uid : myName;
+            myDocId = currentUser ? currentUser.uid : myName;
+            window.myDocId = myDocId;
             const studentRef = doc(db, "rooms", code, "students", window.myDocId);
             
             // Register Student to Class Database
@@ -5599,8 +5666,11 @@ window.joinRoom = async function() {
             
             // Add player to the room list
             let newPlayers = roomData.players || [];
-            if (!newPlayers.some(p => p.name === myName)) {
-                newPlayers.push({name: myName});
+            const playerUid = currentUser ? currentUser.uid : null;
+            if (!newPlayers.some(p =>
+                playerUid ? p.uid === playerUid || (!p.uid && p.name === myName) : p.name === myName
+            )) {
+                newPlayers.push({ name: myName, uid: playerUid });
                 await updateDoc(roomRef, { players: newPlayers });
             }
             
@@ -6243,6 +6313,7 @@ window.showDamage = function(x, y) { 
 // ==========================================
 
 window.startSystem = function() {
+    localStorage.setItem('m3sh_hasSeenIntro', 'true');
     const bootScreen = document.getElementById('boot-overlay');
     const initBtn = document.getElementById('btn-master-start');
     
@@ -6846,7 +6917,8 @@ window.openShop = function() {
     document.getElementById("shop-modal").classList.remove("hidden");
     
     // Update visual coin balance
-    document.getElementById("shop-coin-display").innerText = state.coins;
+const shopCoins = document.getElementById("shop-coin-display");
+if(shopCoins) shopCoins.innerText = state.coins;
     
     // Default Tab
     window.switchShopTab('ships');
@@ -7027,7 +7099,7 @@ window.buyItem = async function(itemId, type, priceOverride) {
     } else {
         if (!currentUser) currentUser = { inventory: [] };
         if (!currentUser.inventory) currentUser.inventory = [];
-        currentUser.inventory.push(itemId);
+if (!currentUser.inventory.includes(itemId)) currentUser.inventory.push(itemId);
     }
 
     // --- REFRESH UI LAYERS ---
@@ -7073,8 +7145,10 @@ window.equipItem = async function(itemId, slot) {
 
 // 8. DATA SYNC & CALCULATORS
 window.syncShopData = function(userData) {
-    if (userData.coins) state.coins = userData.coins;
-    if (userData.inventory) currentUser.inventory = userData.inventory;
+    if (userData.coins !== undefined) state.coins = userData.coins;
+    if (Array.isArray(userData.inventory) && currentUser) {
+        currentUser.inventory = [...new Set(userData.inventory)];
+    }
     if (userData.equipped) state.equipped = userData.equipped;
     if (userData.upgradeLevels) state.upgradeLevels = userData.upgradeLevels;
     
@@ -7083,7 +7157,10 @@ window.syncShopData = function(userData) {
 
     // Apply stats immediately upon load
     window.applyUpgradeStats();
-    if(window.updateHUD) window.updateHUD();
+hudCache.coins = null;
+if(window.updateHUD) window.updateHUD();
+const shopCoins = document.getElementById("shop-coin-display");
+if(shopCoins) shopCoins.innerText = state.coins;
 };
 
 window.applyUpgradeStats = function() {
@@ -10013,14 +10090,6 @@ window.openCampaignMap = function() {
     }
 };
 
-window.closeCampaignMap = function() { 
-    if(window.Sound) window.Sound.click();
-    document.getElementById("campaign-modal")?.classList.add("hidden"); 
-    
-    // 🟢 THE FIX: Gagamitin na rin natin ang Hard Reload Protocol kapag umalis sa Map!
-    window.goHome(true); 
-};
-
 // 3. START LEVEL BUTTON (Planet Click)
 window.startCampaignLevel = function(levelNum) {
     console.log("SYSTEM: Deploying to Sector " + levelNum);
@@ -10077,8 +10146,7 @@ window.openCampaignMap = function() {
 
 window.closeCampaignMap = function() {
     if(window.Sound) window.Sound.click();
-    document.getElementById("campaign-modal").classList.add("hidden");
-    document.getElementById("start-modal").classList.remove("hidden");
+    window.switchView('start-modal');
 };
 
 // 2. SIDEBAR MILESTONE UPDATER
@@ -11614,7 +11682,9 @@ window.submitQuizAnswer = function() {
 
     input.disabled = true; // Lock briefly so they don't spam
     
-    setTimeout(() => {
+    if (quizAdvanceTimeout) clearTimeout(quizAdvanceTimeout);
+    quizAdvanceTimeout = setTimeout(() => {
+        quizAdvanceTimeout = null;
         window.currentQuizIndex++;
         window.renderCurrentQuestion();
     }, 1000); 
@@ -11641,6 +11711,7 @@ window.finishQuiz = function() {
         }));
         state.maxCombo = window.quizScore; 
     }
+    window.cleanupGame();
     
     const reportModal = document.getElementById("report-modal");
     if(reportModal) {
@@ -11671,8 +11742,7 @@ window.finishQuiz = function() {
         if (homeBtn) {
             homeBtn.style.display = 'block';
             homeBtn.onclick = function() {
-                reportModal.classList.add("hidden");
-                window.goHome(true); // Tatawagin ang Hard Reload
+                window.closeReport();
             };
         }
 
