@@ -3284,17 +3284,6 @@ window.quitFromPause = function() {
 
 
 
-
-// FIX: Removed orphaned block that caused crash - senior dev fix
-    if(false){ // Fixed orphaned block - was outside function
-    // Hide the "Quit" button so they stay for the next round
-    const homeBtn = document.querySelector('#report-modal .text-only');
-    if(homeBtn) homeBtn.style.display = 'none';
-    
-    const retryBtn = document.querySelector('#report-modal .secondary'); // The Retry Mission button
-    if(retryBtn) retryBtn.style.display = 'none'; // They can't retry manually, only Teacher starts it
-}
-
 function gameVictory(reason) {
     if (state.matchConcluded) return; // Prevent double firing
     state.matchConcluded = true;

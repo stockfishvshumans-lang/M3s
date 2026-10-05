@@ -15277,3 +15277,13 @@ body, html {
         background: #000 !important;
     }
 }
+
+#start-modal.m3sh-force-show {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 100 !important;
+  position: fixed !important;
+  top:0 !important; left:0 !important; width:100vw !important; height:100vh !important;
+  background: rgba(0,0,0,0.95) !important;
+}
