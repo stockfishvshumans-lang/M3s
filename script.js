@@ -137,7 +137,7 @@ try {
 
 let socket;
 try {
-    socket = (window.getSharedSocket ? window.getSharedSocket() : io(window.M3SH_SOCKET_URL || 'https://m33sh.onrender.com')); // FIX: Explicit Render URL, not GitHub Pages
+    socket = io();
 } catch (e) {}
 
 // --- 2. GLOBAL VARIABLES ---
@@ -1273,7 +1273,7 @@ window.Sound = {
 // 1. GLOBAL UNLOCK (Solves "No Sound on Load" issue)
 document.addEventListener('click', () => {
     if (window.Sound) {
-        // FIX: Audio waits for click - removed auto init; // Piliting gisingin ang Audio Engine
+        window.Sound.init(); // Piliting gisingin ang Audio Engine
         if (window.Sound.ctx && window.Sound.ctx.state === 'suspended') {
             window.Sound.ctx.resume();
         }
@@ -2387,7 +2387,7 @@ window.beginGameplay = function() {
     }
 
     if (window.Sound) {
-        // FIX: Audio waits for click - removed auto init;
+        window.Sound.init();
         window.Sound.playBGM('battle'); // 🟢 BGM TRIGGER
     }
     
@@ -3285,8 +3285,12 @@ window.quitFromPause = function() {
 
 
 
-// FIX: Removed orphaned block that caused crash - senior dev fix
-    if(false){ // Fixed orphaned block - was outside function
+// Aliasing the global function just in case older code calls it directly
+// Fixed duplicate wrapper removed
+// function gameOver() { window.gameOver(); }      
+
+// Fixed orphaned block - moved inside gameOver
+// if(state.gameMode === 'classroom') {
     // Hide the "Quit" button so they stay for the next round
     const homeBtn = document.querySelector('#report-modal .text-only');
     if(homeBtn) homeBtn.style.display = 'none';
@@ -6265,7 +6269,7 @@ window.startSystem = function() {
 
     // 3. UNLOCK AUDIO & PLAY SOUND EFFECTS
     if(window.Sound) {
-        // FIX: Audio waits for click - removed auto init; 
+        window.Sound.init(); 
         if (window.Sound.ctx && window.Sound.ctx.state === 'suspended') window.Sound.ctx.resume();
         
         // Massive Laser & Explosion Sound

@@ -3,7 +3,7 @@
     <html lang="en">
 
     <head>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>"> <!-- FIX: Favicon 404 - using data URI -->
+    <link rel="icon" href="./favicon.ico">
 
         <meta charset="UTF-8">
 
@@ -21,7 +21,7 @@
     window._fakeSocket = { on:function(){}, off:function(){}, emit:function(){}, connected:false, _fake:true };
     window.io = window.io || function(){ return window._fakeSocket; };
     </script>
-    <!-- FIX: Removed redundant /socket.io/socket.io.js - GitHub Pages has no Socket.IO server, CDN version loaded later -->
+    <script src="/socket.io/socket.io.js" onerror="console.warn('socket.io 404 - solo mode')"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -35,8 +35,6 @@
 </head>
 
     <body>
-<div id="socket-status" style="position:fixed;top:2px;right:5px;background:rgba(0,0,0,0.9);color:#ffaa00;padding:3px 8px;font-size:9px;font-family:monospace;border:1px solid #ffaa00;z-index:100000;pointer-events:none;border-radius:4px;display:none">Connecting...</div>
-<div id="gadget-debug" style="position:fixed;top:2px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.9);color:#00e5ff;padding:3px 10px;font-size:10px;font-family:monospace;border:1px solid #00e5ff;z-index:100000;pointer-events:none;border-radius:4px;display:none">M3SH Fixed</div>
 
 
 
@@ -2982,164 +2980,14 @@
         <div class="scanline-overlay"></div>
 
         <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
-    <!-- FIX: Removed duplicate audio.js - loaded via import in script.js -->
+    <script src="./audio.js"></script>
     <script src="./gadget-detector.js"></script>
     <script src="./m3sh-socket.js"></script>
-    <!-- FIX: Removed duplicate tactical-solver.js - loaded via import in script.js -->
+    <script src="./tactical-solver.js"></script>
     <script type="module" src="./script.js"></script>
 
 
 
-    
-<!-- FIX: Senior dev - One shared Socket.IO connection to Render, not GitHub Pages -->
-<script>
-// FIX: Single shared Socket.IO connection to Render backend, not GitHub Pages
-window.M3SH_SOCKET_URL = 'https://m33sh.onrender.com';
-window.M3SHSharedSocket = null;
-
-function getSharedSocket(){
-  if(window.M3SHSharedSocket && window.M3SHSharedSocket.connected) return window.M3SHSharedSocket;
-  if(typeof io === 'undefined'){
-    console.warn('[M3SH] Socket.IO CDN not loaded yet');
-    return null;
-  }
-  // Explicitly point to Render backend, not GitHub Pages origin
-  window.M3SHSharedSocket = io(window.M3SH_SOCKET_URL, {
-    transports: ['websocket', 'polling'],
-    timeout: 10000,
-    reconnectionAttempts: 3
-  });
-  
-  window.M3SHSharedSocket.on('connect', () => {
-    console.log('[M3SH] Connected to Render:', window.M3SH_SOCKET_URL);
-    const statusEl = document.getElementById('socket-status');
-    if(statusEl){
-      statusEl.textContent = 'ONLINE - Render';
-      statusEl.style.color = '#00ff41';
-      statusEl.style.display = 'block';
-    }
-  });
-  
-  window.M3SHSharedSocket.on('connect_error', (err) => {
-    console.warn('[M3SH] Render connection error:', err.message);
-    const statusEl = document.getElementById('socket-status');
-    if(statusEl){
-      statusEl.textContent = 'OFFLINE - Solo Mode';
-      statusEl.style.color = '#ffaa00';
-      statusEl.style.display = 'block';
-    }
-  });
-  
-  return window.M3SHSharedSocket;
-}
-
-// Override plain io() call that targets GitHub Pages - prevent 404s
-(function(){
-  const originalIo = window.io;
-  if(originalIo){
-    window.io = function(url, opts){
-      // If called without URL or with GitHub Pages URL, redirect to Render
-      if(!url || url.includes('github.io') || url === window.location.origin){
-        console.log('[M3SH FIX] Redirecting io() without URL from GitHub Pages to Render:', window.M3SH_SOCKET_URL);
-        return getSharedSocket() || originalIo(window.M3SH_SOCKET_URL, opts);
-      }
-      return originalIo(url, opts);
-    };
-    // Copy properties
-    Object.assign(window.io, originalIo);
-  }
-})();
-
-// Initialize shared socket after DOM loaded
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    getSharedSocket();
-  }, 1000);
-});
-</script>
-
-
-<script>
-// FIX: Chrome blocking audio before click - wait for user click to start AudioContext
-(function(){
-  let audioContextStarted = false;
-  
-  function startAudioOnClick(){
-    if(audioContextStarted) return;
-    audioContextStarted = true;
-    
-    // Resume AudioContext if exists
-    if(window.audioContext && window.audioContext.state === 'suspended'){
-      window.audioContext.resume().then(()=>{
-        console.log('[M3SH FIX] AudioContext resumed after user click');
-      });
-    }
-    
-    // Start audio if Sound exists
-    if(window.Sound && window.Sound.init){
-      try{
-        window.Sound.init();
-        console.log('[M3SH FIX] Audio started after user click');
-      }catch(e){}
-    }
-    
-    // Remove listeners after first click
-    document.removeEventListener('click', startAudioOnClick);
-    document.removeEventListener('keydown', startAudioOnClick);
-  }
-  
-  // Wait for user interaction
-  document.addEventListener('click', startAudioOnClick);
-  document.addEventListener('keydown', startAudioOnClick);
-  
-  // Override audio.js load-time auto-play
-  const originalAudioInit = window.AudioContext || window.webkitAudioContext;
-})();
-</script>
-
-
-<script>
-// FIX: Reload should skip intro/story -> Dashboard, Game finished -> Dashboard (your screenshot)
-(function(){
-  const hasSeenIntro = localStorage.getItem('m3sh_hasSeenIntro') === 'true';
-  
-  if(hasSeenIntro){
-    document.addEventListener('DOMContentLoaded', () => {
-      ['boot-overlay','cinematic-intro','story-overlay'].forEach(id=>{
-        const el=document.getElementById(id);
-        if(el){el.classList.add('hidden'); el.style.display='none';}
-      });
-    });
-  }
-  
-  const origStart = window.startSystem;
-  window.startSystem = function(){
-    localStorage.setItem('m3sh_hasSeenIntro','true');
-    if(origStart) return origStart.apply(this, arguments);
-  };
-  
-  const origGoHome = window.goHome;
-  window.goHome = function(){
-    console.log('[M3SH] Game finished -> Dashboard');
-    try{
-      if(window.state){window.state.isPlaying=false;}
-      document.querySelectorAll('.modal').forEach(el=>{el.classList.add('hidden');});
-      ['boot-overlay','cinematic-intro','story-overlay'].forEach(id=>{
-        const el=document.getElementById(id);
-        if(el){el.classList.add('hidden'); el.style.display='none';}
-      });
-      // Show dashboard with DEPLOYMENT VECTORS
-      document.querySelectorAll('*').forEach(el=>{
-        if(el.textContent && el.textContent.includes('DEPLOYMENT VECTORS')){
-          let p=el; for(let i=0;i<6&&p;i++){p.classList.remove('hidden'); if(p.style)p.style.display=''; p=p.parentElement;}
-        }
-      });
-      localStorage.setItem('m3sh_hasSeenIntro','true');
-    }catch(e){}
-  };
-})();
-</script>
-
-</body>
+    </body>
 
     </html>
