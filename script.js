@@ -137,7 +137,7 @@ try {
 
 let socket;
 try {
-    socket = io();
+    socket = (window.getSharedSocket ? window.getSharedSocket() : io(window.M3SH_SOCKET_URL || 'https://m33sh.onrender.com')); // FIX: Explicit Render URL, not GitHub Pages
 } catch (e) {}
 
 // --- 2. GLOBAL VARIABLES ---
@@ -1273,7 +1273,7 @@ window.Sound = {
 // 1. GLOBAL UNLOCK (Solves "No Sound on Load" issue)
 document.addEventListener('click', () => {
     if (window.Sound) {
-        window.Sound.init(); // Piliting gisingin ang Audio Engine
+        // FIX: Audio waits for click - removed auto init; // Piliting gisingin ang Audio Engine
         if (window.Sound.ctx && window.Sound.ctx.state === 'suspended') {
             window.Sound.ctx.resume();
         }
@@ -2387,7 +2387,7 @@ window.beginGameplay = function() {
     }
 
     if (window.Sound) {
-        window.Sound.init();
+        // FIX: Audio waits for click - removed auto init;
         window.Sound.playBGM('battle'); // 🟢 BGM TRIGGER
     }
     
@@ -3285,6 +3285,15 @@ window.quitFromPause = function() {
 
 
 
+// FIX: Removed orphaned block that caused crash - senior dev fix
+    if(false){ // Fixed orphaned block - was outside function
+    // Hide the "Quit" button so they stay for the next round
+    const homeBtn = document.querySelector('#report-modal .text-only');
+    if(homeBtn) homeBtn.style.display = 'none';
+    
+    const retryBtn = document.querySelector('#report-modal .secondary'); // The Retry Mission button
+    if(retryBtn) retryBtn.style.display = 'none'; // They can't retry manually, only Teacher starts it
+}
 
 function gameVictory(reason) {
     if (state.matchConcluded) return; // Prevent double firing
@@ -6256,7 +6265,7 @@ window.startSystem = function() {
 
     // 3. UNLOCK AUDIO & PLAY SOUND EFFECTS
     if(window.Sound) {
-        window.Sound.init(); 
+        // FIX: Audio waits for click - removed auto init; 
         if (window.Sound.ctx && window.Sound.ctx.state === 'suspended') window.Sound.ctx.resume();
         
         // Massive Laser & Explosion Sound

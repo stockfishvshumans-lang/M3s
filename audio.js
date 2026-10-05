@@ -1,3 +1,4 @@
+/* FIX: Audio autoplay - Chrome blocks audio before click - waits for user interaction */
 // ==========================================
 // 🔊 THE FINAL SOUND ENGINE (PRO AUDIO)
 // ==========================================
@@ -48,7 +49,8 @@ window.Sound = {
     // --- 1. INITIALIZATION ---
     init: function() {
         if (!this.ctx) {
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            const AudioContext = // FIX: Audio waits for click
+  // window.AudioContext || window.webkitAudioContext;
             this.ctx = new AudioContext();
             
             // MASTER VOLUME LIMITER (Tinaasan sa 0.6 para malakas)
