@@ -49,22 +49,18 @@ window.Sound = {
     // --- 1. INITIALIZATION ---
     init: function() {
         if (!this.ctx) {
-            const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
-            if (!AudioContextConstructor) {
-                console.error("AudioContext is unavailable in this browser.");
-    return false;
-            }
-            this.ctx = new AudioContextConstructor();
+            const AudioContext = // FIX: Audio waits for click
+  // window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioContext();
             
             // MASTER VOLUME LIMITER (Tinaasan sa 0.6 para malakas)
             this.masterGain = this.ctx.createGain();
             this.masterGain.gain.value = 0.6; 
             this.masterGain.connect(this.ctx.destination);
         }
-        if (this.ctx && this.ctx.state === 'suspended') {
-            this.ctx.resume().catch(error => console.warn("AudioContext resume failed:", error));
+        if (this.ctx.state === 'suspended') {
+            this.ctx.resume().catch(e => console.log("Audio waiting for user..."));
         }
-        return !!this.ctx;
     },
 
     // --- 2. TOGGLE MUTE ---

@@ -3,11 +3,8 @@
 window.M3SH_SOCKET_URL = 'https://m33sh.onrender.com';
 
 function getSharedSocket(){
-  if(window.M3SHSharedSocket) return window.M3SHSharedSocket;
-  if(typeof window.io !== 'function'){
-    console.error('[M3SH] Socket.IO client is unavailable; multiplayer is disabled.');
-    return null;
-  }
+  if(window.M3SHSharedSocket && window.M3SHSharedSocket.connected) return window.M3SHSharedSocket;
+  if(typeof io === 'undefined') return null;
   window.M3SHSharedSocket = io(window.M3SH_SOCKET_URL, {transports:['websocket','polling'], timeout:10000});
   window.M3SHSharedSocket.on('connect', ()=>{
     const el = document.getElementById('socket-status');
@@ -17,11 +14,10 @@ function getSharedSocket(){
       el.style.display = 'block';
     }
   });
-  window.M3SHSharedSocket.on('connect_error', (error)=>{
-    console.warn('[M3SH] Render connection error:', error.message);
+  window.M3SHSharedSocket.on('connect_error', ()=>{
     const el = document.getElementById('socket-status');
     if(el){
-      el.textContent = 'OFFLINE - Solo Mode';
+      el.textContent = 'OFFLINE - Solo';
       el.style.color = '#ffaa00';
       el.style.display = 'block';
     }
@@ -37,11 +33,7 @@ window.M3SHSocket = {
   },
   emit(ev,d){
     const s = getSharedSocket();
-    if(s && s.connected) {
-      s.emit(ev,d);
-    } else {
-      console.warn(`[M3SH] Socket event "${ev}" was not sent because the connection is offline.`);
-    }
+    if(s && s.connected) s.emit(ev,d);
   }
 };
 
