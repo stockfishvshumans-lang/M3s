@@ -1,2 +1,0 @@
-// Polished - one view manager, no flicker
-window.ViewManager={current:null,locked:false,show(name){if(this.locked||this.current===name)return;const t=document.getElementById(name);if(!t)return;this.locked=true;document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));t.classList.remove('hidden');this.current=name;setTimeout(()=>this.locked=false,200);}};
