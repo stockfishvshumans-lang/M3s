@@ -1,35 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>M3sH</title>
-    <link rel="icon" type="image/png" href="assets/boss_god.png">
-    <link rel="apple-touch-icon" href="assets/boss_god.png">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700;900&display=swap" rel="stylesheet">
+    <!DOCTYPE html>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <style>
-      /* FIX BLANK: Makes hidden truly hidden - your teacher-dashboard has z-index 999999 + bg #05070a covering dashboard */
-      .hidden{ display:none !important; pointer-events:none !important; opacity:0 !important; visibility:hidden !important; z-index:-1 !important; }
-      #cyber-warp-door.hidden, #class-curtain.hidden, #teacher-dashboard.hidden, #glitch-overlay.hidden, #boot-overlay.hidden, #cinematic-intro.hidden, #story-overlay.hidden, #cinematic-outro.hidden{ display:none !important; pointer-events:none !important; }
-    </style>
-    <script>
-    (function(){
-      try{
-        if(localStorage.getItem('m3sh_hasSeenIntro')==='true'){
-          document.addEventListener('DOMContentLoaded',()=>{
-            ['boot-overlay','cinematic-intro','story-overlay','cinematic-outro','cyber-warp-door','glitch-overlay','class-curtain'].forEach(id=>{
-              const el=document.getElementById(id);
-              if(el){ el.classList.add('hidden'); el.style.setProperty('display','none','important'); }
-            });
-          });
-        }
-      }catch(e){}
-    })();
+    <html lang="en">
+
+    <head>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>"> <!-- FIX: Favicon 404 - using data URI -->
+
+        <meta charset="UTF-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>JESSMATH: ELITE DEFENSE</title>
+
+        
+
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700;900&display=swap" rel="stylesheet">
+
+        
+
+        <script>
+    window._fakeSocket = { on:function(){}, off:function(){}, emit:function(){}, connected:false, _fake:true };
+    window.io = window.io || function(){ return window._fakeSocket; };
     </script>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <!-- FIX: Removed redundant /socket.io/socket.io.js - GitHub Pages has no Socket.IO server, CDN version loaded later -->
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        
+
+        <link rel="stylesheet" href="style.css">
+
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 </head>
@@ -38,9 +38,13 @@
 <div id="socket-status" style="position:fixed;top:2px;right:5px;background:rgba(0,0,0,0.9);color:#ffaa00;padding:3px 8px;font-size:9px;font-family:monospace;border:1px solid #ffaa00;z-index:100000;pointer-events:none;border-radius:4px;display:none">Connecting...</div>
 <div id="gadget-debug" style="position:fixed;top:2px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.9);color:#00e5ff;padding:3px 10px;font-size:10px;font-family:monospace;border:1px solid #00e5ff;z-index:100000;pointer-events:none;border-radius:4px;display:none">M3SH Fixed</div>
 
+
+
+
+
         <canvas id="bgCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-10;"></canvas>
 
-
+        ```
         <div id="cyber-warp-door" class="hidden">
             <div class="warp-panel panel-top"></div>
             <div class="warp-panel panel-bottom"></div>
@@ -48,9 +52,20 @@
             <div class="warp-status-text">RE-ROUTING TO COMMAND CENTER...</div>
         </div>
 
-       <div id="boot-overlay" class="god-boot-screen">
+        
+
+
+
+
+
+
+        
+
+
+
+        <div id="boot-overlay" class="god-boot-screen">
             <button id="fullscreen-btn" onclick="window.toggleFullScreen()" style="position: absolute; top: 20px; right: 20px; z-index: 9999999; background: rgba(0, 229, 255, 0.1); border: 1px solid #00e5ff; color: #00e5ff; padding: 8px 15px; cursor: pointer; font-family: 'Orbitron'; font-size: 12px; letter-spacing: 2px; border-radius: 4px; box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);">
-                [ ]
+                [ ] ENTER FULLSCREEN
             </button>
 
             <div class="boot-lightning"></div>
@@ -71,18 +86,38 @@
             </div>
         </div>
 
+
+
         <div id="cinematic-intro">
+
             <div class="space-bg"></div>
+
             <div class="stars-1"></div>
+
             <div class="stars-2"></div>
+
             <div class="nebula-layer"></div>
+
+            
+
             <div id="war-container"></div> 
+
+            
+
             <div class="intro-ui">
+
                 <div class="logo-wrapper">
+
                     <h1 class="defender-logo" data-text="MATH DEFENDER">MATH DEFENDER</h1>
+
                     <div class="logo-scanline"></div>
+
                 </div>
+
                 <div class="subtitle-text">HUMANITY'S LAST STAND</div>
+
+                
+
                 <div class="loading-system">
 
                     <div class="tech-bar">
@@ -3064,19 +3099,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 <script>
+// FIX: Reload should skip intro/story -> Dashboard, Game finished -> Dashboard (your screenshot)
 (function(){
-  const seen = localStorage.getItem('m3sh_hasSeenIntro')==='true';
-  if(seen){
-    document.addEventListener('DOMContentLoaded',()=>{
-      ['boot-overlay','cinematic-intro','story-overlay','cinematic-outro'].forEach(id=>{
+  const hasSeenIntro = localStorage.getItem('m3sh_hasSeenIntro') === 'true';
+  
+  if(hasSeenIntro){
+    document.addEventListener('DOMContentLoaded', () => {
+      ['boot-overlay','cinematic-intro','story-overlay'].forEach(id=>{
         const el=document.getElementById(id);
-        if(el){ el.classList.add('hidden'); el.style.setProperty('display','none','important'); }
+        if(el){el.classList.add('hidden'); el.style.display='none';}
       });
-      // Force dashboard like reload
-      const sm=document.getElementById('start-modal');
-      if(sm){ sm.classList.remove('hidden'); sm.style.setProperty('display','flex','important'); }
     });
   }
+  
+  const origStart = window.startSystem;
+  window.startSystem = function(){
+    localStorage.setItem('m3sh_hasSeenIntro','true');
+    if(origStart) return origStart.apply(this, arguments);
+  };
+  
+  const origGoHome = window.goHome;
+  window.goHome = function(){
+    console.log('[M3SH] Game finished -> Dashboard');
+    try{
+      if(window.state){window.state.isPlaying=false;}
+      document.querySelectorAll('.modal').forEach(el=>{el.classList.add('hidden');});
+      ['boot-overlay','cinematic-intro','story-overlay'].forEach(id=>{
+        const el=document.getElementById(id);
+        if(el){el.classList.add('hidden'); el.style.display='none';}
+      });
+      // Show dashboard with DEPLOYMENT VECTORS
+      document.querySelectorAll('*').forEach(el=>{
+        if(el.textContent && el.textContent.includes('DEPLOYMENT VECTORS')){
+          let p=el; for(let i=0;i<6&&p;i++){p.classList.remove('hidden'); if(p.style)p.style.display=''; p=p.parentElement;}
+        }
+      });
+      localStorage.setItem('m3sh_hasSeenIntro','true');
+    }catch(e){}
+  };
 })();
 </script>
 

@@ -46,13 +46,12 @@ window.Sound = {
         this.playTone(1000, 'sine', 0.05, 0.1); 
     },
 
+    // --- 1. INITIALIZATION ---
     init: function() {
-    if (!this.ctx) {
-        try{
-            const AC = window.AudioContext || window.webkitAudioContext;
-            if(!AC) return;
-            this.ctx = new AC();
-        }catch(e){ console.warn("AudioContext blocked:", e); return; }
+        if (!this.ctx) {
+            const AudioContext = // FIX: Audio waits for click
+  // window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioContext();
             
             // MASTER VOLUME LIMITER (Tinaasan sa 0.6 para malakas)
             this.masterGain = this.ctx.createGain();

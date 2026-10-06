@@ -1,7 +1,7 @@
-import { initializeApp, getApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, doc, setDoc, getDoc, onSnapshot, updateDoc, where, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-
 
 // Modular Injections
 import './audio.js';
@@ -16,8 +16,8 @@ const firebaseConfig = {
   appId: "1:417197691259:web:599483e073e9756c16edde",
   measurementId: "G-7FR5LM7GMY"
 };
-let app;
-try { app = getApp(); } catch(e) { app = initializeApp(firebaseConfig); }
+// FIX: Single safe Firebase init to prevent duplicate-app crash
+let app; try { app = getApp(); } catch { app = initializeApp(firebaseConfig); }
 
 
 
@@ -1836,150 +1836,107 @@ window.cancelMission = function() {
 };
 
 
-window.cleanupGame = function(options = {}) {
+// ==========================================
+// 🧹 SYSTEM TEARDOWN & MEMORY CLEANUP
+// ==========================================
+window.cleanupGame = function() {
     console.log("🧹 Executing Deep System Cleanup...");
+    
     state.isPlaying = false;
     state.isPaused = false;
     state.isGlobalFreeze = false;
     state.isOverdrive = false;
-    if (window.gameLoopId) { cancelAnimationFrame(window.gameLoopId); window.gameLoopId = null; }
-    [scoreInterval, state.gameTimer, state.lockTimer, state.vsInterval, state.partySyncInterval, state.petAttackTimer, autoStartTimer].forEach(interval => { if (interval) clearInterval(interval); });
-    scoreInterval = null; state.gameTimer = null; state.lockTimer = null; state.vsInterval = null; state.partySyncInterval = null; state.petAttackTimer = null; autoStartTimer = null;
-    isAutoStarting = false; state.inputLocked = false; state.petData = null;
-    if (typeof reportTransitionTimeout !== 'undefined' && reportTransitionTimeout) { clearTimeout(reportTransitionTimeout); reportTransitionTimeout = null; }
-    if (gameTransitionTimeout) { clearTimeout(gameTransitionTimeout); gameTransitionTimeout = null; }
-    if (quizAdvanceTimeout) { clearTimeout(quizAdvanceTimeout); quizAdvanceTimeout = null; }
-    if (options.unsubscribe) {
-        if (typeof roomUnsub === 'function') { roomUnsub(); roomUnsub = null; }
-        if (typeof dashboardUnsub !== 'undefined' && dashboardUnsub) { dashboardUnsub(); dashboardUnsub = null; }
+
+    if (window.gameLoopId) {
+        cancelAnimationFrame(window.gameLoopId);
+        window.gameLoopId = null;
     }
-    if (window.ctx && window.canvas) { window.ctx.clearRect(0, 0, window.canvas.width, window.canvas.height); }
     
-    // FIX BLANK: Clear inline !important styles that createClassroom wrote
-    ['teacher-dashboard','cyber-warp-door','class-curtain','glitch-overlay','boot-overlay','cinematic-intro','story-overlay','cinematic-outro'].forEach(id=>{
-      const el=document.getElementById(id);
-      if(el && el.classList.contains('hidden')){
-        el.style.removeProperty('display');
-        el.style.removeProperty('position');
-        el.style.removeProperty('z-index');
-        el.style.removeProperty('background');
-        el.style.removeProperty('width');
-        el.style.removeProperty('height');
-        el.style.removeProperty('top');
-        el.style.removeProperty('left');
-      }
+    // Kill ALL Interval Zombies
+    const intervalsToKill = [
+        scoreInterval, state.gameTimer, state.lockTimer, 
+        state.vsInterval, state.partySyncInterval, 
+        state.petAttackTimer, autoStartTimer
+    ];
+    intervalsToKill.forEach(interval => {
+        if (interval) clearInterval(interval);
     });
+
+    if (state.gameMode !== 'classroom') {
+        if (typeof roomUnsub === 'function') { roomUnsub(); roomUnsub = null; }
+        if (typeof dashboardUnsub !== 'undefined' && dashboardUnsub) { 
+            dashboardUnsub(); dashboardUnsub = null; 
+        }
+    }
+
+    if (window.ctx && window.canvas) {
+        window.ctx.clearRect(0, 0, window.canvas.width, window.canvas.height);
+    }
+
+    document.body.classList.remove('overdrive-active', 'in-combat', 'dashboard-active', 'classroom-mode');
     
-    document.body.classList.remove('overdrive-active', 'in-combat', 'dashboard-active', 'classroom-mode', 'critical-health');
-    state.meteors = []; state.lasers = []; state.particles = []; state.floatingTexts = []; state.shockwaves = []; state.bossActive = false;
+    state.meteors = [];
+    state.lasers = [];
+    state.particles = [];
+    state.floatingTexts = [];
+    state.shockwaves = [];
+    state.bossActive = false;
+    state.matchConcluded = false; 
 };
 
+// ==========================================
+// 🛡️ THE MASTER EXIT ROUTER (SOFT RESET)
+// ==========================================
 window.goHome = async function(skipConfirm = false) {
     if(window.Sound && !skipConfirm) window.Sound.click();
-    if (!skipConfirm && typeof state !== 'undefined' && state.isPlaying && !confirm("ABORT MISSION? Progress will be lost.")) return;
-    console.log("⚡ SNAP RELOAD to dashboard...");
-
-    // Kill loops instantly
-    if (window.gameLoopId) { cancelAnimationFrame(window.gameLoopId); window.gameLoopId = null; }
-    [scoreInterval, state.gameTimer, state.lockTimer, state.vsInterval, state.partySyncInterval, state.petAttackTimer, autoStartTimer].forEach(i=>{ if(i) clearInterval(i); });
-    if (homeTransitionTimeout) { clearTimeout(homeTransitionTimeout); homeTransitionTimeout = null; }
-    if (typeof reportTransitionTimeout !== 'undefined' && reportTransitionTimeout) { clearTimeout(reportTransitionTimeout); reportTransitionTimeout = null; }
-    if (gameTransitionTimeout) { clearTimeout(gameTransitionTimeout); gameTransitionTimeout = null; }
-
-    // Unsubscribe fire-and-forget - don't await (makes it snap)
-    const roomId = currentRoomId;
-    const roomMode = state.gameMode;
-    const wasHost = isHost;
-    const studentId = (currentUser && currentUser.uid) || myDocId || myName;
-    if (typeof roomUnsub === 'function') { try{roomUnsub();}catch(e){} roomUnsub=null; }
-    if (typeof dashboardUnsub !== 'undefined' && dashboardUnsub) { try{dashboardUnsub();}catch(e){} dashboardUnsub=null; }
     
-    // Background Firebase leave - no await
-    if (roomId && db) {
-      (async()=>{
-        try{
-          if (roomMode === 'classroom' && !wasHost) {
-            await updateDoc(doc(db, "rooms", roomId, "students", studentId), { status: 'offline' });
-          } else if (wasHost) {
-            await updateDoc(doc(db, "rooms", roomId), { gameState: 'closed', status: 'archived' });
-          } else {
-            const roomRef = doc(db, "rooms", roomId);
-            const roomSnap = await getDoc(roomRef);
-            if (roomSnap.exists()) {
-              const players = roomSnap.data().players || [];
-              const updatedPlayers = players.filter(p => p.uid ? p.uid !== studentId : p.name !== myName);
-              await updateDoc(roomRef, { players: updatedPlayers });
+    if (!skipConfirm && typeof state !== 'undefined' && state.isPlaying && !confirm("ABORT MISSION? Progress will be lost.")) {
+        return;
+    }
+
+    console.log("🚀 Initiating Soft Reset Sequence...");
+    
+    const warpDoor = document.getElementById("cyber-warp-door");
+    if (warpDoor) {
+        warpDoor.classList.remove('hidden');
+        warpDoor.style.setProperty('z-index', '2147483647', 'important');
+        setTimeout(() => warpDoor.classList.add('active'), 10);
+        if(window.Sound) window.Sound.playTone(150, 'sawtooth', 0.6); 
+    }
+
+    if (typeof currentRoomId !== 'undefined' && currentRoomId) {
+        try {
+            if (typeof isHost !== 'undefined' && isHost && state.gameMode !== 'classroom') {
+                await updateDoc(doc(db, "rooms", currentRoomId), { gameState: 'closed', status: 'archived' });
+            } else if (!isHost && state.gameMode !== 'classroom') {
+                const roomRef = doc(db, "rooms", currentRoomId);
+                const roomSnap = await getDoc(roomRef);
+                if(roomSnap.exists()) {
+                    let players = roomSnap.data().players || [];
+                    players = players.filter(p => p.name !== myName);
+                    await updateDoc(roomRef, { players: players });
+                }
+                if(socket) socket.emit('leave_room', { room: currentRoomId });
             }
-          }
-        }catch(e){ console.warn("Room exit sync failed:", e); }
-      })();
+        } catch(e) { console.warn("Cleanup sync skipped:", e); }
     }
-    if (roomId && socket) { try{ socket.emit('leave_room', { room: roomId }); }catch(e){} }
-    currentRoomId = null; myDocId = null; window.myDocId = null; isHost = false; state.gameMode = 'solo'; state.matchConcluded = false;
-    state.isPlaying = false;
 
-    // SNAP CLEAR - same as reload - clear ALL blockers
-    ['teacher-dashboard','cyber-warp-door','class-curtain','glitch-overlay','boot-overlay','cinematic-intro','story-overlay','cinematic-outro','start-countdown','curtain-countdown','pause-modal','report-modal','lobby-modal','mp-menu-modal','mission-config-modal','game-wrapper'].forEach(id=>{
-      const el=document.getElementById(id);
-      if(el){
-        el.classList.add('hidden');
-        el.style.removeProperty('display');
-        el.style.removeProperty('position');
-        el.style.removeProperty('z-index');
-        el.style.removeProperty('background');
-        el.style.removeProperty('width');
-        el.style.removeProperty('height');
-        el.style.removeProperty('top');
-        el.style.removeProperty('left');
-        el.style.setProperty('display','none','important');
-      }
-    });
-    if (window.ctx && window.canvas) window.ctx.clearRect(0, 0, window.canvas.width, window.canvas.height);
-    document.body.classList.remove('overdrive-active', 'in-combat', 'dashboard-active', 'classroom-mode', 'critical-health');
-    localStorage.setItem('m3sh_hasSeenIntro','true');
+    if(typeof clearSession === 'function') clearSession();
 
-    // SHOW DASHBOARD EXACTLY LIKE RELOAD
-    const sm=document.getElementById('start-modal');
-    const ps=document.getElementById('profile-section');
-    const auth=document.getElementById('auth-section');
-    if(sm){
-      sm.classList.remove('hidden');
-      sm.style.setProperty('display','flex','important');
-      sm.style.setProperty('visibility','visible','important');
-      sm.style.setProperty('opacity','1','important');
-      sm.style.removeProperty('z-index');
-    }
-    if(currentUser && ps){
-      ps.classList.remove('hidden');
-      ps.style.setProperty('display','flex','important');
-      ps.style.setProperty('visibility','visible','important');
-      if(auth) { auth.classList.add('hidden'); auth.style.setProperty('display','none','important'); }
-    }else if(auth){
-      auth.classList.remove('hidden');
-      auth.style.setProperty('display','block','important');
-      if(ps) { ps.classList.add('hidden'); ps.style.setProperty('display','none','important'); }
-    }
-    // Safety fallback
-    if(ps && auth && ps.classList.contains('hidden') && auth.classList.contains('hidden')){
-      auth.classList.remove('hidden');
-      auth.style.setProperty('display','block','important');
-    }
-    if(window.updateOrbsVisibility) window.updateOrbsVisibility();
-    if(window.Sound) window.Sound.playBGM('menu');
-    console.log("✅ Snap reload done");
+    window.cleanupGame();
+
+    setTimeout(() => {
+        window.switchView('start-modal');
+        
+        if(window.updateOrbsVisibility) window.updateOrbsVisibility();
+        if(window.Sound) window.Sound.playBGM('menu');
+
+        if (warpDoor) {
+            warpDoor.classList.remove('active');
+            setTimeout(() => warpDoor.classList.add('hidden'), 500);
+        }
+    }, 1000);
 };
-
-window.closeReport = function() { window.goHome(true); };
-window.closeVictory = function() { window.goHome(true); };
-window.closeDefeat = function() { window.goHome(true); };
-window.abortStudent = function() { if(confirm("Disconnect from Classroom?")) window.goHome(true); };
-
-// All exits use same snap reload
-window.closeReport = ()=> window.goHome(true);
-window.closeVictory = ()=> window.goHome(true);
-window.closeDefeat = ()=> window.goHome(true);
-window.abortStudent = ()=>{ if(confirm("Disconnect?")) window.goHome(true); };
-window.cancelMission = ()=> window.goHome(true);
 
 window.abortStudent = function() {
     if(confirm("Disconnect from Classroom?")) {
@@ -3258,33 +3215,39 @@ window.gameOver = function() {
 
 
 
-// === FIX: Missing switchView - controls modals ===
-window.switchView = function(targetId){
-  // Hide all modals
-  document.querySelectorAll('.modal, #teacher-dashboard, #start-modal').forEach(el=>{
-    if(el && el.id !== targetId){
-      // Don't hide teacher-dashboard inline if we are going to dashboard - will be cleared by goHome
-      if(el.id === 'teacher-dashboard' && targetId === 'start-modal') return;
-    }
-  });
-  document.querySelectorAll('#mp-menu-modal, #mission-config-modal, #lobby-modal, #game-wrapper, #report-modal, #win-modal, #defeat-modal, #class-selection-modal').forEach(el=>{
-    if(el) { el.classList.add('hidden'); el.style.setProperty('display','none','important'); }
-  });
+// ==========================================
+// 📺 MASTER VIEW MANAGER (REPLACES MANUAL .hidden TOGGLES)
+// ==========================================
+window.switchView = function(targetViewId) {
+    const allViews = [
+        'start-modal', 'mission-config-modal', 'mp-menu-modal', 'lobby-modal',
+        'class-selection-modal', 'classroom-setup-modal', 'game-wrapper', 
+        'teacher-dashboard', 'report-modal', 'win-modal', 'agent-dashboard-modal',
+        'shop-modal', 'codex-modal', 'leaderboard-modal', 'quiz-forge-menu-modal',
+        'quiz-flashcard-modal', 'pause-modal', 'campaign-modal', 'reward-modal',
+        'training-modal', 'intervention-report-modal', 'cctv-modal'
+    ];
 
-  const target = document.getElementById(targetId);
-  if(target){
-    target.classList.remove('hidden');
-    target.style.removeProperty('display');
-    target.style.removeProperty('z-index');
-    target.style.removeProperty('background');
-    if(targetId === 'game-wrapper'){
-      target.style.setProperty('display','block','important');
-    } else {
-      target.style.setProperty('display','flex','important');
-      target.style.setProperty('visibility','visible','important');
-      target.style.setProperty('opacity','1','important');
+    // 1. Hide everything completely and strip inline display styles
+    allViews.forEach(viewId => {
+        const el = document.getElementById(viewId);
+        if (el) {
+            el.classList.add('hidden');
+            el.style.display = ''; // Kills inline styles that override classes
+        }
+    });
+
+    // 2. Unhide the target view
+    const targetEl = document.getElementById(targetViewId);
+    if (targetEl) {
+        targetEl.classList.remove('hidden');
+        
+        // 3. Specific handling for the game canvas to ensure it renders correctly
+        if (targetViewId === 'game-wrapper') {
+            targetEl.style.display = 'block';
+            if (typeof window.fixGameResolution === 'function') window.fixGameResolution();
+        }
     }
-  }
 };
 // ==========================================
 // 👨🏫 TEACHER EXITS (ROUTES DIRECTLY TO GOHOME RELOAD)
@@ -11863,14 +11826,3 @@ window.joinCustomQuiz = async function() {
         alert("Connection error.");
     }
 };
-
-function fixGameResolution(){
-  const rect=canvas.parentElement.getBoundingClientRect();
-  const dpr=Math.min(window.devicePixelRatio||1, 2); // cap at 2, not 4
-  const maxW=1920, maxH=1080;
-  canvas.width=Math.min(rect.width*dpr, maxW);
-  canvas.height=Math.min(rect.height*dpr, maxH);
-  canvas.style.width=rect.width+'px';
-  canvas.style.height=rect.height+'px';
-  ctx.setTransform(dpr,0,0,dpr,0,0); // fix blurry on retina
-}

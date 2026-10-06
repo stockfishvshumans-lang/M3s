@@ -71,22 +71,12 @@ window.nexusAutoCorrect = function(input) {
         .replace(/\bX\b/g, 'x');
 };
 
-window.evaluateFlat = function(expr) {
+// Advanced battle math evaluator (used by training modal)
+window.evaluateFlat = window.evaluateFlat || function(expr) {
     try {
-        if (!expr || typeof expr!== 'string') return null;
-        expr = expr.trim().slice(0, 100);
-        if (!/^[0-9+\-*/().\s]+$/.test(expr)) return null;
-        const s = expr.replace(/\s/g, '').split(/([+\-*/])/);
-        if (s.length === 3) {
-            const a = parseFloat(s[0]), op = s[1], b = parseFloat(s[2]);
-            if (!Number.isFinite(a) ||!Number.isFinite(b)) return null;
-            if (op === '+') return a + b;
-            if (op === '-') return a - b;
-            if (op === '*') return a * b;
-            if (op === '/') return b!== 0? a / b : null;
-        }
-        const n = parseFloat(s[0] || expr);
-        return Number.isFinite(n)? n : null;
+        // Safe eval for math only
+        if (/[^0-9x+\-*/().=\s]/.test(expr)) return null;
+        return Function('"use strict"; return (' + expr.replace(/x/g, '*') + ')')();
     } catch(e) { return null; }
 };
 
