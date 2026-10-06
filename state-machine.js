@@ -1,2 +1,0 @@
-// Polished - 11 states, gen check, no race
-const STATES={IDLE:'idle',PREPARING:'preparing',LOBBY:'lobby',COUNTDOWN:'countdown',PLAYING:'playing',PAUSED:'paused',ENDING:'ending',DEFEATED:'defeated',VICTORY:'victory',REPORT:'report',CLEANUP:'cleanup',HOME:'home'};window.GameMachine={current:'idle',gen:0,locked:false,transition(to){if(this.locked)return false;if(this.current==='ending'&&to!=='cleanup'&&to!=='defeated'&&to!=='victory')return false;window.TimerRegistry&&window.TimerRegistry.clearAll();if(to==='preparing'||to==='lobby')this.gen++;this.current=to;return true;}};
