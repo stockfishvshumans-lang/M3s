@@ -10,7 +10,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap');
 
-
+html,body{ width:100%; height:100%; overflow:hidden; overscroll-behavior:none; touch-action:manipulation; }
+* { box-sizing:border-box; }
 
 :root {
 
@@ -15236,19 +15237,20 @@ input, textarea, select {
     -webkit-tap-highlight-color: transparent !important;
 }
 
-/* Fix iOS rubber banding */
 body, html {
-    overscroll-behavior: none !important;
-    position: fixed !important;
-    overflow: hidden !important;
-    width: 100% !important;
-    height: 100% !important;
+    overscroll-behavior: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#game-wrapper{
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh; height: 100dvh;
+    overflow: hidden;
 }
 
-#game-wrapper {
-    overscroll-behavior: none !important;
-    -webkit-overflow-scrolling: touch !important;
-}
+
 
 /* High DPI optimization for tablets */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
@@ -15276,4 +15278,55 @@ body, html {
     body {
         background: #000 !important;
     }
+}
+
+/* OLD: font-size:40px */
+#reward-title{ font-size: clamp(20px, 5vw, 40px); }
+
+/* OLD: width:900px */
+#cctv-modal .modal-content{ width: clamp(320px, 90vw, 900px); }
+
+/* Dashboard body - stack on phone */
+.dashboard-body{ display:flex; gap:20px; }
+@media (max-width: 768px){
+  .dashboard-body{ flex-direction:column; }
+  .identity-panel, .stats-panel, .action-panel{ width:100%; }
+  .dash-global-bar{ flex-direction:column; gap:10px; }
+}
+
+/* Buttons - min touch target 44px for phone */
+.btn{ min-height:44px; min-width:44px; font-size: clamp(12px, 3vw, 16px); padding: 10px clamp(15px, 4vw, 30px); }
+
+#reward-title{ font-size: clamp(20px, 5vw, 40px); }
+
+/* OLD: width:900px */
+#cctv-modal .modal-content{ width: clamp(320px, 90vw, 900px); }
+
+/* Dashboard body - stack on phone */
+.dashboard-body{ display:flex; gap:20px; }
+@media (max-width: 768px){
+  .dashboard-body{ flex-direction:column; }
+  .identity-panel, .stats-panel, .action-panel{ width:100%; }
+  .dash-global-bar{ flex-direction:column; gap:10px; }
+}
+
+/* Buttons - min touch target 44px for phone */
+.btn{ min-height:44px; min-width:44px; font-size: clamp(12px, 3vw, 16px); padding: 10px clamp(15px, 4vw, 30px); }
+.cyber-orb-wrapper{ position:fixed; z-index:100; }
+.left-orb{ left:10px; bottom:20px; top:auto; }
+.right-orb{ right:10px; bottom:20px; top:auto; }
+@media (min-width: 769px){
+  .left-orb{ left:20px; top:50%; bottom:auto; transform:translateY(-50%); }
+  .right-orb{ right:20px; top:50%; bottom:auto; transform:translateY(-50%); }
+}
+#teacher-dashboard, #start-modal{
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.dashboard-container{ min-height:100%; padding-bottom:80px; }
+@media (max-width:1024px){
+  .dashboard-body{ flex-direction:column; }
+  .modal-content{ width:90vw; max-width:90vw; }
+  .cyber-orb-wrapper.left-orb{ bottom:20px; top:auto; }
+  .cyber-orb-wrapper.right-orb{ bottom:20px; top:auto; }
 }

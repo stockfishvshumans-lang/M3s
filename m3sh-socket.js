@@ -14,27 +14,28 @@ function getSharedSocket(){
       el.style.display = 'block';
     }
   });
-  window.M3SHSharedSocket.on('connect_error', ()=>{
-    const el = document.getElementById('socket-status');
+   window.M3SHSharedSocket.on('connect_error', ()=>{
+   const el = document.getElementById('socket-status');
     if(el){
-      el.textContent = 'OFFLINE - Solo';
+      el.textContent = 'OFFLINE - Solo Mode';
       el.style.color = '#ffaa00';
       el.style.display = 'block';
     }
   });
+
+
   return window.M3SHSharedSocket;
 }
 
 window.M3SHSocket = {
   serverUrl: 'https://m33sh.onrender.com',
-  socket: null,
-  init(){
-    this.socket = getSharedSocket();
-  },
+  get socket(){ return getSharedSocket(); },
+  init(){ return getSharedSocket(); },
   emit(ev,d){
     const s = getSharedSocket();
     if(s && s.connected) s.emit(ev,d);
   }
 };
+setTimeout(()=>window.M3SHSocket.init(), 800);
 
-setTimeout(()=>window.M3SHSocket.init(), 1000);
+
