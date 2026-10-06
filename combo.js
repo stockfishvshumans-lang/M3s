@@ -1,2 +1,2 @@
-// Fixed - Combo with reset and actual score integration
-window.ComboSystem={combo:0,multiplier:1,reset(){this.combo=0;this.multiplier=1;},onCorrectAnswer(){this.combo++; if(this.combo>=10) this.multiplier=3; else if(this.combo>=5) this.multiplier=2; else if(this.combo>=3) this.multiplier=1.5; else this.multiplier=1; return {combo:this.combo,multiplier:this.multiplier};},onWrongAnswer(){this.combo=0;this.multiplier=1; return {combo:0,multiplier:1};},getScore(base){return Math.floor(base*this.multiplier);}};
+// Polished - Combo
+window.ComboSystem={combo:0,multiplier:1,onCorrectAnswer(){this.combo++;if(this.combo>=10)this.multiplier=3;else if(this.combo>=5)this.multiplier=2;else if(this.combo>=3)this.multiplier=1.5;return{combo:this.combo,multiplier:this.multiplier};},onWrongAnswer(){this.combo=0;this.multiplier=1;}};
