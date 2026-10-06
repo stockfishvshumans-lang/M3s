@@ -1,35 +1,35 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>M3sH</title>
+    <link rel="icon" type="image/png" href="assets/boss_god.png">
+    <link rel="apple-touch-icon" href="assets/boss_god.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700;900&display=swap" rel="stylesheet">
 
-    <html lang="en">
-
-    <head>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>"> <!-- FIX: Favicon 404 - using data URI -->
-
-        <meta charset="UTF-8">
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-        <title>JESSMATH: ELITE DEFENSE</title>
-
-        
-
-        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700;900&display=swap" rel="stylesheet">
-
-        
-
-        <script>
-    window._fakeSocket = { on:function(){}, off:function(){}, emit:function(){}, connected:false, _fake:true };
-    window.io = window.io || function(){ return window._fakeSocket; };
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      /* FIX BLANK: Makes hidden truly hidden - your teacher-dashboard has z-index 999999 + bg #05070a covering dashboard */
+      .hidden{ display:none !important; pointer-events:none !important; opacity:0 !important; visibility:hidden !important; z-index:-1 !important; }
+      #cyber-warp-door.hidden, #class-curtain.hidden, #teacher-dashboard.hidden, #glitch-overlay.hidden, #boot-overlay.hidden, #cinematic-intro.hidden, #story-overlay.hidden, #cinematic-outro.hidden{ display:none !important; pointer-events:none !important; }
+    </style>
+    <script>
+    (function(){
+      try{
+        if(localStorage.getItem('m3sh_hasSeenIntro')==='true'){
+          document.addEventListener('DOMContentLoaded',()=>{
+            ['boot-overlay','cinematic-intro','story-overlay','cinematic-outro','cyber-warp-door','glitch-overlay','class-curtain'].forEach(id=>{
+              const el=document.getElementById(id);
+              if(el){ el.classList.add('hidden'); el.style.setProperty('display','none','important'); }
+            });
+          });
+        }
+      }catch(e){}
+    })();
     </script>
-    <!-- FIX: Removed redundant /socket.io/socket.io.js - GitHub Pages has no Socket.IO server, CDN version loaded later -->
-
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-        
-
-        <link rel="stylesheet" href="style.css">
-
-        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 </head>
