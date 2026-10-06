@@ -1,2 +1,0 @@
-// Polished - Shake
-window.ScreenShake={shake(i=10){const t=document.getElementById('game-wrapper');if(!t)return;const orig=t.style.transform||'';t.style.transform=`${orig} translate(${Math.random()*i}px,${Math.random()*i}px)`;setTimeout(()=>{t.style.transform=orig;},200);}};
