@@ -1,2 +1,0 @@
-// Polished - 150, 28, DPR2
-window.fixGameResolution=function(){const c=document.getElementById('gameCanvas');if(!c||!c.offsetParent)return;const r=c.parentElement?c.parentElement.getBoundingClientRect():{width:innerWidth,height:innerHeight};const dpr=Math.min(devicePixelRatio||1,2);c.width=r.width*dpr;c.height=r.height*dpr;};
