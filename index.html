@@ -2,8 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>M3sH</title>
     <link rel="icon" type="image/png" href="./assets/boss_god.png">
     <link rel="apple-touch-icon" href="./assets/boss_god.png">
@@ -19,28 +20,6 @@
     <body>
         <div id="socket-status" style="position:fixed;top:2px;right:5px;background:rgba(0,0,0,0.9);color:#ffaa00;padding:3px 8px;font-size:9px;font-family:monospace;border:1px solid #ffaa00;z-index:100000;pointer-events:none;border-radius:4px;display:none">Connecting...</div>
         <div id="gadget-debug" style="position:fixed;top:2px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.9);color:#00e5ff;padding:3px 10px;font-size:10px;font-family:monospace;border:1px solid #00e5ff;z-index:100000;pointer-events:none;border-radius:4px;display:none">M3SH Fixed</div>
-
-
-
-
-
-        <canvas id="bgCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-10;"></canvas>
-
-        <div id="cyber-warp-door" class="hidden">
-            <div class="warp-panel panel-top"></div>
-            <div class="warp-panel panel-bottom"></div>
-            <div class="warp-center-laser"></div>
-            <div class="warp-status-text">RE-ROUTING TO COMMAND CENTER...</div>
-        </div>
-
-        
-
-
-
-
-
-
-        
 
 
 
@@ -2962,7 +2941,7 @@
 
         <div class="scanline-overlay"></div>
 
-        <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+        
     <!-- FIX: Removed duplicate audio.js - loaded via import in script.js -->
     <script src="./gadget-detector.js"></script>
     <script src="./m3sh-socket.js"></script>
@@ -2971,46 +2950,43 @@
 
 
 
-<script>
-// FIX: Chrome blocking audio before click - wait for user click to start AudioContext
-(function(){
-  let audioContextStarted = false;
-  
-  function startAudioOnClick(){
-    if(audioContextStarted || !window.Sound || !window.Sound.init) return;
-    
-    try{
-      if(!window.Sound.init()) return;
-      audioContextStarted = true;
-      console.log('[M3SH FIX] Audio started after user click');
-      document.removeEventListener('click', startAudioOnClick);
-      document.removeEventListener('keydown', startAudioOnClick);
-    }catch(error){
-      console.error('[M3SH FIX] Audio initialization failed:', error);
-    }
-  }
-  
-  // Wait for user interaction
-  document.addEventListener('click', startAudioOnClick);
-  document.addEventListener('keydown', startAudioOnClick);
-})();
-</script>
+
+
+
+
 
 
 <script>
-// FIX: Reload should skip intro/story -> Dashboard, Game finished -> Dashboard (your screenshot)
+// Fixed v2 - single intro skip, uses !important, no cache fight
 (function(){
-  const hasSeenIntro = localStorage.getItem('m3sh_hasSeenIntro') === 'true';
-  
-  if(hasSeenIntro){
+  const seen = localStorage.getItem('m3sh_hasSeenIntro') === 'true';
+  if(seen){
     document.addEventListener('DOMContentLoaded', () => {
-      ['boot-overlay','cinematic-intro','story-overlay'].forEach(id=>{
+      ['boot-overlay','cinematic-intro','story-overlay','cinematic-outro','cyber-warp-door','glitch-overlay','class-curtain','start-countdown','curtain-countdown'].forEach(id=>{
         const el=document.getElementById(id);
-        if(el){el.classList.add('hidden'); el.style.display='none';}
+        if(el){ el.classList.add('hidden'); el.style.setProperty('display','none','important'); }
       });
     });
   }
-  
+})();
+</script>
+<script>
+// Fixed v2 - audio unlock single listener
+(function(){
+  let started=false;
+  function startAudio(){
+    if(started) return;
+    if(window.Sound && window.Sound.init){
+      if(window.Sound.init()){
+        started=true;
+        document.removeEventListener('click', startAudio);
+        document.removeEventListener('keydown', startAudio);
+        console.log('[M3SH FIX v2] Audio unlocked');
+      }
+    }
+  }
+  document.addEventListener('click', startAudio);
+  document.addEventListener('keydown', startAudio);
 })();
 </script>
 

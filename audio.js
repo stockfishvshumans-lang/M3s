@@ -119,7 +119,7 @@ window.Sound = {
             osc.start(t);
             osc.stop(t + duration);
             
-            setTimeout(() => { osc.disconnect(); }, duration * 1000 + 100);
+            setTimeout(() => { try{osc.disconnect();}catch(e){} try{gain.disconnect();}catch(e){} try{filter.disconnect();}catch(e){} }, duration * 1000 + 100);
         } catch (e) {}
     },
 
@@ -251,10 +251,7 @@ window.Sound = {
     },
 
     stopBGM: function() {
-        this.activeNodes.forEach(n => {
-            if (n.stop) n.stop();
-            else { try { n.stop(); n.disconnect(); } catch(e){} }
-        });
+        this.activeNodes.forEach(n => { try{ if(n.stop) n.stop(); }catch(e){} try{ if(n.disconnect) n.disconnect(); }catch(e){} });
         this.activeNodes = [];
         this.currentMode = null;
     }
