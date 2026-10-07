@@ -1,168 +1,63 @@
-
-
+.hidden{ display:none !important; }
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap');
-
-
-
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-
-
-
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap');
-
-
 
 :root {
 
-
-
-    
-
-
-
     --neon-cyan: #00f3ff;
-
-
 
     --cyan-glow: rgba(0, 243, 255, 0.6);
 
-
-
     --neon-red: #ff0055;
-
-
 
     --neon-gold: #ffd700;
 
-
-
     --neon-green: #00ff41;
-
-
-
-    
-
-
 
     --bg-void: #020205;
 
-
-
     --glass-panel: rgba(10, 15, 25, 0.85); 
-
-
-
-    
-
-
 
     --text-white: #ffffff;
 
-
-
     --text-dim: #8b9bb4;
 
-
-
 }
-
-
-
-
-
-
-
-
-
-
 
 body {
 
-
-
     margin: 0; overflow: hidden; background-color: var(--bg-void);
-
-
 
     font-family: 'Rajdhani', sans-serif; color: var(--text-white);
 
-
-
     user-select: none;
 
-
-
 }
-
-
-
-
-
-
-
-
-
-
 
 body::before {
 
-
-
     content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-
-
 
     background-image: 
 
-
-
         linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
-
-
 
         linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
 
-
-
     background-size: 50px 50px;
 
-
-
-    transform: perspective(1000px) rotateX(60deg);
-
-
+    transform: rotateX(60deg);
 
     animation: gridFlow 60s linear infinite; z-index: 0; pointer-events: none;
 
-
-
 }
 
-
-
-@keyframes gridFlow { 0% { transform: perspective(1000px) rotateX(60deg) translateY(0); } 100% { transform: perspective(1000px) rotateX(60deg) translateY(50px); } }
-
-
-
-
-
-
+@keyframes gridFlow { 0% { transform: rotateX(60deg) translateY(0); } 100% { transform: rotateX(60deg) translateY(50px); } }
 
 canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
-
-
 .hidden { display: none !important; }
-
-
-
-
-
-
-
-
-
-
 
 #ui-layer {
 
@@ -174,7 +69,7 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
     display: flex; flex-direction: column; justify-content: space-between;
 
-    z-index: 50 !important; /* Eto ang tamang layer niya: Mataas sa game, mababa sa modals */
+    z-index: 50 ; /* Eto ang tamang layer niya: Mataas sa game, mababa sa modals */
 
     transform-style: preserve-3d;
 
@@ -182,51 +77,19 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
-
-
-
-
 #hud-top {
-
-
 
     display: flex; justify-content: space-between; align-items: flex-start; 
 
-
-
     padding: 20px;
-
-
 
     background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
 
-
-
     pointer-events: none;
-
-
 
 }
 
-
-
-
-
-
-
 .hud-group { display: flex; gap: 15px; }
-
-
-
-
-
-
-
-
-
-
 
 .hud-box {
 
@@ -246,23 +109,17 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
     align-items: center;
 
-    
-
     /* Hologram Glow */
 
     box-shadow: 0 5px 20px rgba(0, 243, 255, 0.1), inset 0 0 20px rgba(0, 243, 255, 0.05);
 
     backdrop-filter: blur(5px);
 
-    
-
     /* Floating Animation */
 
     animation: hudFloat 4s ease-in-out infinite;
 
 }
-
-
 
 @keyframes hudFloat {
 
@@ -271,8 +128,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
     50% { transform: translateY(-3px); }
 
 }
-
-
 
 /* --- UI FIX: INPUT BOX --- */
 
@@ -291,8 +146,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
     z-index: 50;
 
 }
-
-
 
 #player-input {
 
@@ -322,8 +175,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 #player-input::placeholder {
 
     color: rgba(0, 243, 255, 0.3);
@@ -331,8 +182,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
     font-size: 16px;
 
 }
-
-
 
 #player-input:focus {
 
@@ -344,303 +193,125 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 .label { font-size: 11px; color: var(--neon-cyan); letter-spacing: 2px; margin-bottom: 2px; font-weight: 700; }
-
-
 
 .value { font-family: 'Orbitron', sans-serif; font-size: 26px; font-weight: 700; line-height: 1; }
 
-
-
-
-
-
-
-
-
-
-
 .neon-blue { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); }
-
-
 
 .neon-red { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red); }
 
-
-
 .neon-green { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
-
-
 
 .neon-gold { color: var(--neon-gold); text-shadow: 0 0 10px var(--neon-gold); }
 
-
-
-
-
-
-
-
-
-
-
 #boss-hud { position: absolute; top: 110px; left: 50%; transform: translateX(-50%); text-align: center; width: 400px; }
-
-
 
 #boss-name { display: block; color: var(--neon-red); font-family: 'Orbitron'; font-weight: 900; letter-spacing: 4px; text-shadow: 0 0 20px var(--neon-red); margin-bottom: 8px; font-size: 18px; }
 
-
-
 #boss-hp-bar { width: 100%; height: 12px; background: #200; border: 1px solid var(--neon-red); border-radius: 6px; overflow: hidden; box-shadow: 0 0 10px var(--neon-red); }
-
-
 
 #boss-hp-fill { width: 100%; height: 100%; background: var(--neon-red); box-shadow: 0 0 20px var(--neon-red); transition: width 0.2s; }
 
-
-
-
-
-
-
-
-
-
-
 #xp-bar-container { width: 180px; height: 8px; background: #222; border: 1px solid #444; margin-top: 8px; transform: skewX(-15deg); border-radius: 2px; }
-
-
 
 #xp-bar-fill { height: 100%; background: var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan); width: 0%; transition: width 0.3s; }
 
-
-
-
-
-
-
-
-
-
-
 #side-feed {
-
-
 
     position: absolute;
 
-
-
     top: 120px; 
-
-
 
     right: 20px; 
 
-
-
     left: auto; 
-
-
 
     width: 250px; 
 
-
-
     pointer-events: auto; 
-
-
 
     z-index: 15;
 
-
-
 }
-
-
-
-
-
-
 
 #live-leaderboard {
 
-
-
     background: var(--glass-panel);
-
-
 
     border-right: 3px solid var(--neon-gold); 
 
-
-
     border-left: none; 
-
-
 
     padding: 15px;
 
-
-
     border-radius: 10px 0 0 10px; 
-
-
 
     box-shadow: -5px 5px 20px rgba(0,0,0,0.5); 
 
-
-
     backdrop-filter: blur(5px);
 
-
-
 }
-
-
-
-
-
-
 
 #live-leaderboard h4 {
 
-
-
     margin: 0 0 10px 0;
-
-
 
     color: var(--neon-gold);
 
-
-
     font-family: 'Orbitron', sans-serif;
-
-
 
     font-size: 14px; 
 
-
-
     letter-spacing: 2px;
-
-
 
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
-
-
     padding-bottom: 5px;
-
-
 
     text-shadow: 0 0 10px var(--neon-gold);
 
-
-
     text-align: right; 
 
-
-
 }
-
-
-
-
-
-
 
 #leaderboard-list {
 
-
-
     list-style: none; padding: 0; margin: 0;
-
-
 
     font-size: 15px; font-weight: 600;
 
-
-
 }
-
-
-
-
-
-
 
 #leaderboard-list li {
 
-
-
     padding: 6px 0;
-
-
 
     display: flex; justify-content: space-between;
 
-
-
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
-
 
     color: var(--text-dim);
 
-
-
 }
-
-
 
 #leaderboard-list li span:last-child {
 
-
-
     color: var(--neon-cyan);
 
-
-
 }
-
-
-
-
-
-
-
-
-
-
 
 #hud-bottom {
 
-
-
     display: flex; justify-content: space-between; align-items: flex-end; padding: 30px;
-
-
 
     background: linear-gradient(0deg, rgba(0,0,0,0.95) 0%, transparent 100%);
 
-
-
     pointer-events: auto; 
-
-
 
 }
 
-
-
 /* --- 🛸 TURRET CONSOLE UI (CSS) --- */
-
-
 
 /* Container: Nakapwesto sa ibabaw ng ship */
 
@@ -662,8 +333,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 /* The Input Box: Mukhang Holographic Screen */
 
 #player-input {
@@ -675,8 +344,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
     border: 2px solid #00f3ff; /* Neon Cyan Border */
 
     border-radius: 6px;
-
-    
 
     font-family: 'Orbitron', sans-serif;
 
@@ -690,21 +357,15 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
     letter-spacing: 4px;
 
-    
-
     padding: 12px;
 
     outline: none;
 
     box-shadow: 0 0 25px rgba(0, 243, 255, 0.15), inset 0 0 10px rgba(0, 243, 255, 0.1);
 
-    
-
     transition: all 0.2s ease-in-out;
 
 }
-
-
 
 /* Effect kapag nagta-type ka (Active) */
 
@@ -720,8 +381,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 /* Alisin ang placeholder text pag nagta-type para malinis */
 
 #player-input:not(:placeholder-shown)::placeholder {
@@ -729,8 +388,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
     color: transparent;
 
 }
-
-
 
 /* Maliit na label sa ilalim (optional) */
 
@@ -756,77 +413,31 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
-
-
-
-
-
-
 .icon-btn {
-
-
 
     width: 50px; height: 50px; background: rgba(255,255,255,0.05);
 
-
-
     border: 1px solid #445; color: #fff; border-radius: 12px;
-
-
 
     font-size: 22px; cursor: pointer; margin-right: 15px;
 
-
-
     display: flex; justify-content: center; align-items: center; transition: 0.3s;
 
-
-
 }
-
-
 
 .icon-btn:hover { background: var(--neon-cyan); color: black; box-shadow: 0 0 20px var(--neon-cyan); border-color: transparent; }
 
-
-
-
-
-
-
 .skill-icon {
-
-
 
     font-size: 12px; color: #889; background: rgba(0,0,0,0.8);
 
-
-
     padding: 10px 15px; border: 1px solid #445; border-radius: 6px;
-
-
 
     margin-top: 8px; text-align: right; cursor: pointer; font-family: 'Orbitron'; letter-spacing: 1px;
 
-
-
 }
 
-
-
 .skill-icon:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan); }
-
-
-
-
-
-
-
-
-
-
 
 .modal {
 
@@ -840,693 +451,297 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
     display: flex; justify-content: center; align-items: center;
 
-    z-index: 99999 !important; /* 🟢 FORCE ON TOP */
+    z-index: 99999 ; /* 🟢 FORCE ON TOP */
 
     pointer-events: auto;
 
 }
 
-
-
-
-
-
-
 .modal-content {
-
-
 
     background: var(--glass-panel);
 
-
-
     width: 520px; max-width: 90%;
-
-
 
     padding: 45px;
 
-
-
     border-radius: 20px;
-
-
 
     text-align: center;
 
-
-
     border: 2px solid var(--neon-cyan);
-
-
 
     box-shadow: 0 0 50px rgba(0, 243, 255, 0.15), inset 0 0 30px rgba(0, 243, 255, 0.05);
 
-
-
     position: relative;
-
-
 
     display: flex; flex-direction: column; align-items: center;
 
-
-
 }
-
-
-
-
-
-
 
 .modal-content::after {
 
-
-
     content: ""; position: absolute; top: 0; left: 20%; width: 60%; height: 3px;
-
-
 
     background: var(--neon-cyan); box-shadow: 0 0 20px var(--neon-cyan);
 
-
-
     border-radius: 0 0 10px 10px;
 
-
-
 }
-
-
-
-
-
-
-
-
-
-
 
 .game-title {
 
-
-
     font-family: 'Orbitron', sans-serif;
-
-
 
     font-size: 60px; margin: 0; color: white;
 
-
-
     letter-spacing: -2px; line-height: 1;
-
-
 
     text-shadow: 0 0 10px rgba(255,255,255,0.2);
 
-
-
 }
-
-
 
 .highlight { color: var(--neon-cyan); text-shadow: 0 0 30px var(--neon-cyan); }
 
-
-
 .subtitle { color: var(--text-dim); letter-spacing: 5px; margin-bottom: 35px; font-size: 14px; text-transform: uppercase; font-weight: 700; }
-
-
-
-
-
-
-
-
-
-
 
 .main-input, input[type="text"], input[type="tel"] {
 
-
-
     width: 90%; padding: 18px;
-
-
 
     font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 700;
 
-
-
     text-align: center; text-transform: uppercase; letter-spacing: 3px;
-
-
 
     background: rgba(0, 0, 0, 0.6);
 
-
-
     border: 2px solid #334;
-
-
 
     border-radius: 12px; color: #fff;
 
-
-
     margin-bottom: 25px; transition: 0.3s; outline: none;
 
-
-
 }
-
-
 
 .main-input:focus, input[type="text"]:focus {
 
-
-
     border-color: var(--neon-cyan);
-
-
 
     background: rgba(0, 243, 255, 0.05);
 
-
-
     box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
 
-
-
 }
-
-
-
-
-
-
-
-
-
-
 
 #join-code-input {
 
+    border: 2px dashed var(--neon-gold);
 
-
-    border: 2px dashed var(--neon-gold) !important;
-
-
-
-    color: var(--neon-gold) !important;
-
-
-
-    background: rgba(255, 215, 0, 0.05) !important;
-
-
-
-    letter-spacing: 5px;
-
-
-
-}
-
-
-
-#join-code-input:focus {
-
-
-
-    background: rgba(255, 215, 0, 0.1) !important;
-
-
-
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4) !important;
-
-
-
-}
-
-
-
-#join-code-input::placeholder { color: #654; }
-
-
-
-
-
-
-
-
-
-
-
-.settings-group { width: 100%; border-top: 1px solid #223; padding-top: 20px; margin-bottom: 20px; }
-
-
-
-.settings-group h3 { font-size: 12px; color: #667; margin-bottom: 12px; font-family: 'Rajdhani'; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; }
-
-
-
-
-
-
-
-.radio-group, .check-group { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-
-
-
-.radio-btn input, .check-group input { display: none; }
-
-
-
-
-
-
-
-.radio-btn span {
-
-
-
-    padding: 10px 25px; background: rgba(255,255,255,0.03);
-
-
-
-    border: 1px solid #334; border-radius: 50px;
-
-
-
-    color: #667; font-weight: 700; font-size: 14px;
-
-
-
-    cursor: pointer; transition: 0.3s;
-
-
-
-}
-
-
-
-.radio-btn span:hover { border-color: white; color: white; }
-
-
-
-.radio-btn input:checked + span {
-
-
-
-    background: var(--neon-cyan); border-color: var(--neon-cyan); color: black;
-
-
-
-    box-shadow: 0 0 20px var(--neon-cyan);
-
-
-
-}
-
-
-
-
-
-
-
-.check-group span {
-
-
-
-    display: flex; justify-content: center; align-items: center;
-
-
-
-    width: 60px; height: 60px;
-
-
-
-    background: rgba(255,255,255,0.03);
-
-
-
-    border: 2px solid #334; border-radius: 12px;
-
-
-
-    color: #556; font-size: 26px; font-weight: 900;
-
-
-
-    cursor: pointer; transition: 0.3s;
-
-
-
-}
-
-
-
-.check-group span:hover { border-color: white; color: white; transform: translateY(-3px); }
-
-
-
-.check-group input:checked + span {
-
-
-
-    border-color: var(--neon-cyan); color: var(--neon-cyan);
-
-
-
-    background: rgba(0, 243, 255, 0.1);
-
-
-
-    box-shadow: 0 0 25px rgba(0, 243, 255, 0.4), inset 0 0 10px rgba(0, 243, 255, 0.1);
-
-
-
-    text-shadow: 0 0 10px var(--neon-cyan);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-.btn {
-
-
-
-    display: block; width: 100%; padding: 20px; margin: 12px 0;
-
-
-
-    font-family: 'Orbitron', sans-serif; font-size: 20px; letter-spacing: 2px;
-
-
-
-    border: none; cursor: pointer; border-radius: 10px; transition: 0.3s;
-
-
-
-}
-
-
-
-
-
-
-
-.btn.primary {
-
-
-
-    background: linear-gradient(90deg, var(--neon-cyan), #00a8ff);
-
-
-
-    color: #020408; font-weight: 900;
-
-
-
-    box-shadow: 0 0 25px rgba(0, 243, 255, 0.3);
-
-
-
-}
-
-
-
-.btn.primary:hover {
-
-
-
-    box-shadow: 0 0 50px var(--neon-cyan);
-
-
-
-    transform: scale(1.02); color: black;
-
-
-
-}
-
-
-
-
-
-
-
-.btn.secondary {
-
-
-
-    background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: white;
-
-
-
-}
-
-
-
-.btn.secondary:hover {
-
-
-
-    border-color: var(--neon-cyan); background: rgba(0, 243, 255, 0.1);
-
-
-
-    box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
-
-
-
-}
-
-
-
-
-
-
-
-.btn.tertiary { background: transparent; border: 1px solid #222; color: #667; font-size: 14px; padding: 15px; }
-
-
-
-.btn.tertiary:hover { border-color: var(--neon-gold); color: var(--neon-gold); letter-spacing: 4px; }
-
-
-
-
-
-
-
-.btn.text-only { 
-
-
-
-    background: transparent; color: #555; font-size: 12px; padding: 15px; 
-
-
-
-    border: 1px solid transparent; transition: 0.3s;
-
-
-
-}
-
-
-
-.btn.text-only:hover { 
-
-
-
-    color: var(--neon-red); border-color: var(--neon-red);
-
-
-
-    box-shadow: 0 0 15px rgba(255, 42, 85, 0.3);
-
-
-
-    letter-spacing: 2px; text-decoration: none;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-#report-modal .modal-content { border-color: var(--neon-red); box-shadow: 0 0 40px rgba(255, 42, 85, 0.2); }
-
-
-
-#report-modal .modal-content::after { background: var(--neon-red); box-shadow: 0 0 15px var(--neon-red); }
-
-
-
-#report-modal h1 { color: var(--neon-red); text-shadow: 0 0 20px var(--neon-red); }
-
-
-
-
-
-
-
-#win-modal .modal-content { border-color: var(--neon-green); box-shadow: 0 0 40px rgba(0, 255, 65, 0.2); }
-
-
-
-#win-modal .modal-content::after { background: var(--neon-green); box-shadow: 0 0 15px var(--neon-green); }
-
-
-
-#win-modal h1 { color: var(--neon-green); text-shadow: 0 0 20px var(--neon-green); }
-
-
-
-
-
-
-
-
-
-
-
-.scrollable-list, .player-list {
-
-
-
-    width: 100%; max-height: 220px; overflow-y: auto; margin-bottom: 20px;
-
-
-
-    background: rgba(0,0,0,0.3); border: 1px solid #334; border-radius: 8px;
-
-
-
-}
-
-
-
-.player-row, .lb-row, .log-item {
-
-
-
-    padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.05);
-
-
-
-    display: flex; justify-content: space-between; font-weight: 600; color: #ccc;
-
-
-
-    font-size: 16px; transition: 0.2s;
-
-
-
-}
-
-
-
-.player-row:hover { background: rgba(255,255,255,0.05); color: white; }
-
-
-
-
-
-
-
-.code-display h1 {
-
-
-
-    font-family: 'Orbitron'; font-size: 52px; color: var(--neon-gold);
-
-
-
-    text-shadow: 0 0 20px var(--neon-gold); margin: 15px 0;
-
-
-
-    border: 1px dashed rgba(255, 215, 0, 0.3); padding: 15px; border-radius: 10px;
-
-
+    color: var(--neon-gold);
 
     background: rgba(255, 215, 0, 0.05);
 
-
+    letter-spacing: 5px;
 
 }
 
+#join-code-input:focus {
 
+    background: rgba(255, 215, 0, 0.1);
 
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
 
+}
 
+#join-code-input::placeholder { color: #654; }
 
+.settings-group { width: 100%; border-top: 1px solid #223; padding-top: 20px; margin-bottom: 20px; }
+
+.settings-group h3 { font-size: 12px; color: #667; margin-bottom: 12px; font-family: 'Rajdhani'; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; }
+
+.radio-group, .check-group { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+.radio-btn input, .check-group input { display: none; }
+
+.radio-btn span {
+
+    padding: 10px 25px; background: rgba(255,255,255,0.03);
+
+    border: 1px solid #334; border-radius: 50px;
+
+    color: #667; font-weight: 700; font-size: 14px;
+
+    cursor: pointer; transition: 0.3s;
+
+}
+
+.radio-btn span:hover { border-color: white; color: white; }
+
+.radio-btn input:checked + span {
+
+    background: var(--neon-cyan); border-color: var(--neon-cyan); color: black;
+
+    box-shadow: 0 0 20px var(--neon-cyan);
+
+}
+
+.check-group span {
+
+    display: flex; justify-content: center; align-items: center;
+
+    width: 60px; height: 60px;
+
+    background: rgba(255,255,255,0.03);
+
+    border: 2px solid #334; border-radius: 12px;
+
+    color: #556; font-size: 26px; font-weight: 900;
+
+    cursor: pointer; transition: 0.3s;
+
+}
+
+.check-group span:hover { border-color: white; color: white; transform: translateY(-3px); }
+
+.check-group input:checked + span {
+
+    border-color: var(--neon-cyan); color: var(--neon-cyan);
+
+    background: rgba(0, 243, 255, 0.1);
+
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.4), inset 0 0 10px rgba(0, 243, 255, 0.1);
+
+    text-shadow: 0 0 10px var(--neon-cyan);
+
+}
+
+.btn {
+
+    display: block; width: 100%; padding: 20px; margin: 12px 0;
+
+    font-family: 'Orbitron', sans-serif; font-size: 20px; letter-spacing: 2px;
+
+    border: none; cursor: pointer; border-radius: 10px; transition: 0.3s;
+
+}
+
+.btn.primary {
+
+    background: linear-gradient(90deg, var(--neon-cyan), #00a8ff);
+
+    color: #020408; font-weight: 900;
+
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.3);
+
+}
+
+.btn.primary:hover {
+
+    box-shadow: 0 0 50px var(--neon-cyan);
+
+    transform: scale(1.02); color: black;
+
+}
+
+.btn.secondary {
+
+    background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); color: white;
+
+}
+
+.btn.secondary:hover {
+
+    border-color: var(--neon-cyan); background: rgba(0, 243, 255, 0.1);
+
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
+
+}
+
+.btn.tertiary { background: transparent; border: 1px solid #222; color: #667; font-size: 14px; padding: 15px; }
+
+.btn.tertiary:hover { border-color: var(--neon-gold); color: var(--neon-gold); letter-spacing: 4px; }
+
+.btn.text-only { 
+
+    background: transparent; color: #555; font-size: 12px; padding: 15px; 
+
+    border: 1px solid transparent; transition: 0.3s;
+
+}
+
+.btn.text-only:hover { 
+
+    color: var(--neon-red); border-color: var(--neon-red);
+
+    box-shadow: 0 0 15px rgba(255, 42, 85, 0.3);
+
+    letter-spacing: 2px; text-decoration: none;
+
+}
+
+#report-modal .modal-content { border-color: var(--neon-red); box-shadow: 0 0 40px rgba(255, 42, 85, 0.2); }
+
+#report-modal .modal-content::after { background: var(--neon-red); box-shadow: 0 0 15px var(--neon-red); }
+
+#report-modal h1 { color: var(--neon-red); text-shadow: 0 0 20px var(--neon-red); }
+
+#win-modal .modal-content { border-color: var(--neon-green); box-shadow: 0 0 40px rgba(0, 255, 65, 0.2); }
+
+#win-modal .modal-content::after { background: var(--neon-green); box-shadow: 0 0 15px var(--neon-green); }
+
+#win-modal h1 { color: var(--neon-green); text-shadow: 0 0 20px var(--neon-green); }
+
+.scrollable-list, .player-list {
+
+    width: 100%; max-height: 220px; overflow-y: auto; margin-bottom: 20px;
+
+    background: rgba(0,0,0,0.3); border: 1px solid #334; border-radius: 8px;
+
+}
+
+.player-row, .lb-row, .log-item {
+
+    padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.05);
+
+    display: flex; justify-content: space-between; font-weight: 600; color: #ccc;
+
+    font-size: 16px; transition: 0.2s;
+
+}
+
+.player-row:hover { background: rgba(255,255,255,0.05); color: white; }
+
+.code-display h1 {
+
+    font-family: 'Orbitron'; font-size: 52px; color: var(--neon-gold);
+
+    text-shadow: 0 0 20px var(--neon-gold); margin: 15px 0;
+
+    border: 1px dashed rgba(255, 215, 0, 0.3); padding: 15px; border-radius: 10px;
+
+    background: rgba(255, 215, 0, 0.05);
+
+}
 
 #boss-warning {
 
-
-
     position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
-
-
 
     font-family: 'Orbitron'; font-size: 80px; color: var(--neon-red); font-weight: 900;
 
-
-
     text-shadow: 0 0 50px var(--neon-red); z-index: 50; white-space: nowrap; animation: flash 0.3s infinite;
-
-
 
 }
 
-
-
 @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-
-
-
-
-
-
 
 ::-webkit-scrollbar { width: 6px; }
 
-
-
 ::-webkit-scrollbar-track { background: #111; }
-
-
 
 ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
-
-
 ::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); }
-
-
 
 /* --- NEW VIRTUAL NUMPAD STYLES --- */
 
@@ -1552,8 +767,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 .numpad-row {
 
     display: flex;
@@ -1565,8 +778,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
     margin-bottom: 8px;
 
 }
-
-
 
 .num-btn {
 
@@ -1600,8 +811,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 .num-btn:active {
 
     background: var(--neon-cyan);
@@ -1612,8 +821,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 .num-btn.clear-btn {
 
     border-color: var(--neon-red);
@@ -1622,8 +829,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 .num-btn.clear-btn:active {
 
     background: var(--neon-red);
@@ -1631,8 +836,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
     color: white;
 
 }
-
-
 
 .num-btn.fire-btn {
 
@@ -1644,8 +847,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 .num-btn.fire-btn:active {
 
     background: var(--neon-gold);
@@ -1653,8 +854,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
     box-shadow: 0 0 30px var(--neon-gold);
 
 }
-
-
 
 /* MEDIA QUERY: Only show on screens smaller than 768px (Tablets/Phones) */
 
@@ -1666,8 +865,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
     }
 
-    
-
     /* Adjust Input Position to make room for Numpad */
 
     #hud-bottom {
@@ -1678,8 +875,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
     }
 
-
-
     #player-input {
 
         pointer-events: none; /* Prevents keyboard from popping up if they tap the box by mistake */
@@ -1689,8 +884,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
     }
 
 }
-
-
 
 /* --- COMBO & HYPE UPDATE --- */
 
@@ -1714,8 +907,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 #combo-label {
 
     font-family: 'Rajdhani', sans-serif;
@@ -1729,8 +920,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
     letter-spacing: 4px;
 
 }
-
-
 
 #combo-value {
 
@@ -1748,8 +937,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 /* Animations for Hype */
 
 .combo-pulse {
@@ -1757,8 +944,6 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
     animation: comboPulse 0.2s ease-out;
 
 }
-
-
 
 @keyframes comboPulse {
 
@@ -1770,15 +955,11 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 .shake-screen {
 
     animation: shakeAnim 0.3s ease-in-out;
 
 }
-
-
 
 @keyframes shakeAnim {
 
@@ -1794,11 +975,7 @@ canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; }
 
 }
 
-
-
 /* --- VISUAL OVERHAUL UPDATE --- */
-
-
 
 /* 1. Background Canvas (Behind everything) */
 
@@ -1820,8 +997,6 @@ canvas {
 
 }
 
-
-
 /* 2. RGB Split / Chromatic Aberration on UI */
 
 #ui-layer {
@@ -1829,8 +1004,6 @@ canvas {
     text-shadow: 2px 0 rgba(255,0,0,0.3), -2px 0 rgba(0,255,255,0.3);
 
 }
-
-
 
 /* 3. Glitch Effect Overlay */
 
@@ -1852,8 +1025,6 @@ canvas {
 
 }
 
-
-
 @keyframes glitchAnim {
 
     0% { transform: translate(0); }
@@ -1870,8 +1041,6 @@ canvas {
 
 }
 
-
-
 /* Fever Mode Glow (Add this class to body via JS later) */
 
 .fever-mode #gameCanvas {
@@ -1882,8 +1051,6 @@ canvas {
 
 }
 
-
-
 /* --- AUTH & RANK STYLES --- */
 
 .auth-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
@@ -1891,8 +1058,6 @@ canvas {
 .tab-btn { background: transparent; border: none; color: #666; font-family: 'Orbitron'; font-size: 14px; cursor: pointer; padding-bottom: 5px; }
 
 .tab-btn.active { color: var(--neon-cyan); border-bottom: 2px solid var(--neon-cyan); }
-
-
 
 .auth-input {
 
@@ -1906,13 +1071,9 @@ canvas {
 
 .auth-input:focus { border-color: var(--neon-cyan); outline: none; }
 
-
-
 .rank-display { display: flex; align-items: center; justify-content: center; gap: 15px; text-align: left; }
 
 #rank-icon { font-size: 40px; }
-
-
 
 /* MISSION CONFIG STYLES */
 
@@ -1938,11 +1099,7 @@ canvas {
 
 }
 
-
-
 /* --- CUSTOM NEON CHECKBOXES & RADIO BUTTONS --- */
-
-
 
 /* Itago ang default na browser inputs */
 
@@ -1961,8 +1118,6 @@ canvas {
     width: 0;
 
 }
-
-
 
 /* Style para sa label container */
 
@@ -1992,8 +1147,6 @@ canvas {
 
 }
 
-
-
 /* Hover effect sa label */
 
 .op-label:hover, .diff-label:hover {
@@ -2003,8 +1156,6 @@ canvas {
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 
 }
-
-
 
 /* --- CUSTOM CHECKBOX INDICATOR (Operations) --- */
 
@@ -2034,8 +1185,6 @@ canvas {
 
 }
 
-
-
 /* Kapag na-check ang checkbox */
 
 .op-label input:checked ~ .checkmark {
@@ -2047,8 +1196,6 @@ canvas {
     box-shadow: 0 0 15px #00e5ff, inset 0 0 10px rgba(0, 229, 255, 0.3);
 
 }
-
-
 
 /* Checkmark icon (gamit ang CSS pseudo-element) */
 
@@ -2078,8 +1225,6 @@ canvas {
 
 }
 
-
-
 /* Ipakita ang icon kapag checked */
 
 .op-label input:checked ~ .checkmark:after {
@@ -2087,8 +1232,6 @@ canvas {
     display: block;
 
 }
-
-
 
 /* Paliwanagin ang text kapag checked */
 
@@ -2099,8 +1242,6 @@ canvas {
     text-shadow: 0 0 10px #00e5ff;
 
 }
-
-
 
 /* --- CUSTOM RADIO INDICATOR (Difficulty) --- */
 
@@ -2130,8 +1271,6 @@ canvas {
 
 }
 
-
-
 /* Inner circle para sa radio button */
 
 .radiomark:after {
@@ -2160,8 +1299,6 @@ canvas {
 
 }
 
-
-
 /* Ipakita ang inner circle kapag checked */
 
 .diff-label input:checked ~ .radiomark:after {
@@ -2170,11 +1307,7 @@ canvas {
 
 }
 
-
-
 /* --- DIFFICULTY SPECIFIC COLORS & GLOWS --- */
-
-
 
 /* EASY (Green) */
 
@@ -2202,8 +1335,6 @@ canvas {
 
 }
 
-
-
 /* MEDIUM (Yellow) */
 
 .diff-label:nth-child(2) input:checked ~ .radiomark {
@@ -2229,8 +1360,6 @@ canvas {
     text-shadow: 0 0 10px #ffd700;
 
 }
-
-
 
 /* HARD (Red) */
 
@@ -2258,8 +1387,6 @@ canvas {
 
 }
 
-
-
 /* --- INITIATE & ABORT BUTTONS --- */
 
 /* Siguraduhin na ang mga ito ay gamit na ang tamang classes sa HTML */
@@ -2267,8 +1394,6 @@ canvas {
 /* Example: <button class="btn primary">INITIATE LAUNCH</button> */
 
 /* Example: <button class="btn text-only">ABORT</button> */
-
-
 
 /* Kung kailangan mo i-adjust ang spacing nila sa modal */
 
@@ -2286,8 +1411,6 @@ canvas {
 
 }
 
-
-
 #ui-layer {
 
     pointer-events: none; /* Para lumusot ang click sa canvas */
@@ -2295,8 +1418,6 @@ canvas {
     /* ... ibang styles ... */
 
 }
-
-
 
 /* PERO dapat buhayin ulit ang click para sa buttons */
 
@@ -2306,15 +1427,11 @@ canvas {
 
 }
 
-
-
 /* =========================================
 
    TEACHER & CLASSROOM MODE STYLES
 
    ========================================= */
-
-
 
 /* --- DASHBOARD LAYOUT --- */
 
@@ -2334,8 +1451,6 @@ canvas {
 
 }
 
-
-
 .table-container {
 
     width: 100%;
@@ -2350,8 +1465,6 @@ canvas {
 
 }
 
-
-
 /* --- STUDENT TABLE --- */
 
 #student-table {
@@ -2365,8 +1478,6 @@ canvas {
     font-family: 'Rajdhani', sans-serif;
 
 }
-
-
 
 #student-table th {
 
@@ -2388,8 +1499,6 @@ canvas {
 
 }
 
-
-
 #student-table td {
 
     padding: 12px;
@@ -2399,8 +1508,6 @@ canvas {
     font-size: 18px;
 
 }
-
-
 
 /* --- STATUS DOTS --- */
 
@@ -2424,19 +1531,13 @@ canvas {
 
 .status-offline { background-color: #555; }
 
-
-
 .top-performer { color: #ffd700; font-weight: bold; }
-
-
 
 /* =========================================
 
    SETUP & CONFIGURATION MODAL
 
    ========================================= */
-
-
 
 /* 1. Grid Layout for Config (Label Left, Input Right) */
 
@@ -2456,8 +1557,6 @@ canvas {
 
 }
 
-
-
 /* 2. Label Styling */
 
 .config-grid label {
@@ -2476,8 +1575,6 @@ canvas {
 
 }
 
-
-
 /* 3. DROPDOWN FIXES (Black Background) */
 
 .config-grid select.main-input {
@@ -2490,21 +1587,17 @@ canvas {
 
 }
 
-
-
 .config-grid select.main-input option, select option {
 
-    background-color: #000000 !important;
+    background-color: #000000;
 
-    color: #ffffff !important;
+    color: #ffffff;
 
     padding: 10px;
 
     font-size: 16px;
 
 }
-
-
 
 /* 4. Radio/Difficulty Alignment */
 
@@ -2520,15 +1613,13 @@ canvas {
 
 }
 
-
-
 .diff-select-container label {
 
-    color: white !important;
+    color: white;
 
-    text-align: left !important;
+    text-align: left;
 
-    font-weight: normal !important;
+    font-weight: normal;
 
     cursor: pointer;
 
@@ -2540,8 +1631,6 @@ canvas {
 
 }
 
-
-
 .diff-select-container input[type="radio"] {
 
     accent-color: #00e5ff;
@@ -2549,8 +1638,6 @@ canvas {
     transform: scale(1.2);
 
 }
-
-
 
 /* 5. Button Actions Spacing */
 
@@ -2569,8 +1656,6 @@ canvas {
     border-top: 1px solid #333;
 
 }
-
-
 
 /* =========================================
 
@@ -2594,8 +1679,6 @@ canvas {
 
 }
 
-
-
 @media (max-width: 768px) {
 
     .main-menu-grid {
@@ -2606,29 +1689,21 @@ canvas {
 
 }
 
-
-
 /* --- NEW VISUAL EFFECTS (ADD TO BOTTOM OF CSS) --- */
-
-
 
 /* HIDE THE NOISE EFFECTS */
 
 .scanline-overlay {
 
-    display: none !important; /* Tanggalin ang guhit sa screen */
+    display: none ; /* Tanggalin ang guhit sa screen */
 
 }
-
-
 
 #glitch-overlay {
 
-    display: none !important; /* Tanggalin ang kurap-kurap */
+    display: none ; /* Tanggalin ang kurap-kurap */
 
 }
-
-
 
 /* Optional: Gawing mas clean ang UI Layer */
 
@@ -2639,8 +1714,6 @@ canvas {
     background: radial-gradient(circle, transparent 70%, rgba(0,0,0,0.6) 100%);
 
 }
-
-
 
 /* 2. Vignette (Darker Corners for immersion) */
 
@@ -2654,8 +1727,6 @@ canvas {
 
 }
 
-
-
 /* 3. Red Alert Pulse (Triggered by JS when health < 30%) */
 
 .critical-health #ui-layer {
@@ -2665,8 +1736,6 @@ canvas {
     animation: heartbeat 1s infinite;
 
 }
-
-
 
 @keyframes heartbeat {
 
@@ -2678,11 +1747,7 @@ canvas {
 
 }
 
-
-
 /* ADD TO style.css */
-
-
 
 /* The Jammed State (Striped Red Pattern) */
 
@@ -2700,13 +1765,13 @@ canvas {
 
         rgba(100, 0, 0, 0.9) 20px
 
-    ) !important;
+    );
 
-    border: 2px solid #ff0055 !important;
+    border: 2px solid #ff0055;
 
-    color: #ff0055 !important;
+    color: #ff0055;
 
-    font-weight: 900 !important;
+    font-weight: 900;
 
     text-shadow: 0 0 10px #ff0055;
 
@@ -2716,33 +1781,25 @@ canvas {
 
 }
 
-
-
 /* Golden Drone Text Style */
 
 .golden-text {
 
-    color: #ffd700 !important;
+    color: #ffd700;
 
-    text-shadow: 0 0 15px #ffd700, 0 0 30px orange !important;
+    text-shadow: 0 0 15px #ffd700, 0 0 30px orange;
 
-    font-size: 36px !important;
+    font-size: 36px;
 
 }
 
-
-
 /* ADD TO style.css */
-
-
 
 /* Dashboard Tabs */
 
 .dash-tabs { display: flex; gap: 15px; }
 
 .dash-view { width: 100%; height: 100%; overflow-y: auto; padding-top: 20px; }
-
-
 
 /* Podium Layout */
 
@@ -2753,8 +1810,6 @@ canvas {
     height: 250px; margin-bottom: 30px; gap: 10px;
 
 }
-
-
 
 .podium-box {
 
@@ -2770,15 +1825,11 @@ canvas {
 
 }
 
-
-
 .podium-box .crown { font-size: 40px; margin-bottom: 10px; }
 
 .podium-box .p-name { font-family: 'Orbitron'; font-weight: bold; font-size: 14px; color: white; }
 
 .podium-box .p-score { font-family: 'Rajdhani'; font-size: 24px; font-weight: bold; color: #ffd700; }
-
-
 
 /* Rank Specifics */
 
@@ -2787,8 +1838,6 @@ canvas {
 .rank-2 { height: 80%; border-color: #c0c0c0; }
 
 .rank-3 { height: 65%; border-color: #cd7f32; }
-
-
 
 /* Spy Card */
 
@@ -2810,43 +1859,37 @@ canvas {
 
 .status-badge { position: absolute; top: 10px; right: 10px; font-size: 10px; color: #888; }
 
-
-
 /* =========================================
 
    👨‍🏫 TEACHER DASHBOARD (COMMAND CENTER)
 
 ========================================= */
 
-
-
 /* The main container - fills the screen, no centered box */
 
 .dashboard-layout {
 
-    display: flex !important; /* Override 'hidden' display */
+    display: flex ; /* Override 'hidden' display */
 
     flex-direction: column;
 
-    width: 100vw !important;
+    width: 100vw;
 
-    height: 100vh !important;
+    height: 100vh;
 
-    background: #05070a !important;
+    background: #05070a;
 
-    padding: 0 !important;
+    padding: 0;
 
-    border: none !important;
+    border: none;
 
-    border-radius: 0 !important;
+    border-radius: 0;
 
-    box-shadow: none !important;
+    box-shadow: none;
 
-    max-width: none !important;
+    max-width: none;
 
 }
-
-
 
 /* 1. COMMAND HEADER BAR */
 
@@ -2870,15 +1913,11 @@ canvas {
 
 }
 
-
-
 .header-status {
 
     text-align: left;
 
 }
-
-
 
 .header-controls {
 
@@ -2887,8 +1926,6 @@ canvas {
     align-items: center;
 
 }
-
-
 
 /* 2. MAIN VIEWPORT AREA */
 
@@ -2906,8 +1943,6 @@ canvas {
 
 }
 
-
-
 /* TABS */
 
 .dash-tabs {
@@ -2921,8 +1956,6 @@ canvas {
     flex-shrink: 0;
 
 }
-
-
 
 .tab-btn {
 
@@ -2946,8 +1979,6 @@ canvas {
 
 }
 
-
-
 .tab-btn:hover { color: #fff; }
 
 .tab-btn.active {
@@ -2960,8 +1991,6 @@ canvas {
 
 }
 
-
-
 /* VIEW CONTAINERS */
 
 .dash-view {
@@ -2973,8 +2002,6 @@ canvas {
     flex-direction: column;
 
 }
-
-
 
 /* --- PODIUM STYLING --- */
 
@@ -2994,8 +2021,6 @@ canvas {
 
 }
 
-
-
 .podium-pillar {
 
     display: flex;
@@ -3010,15 +2035,11 @@ canvas {
 
 }
 
-
-
 .crown { font-size: 40px; margin-bottom: 5px; filter: drop-shadow(0 0 10px currentColor); }
 
 .p-name { font-weight: bold; margin-bottom: 2px; font-size: 18px; }
 
 .p-score { color: #ffd700; font-family: 'Courier New', monospace; margin-bottom: 10px; }
-
-
 
 .pillar-block {
 
@@ -3048,15 +2069,11 @@ canvas {
 
 }
 
-
-
 .gold .crown { color: #ffd700; } .gold .pillar-block { border-color: #ffd700; box-shadow: 0 -5px 20px rgba(255, 215, 0, 0.3); }
 
 .silver .crown { color: #c0c0c0; } .silver .pillar-block { border-color: #c0c0c0; box-shadow: 0 -5px 20px rgba(192, 192, 192, 0.3); }
 
 .bronze .crown { color: #cd7f32; } .bronze .pillar-block { border-color: #cd7f32; box-shadow: 0 -5px 20px rgba(205, 127, 50, 0.3); }
-
-
 
 /* RUNNER UPS */
 
@@ -3076,15 +2093,11 @@ canvas {
 
 }
 
-
-
 .runner-ups-list .player-row:hover {
 
     background: rgba(0, 229, 255, 0.1);
 
 }
-
-
 
 /* STAT BOXES (For Reports View) */
 
@@ -3102,11 +2115,9 @@ canvas {
 
 }
 
-
-
 #teacher-dashboard:not(.hidden) {
 
-    display: flex !important;
+    display: flex;
 
     flex-direction: column;
 
@@ -3136,8 +2147,6 @@ canvas {
 
 }
 
-
-
 /* PHASE 3: ALERT ANIMATIONS */
 
 @keyframes blink {
@@ -3150,11 +2159,7 @@ canvas {
 
 }
 
-
-
 /* --- PHASE 3.5: COMMANDER UI UPDATES --- */
-
-
 
 /* Digital Stepper (Time) */
 
@@ -3214,8 +2219,6 @@ canvas {
 
 }
 
-
-
 /* Neon Chips (Operations) */
 
 .chip-container { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -3262,23 +2265,19 @@ canvas {
 
 }
 
-
-
 /* Fire Streak Animation */
 
 .on-fire-row {
 
-    background: linear-gradient(90deg, rgba(255, 69, 0, 0.2), transparent) !important;
+    background: linear-gradient(90deg, rgba(255, 69, 0, 0.2), transparent);
 
-    border-left: 4px solid #ff4500 !important;
+    border-left: 4px solid #ff4500;
 
 }
 
 .fire-icon { font-size: 20px; text-shadow: 0 0 10px orange; animation: flicker 0.5s infinite alternate; }
 
 @keyframes flicker { from { opacity: 0.8; } to { opacity: 1; text-shadow: 0 0 20px red; } }
-
-
 
 /* Class Summary Line */
 
@@ -3300,17 +2299,13 @@ canvas {
 
 }
 
-
-
 /* 🚨 REFINED DASHBOARD VISIBILITY LOGIC 🚨 */
-
-
 
 /* 1. Default State: Dashboard is HIDDEN */
 
 #teacher-dashboard {
 
-    display: none !important; /* Force hide by default */
+    display: none ; /* Force hide by default */
 
     background-color: #05070a;
 
@@ -3328,21 +2323,17 @@ canvas {
 
 }
 
-
-
 /* 2. Active State: Only show if BODY has class AND dashboard lacks 'hidden' class */
 
 body.dashboard-active #teacher-dashboard:not(.hidden) {
 
-    display: flex !important;
+    display: flex;
 
-    visibility: visible !important;
+    visibility: visible;
 
-    opacity: 1 !important;
+    opacity: 1;
 
 }
-
-
 
 /* 3. Hide other layers when Dashboard is active */
 
@@ -3352,11 +2343,9 @@ body.dashboard-active #glitch-overlay,
 
 body.dashboard-active #ui-layer {
 
-    display: none !important;
+    display: none;
 
 }
-
-
 
 /* ROSTER CARD STYLES */
 
@@ -3373,8 +2362,6 @@ body.dashboard-active #ui-layer {
     width: 100%;
 
 }
-
-
 
 .roster-card {
 
@@ -3424,8 +2411,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* AWARDING STYLES */
 
 .winner-card {
@@ -3450,23 +2435,17 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .winner-card.rank-1 { border-color: #ffd700; transform: scale(1.1); z-index: 10; }
 
 .winner-card.rank-2 { border-color: #c0c0c0; background: linear-gradient(180deg, rgba(192, 192, 192, 0.1), rgba(0,0,0,0.5)); }
 
 .winner-card.rank-3 { border-color: #cd7f32; background: linear-gradient(180deg, rgba(205, 127, 50, 0.1), rgba(0,0,0,0.5)); }
 
-
-
 .winner-medal { font-size: 40px; display: block; margin-bottom: 10px; }
 
 .winner-name { font-family: 'Orbitron'; font-weight: bold; color: white; font-size: 18px; }
 
 .winner-score { font-family: 'Rajdhani'; color: #ffd700; font-size: 24px; font-weight: bold; }
-
-
 
 @keyframes float {
 
@@ -3478,15 +2457,11 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* =========================================
 
    🛸 GALACTIC WAR INTRO STYLES
 
    ========================================= */
-
-
 
 #cinematic-intro {
 
@@ -3510,8 +2485,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* --- 1. DEEP SPACE & STARS --- */
 
 .space-bg {
@@ -3521,8 +2494,6 @@ body.dashboard-active #ui-layer {
     background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
 
 }
-
-
 
 .stars-1, .stars-2 {
 
@@ -3550,8 +2521,6 @@ body.dashboard-active #ui-layer {
 
 .stars-2 { background-size: 300px 300px; animation-duration: 6s; }
 
-
-
 @keyframes zoomStars {
 
     0% { opacity: 0; transform: scale(1); }
@@ -3561,8 +2530,6 @@ body.dashboard-active #ui-layer {
     100% { opacity: 0; transform: scale(2); }
 
 }
-
-
 
 /* --- 2. NEBULA CLOUDS (Ang "Ulap-ulap") --- */
 
@@ -3586,8 +2553,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 @keyframes nebulaMove {
 
     0% { transform: rotate(0deg) scale(1); }
@@ -3595,8 +2560,6 @@ body.dashboard-active #ui-layer {
     100% { transform: rotate(10deg) scale(1.1); }
 
 }
-
-
 
 /* --- 3. BATTLE ELEMENTS (Lasers & Ships) --- */
 
@@ -3618,8 +2581,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .ally-laser {
 
     background: linear-gradient(90deg, transparent, #00f3ff, #fff, transparent);
@@ -3627,8 +2588,6 @@ body.dashboard-active #ui-layer {
     box-shadow: 0 0 15px #00f3ff;
 
 }
-
-
 
 .space-ship {
 
@@ -3648,8 +2607,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* --- 4. THE LOGO (MATH DEFENDER) --- */
 
 .intro-ui {
@@ -3657,8 +2614,6 @@ body.dashboard-active #ui-layer {
     position: relative; z-index: 50; text-align: center;
 
 }
-
-
 
 .defender-logo {
 
@@ -3686,15 +2641,11 @@ body.dashboard-active #ui-layer {
 
     filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.5));
 
-    
-
     transform: scale(3); opacity: 0; /* Start State */
 
     animation: logoSlam 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s forwards;
 
 }
-
-
 
 /* Glitch Effect on Text */
 
@@ -3718,8 +2669,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .defender-logo::after {
 
     content: attr(data-text);
@@ -3739,8 +2688,6 @@ body.dashboard-active #ui-layer {
     animation: glitchText 3s infinite linear alternate-reverse;
 
 }
-
-
 
 .subtitle-text {
 
@@ -3762,8 +2709,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* --- 5. LOADING SYSTEM --- */
 
 .loading-system {
@@ -3775,8 +2720,6 @@ body.dashboard-active #ui-layer {
     animation: fadeIn 0.5s ease-out 2s forwards;
 
 }
-
-
 
 .tech-bar {
 
@@ -3796,8 +2739,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .tech-fill {
 
     width: 0%; height: 100%;
@@ -3810,8 +2751,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .loading-status {
 
     font-family: 'Courier New', monospace;
@@ -3823,8 +2762,6 @@ body.dashboard-active #ui-layer {
     animation: blink 0.2s infinite;
 
 }
-
-
 
 /* --- 6. FX LAYERS --- */
 
@@ -3844,8 +2781,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .vignette-overlay {
 
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -3855,8 +2790,6 @@ body.dashboard-active #ui-layer {
     pointer-events: none; z-index: 20;
 
 }
-
-
 
 /* --- ANIMATIONS --- */
 
@@ -3871,8 +2804,6 @@ body.dashboard-active #ui-layer {
     100% { transform: scale(1); opacity: 1; }
 
 }
-
-
 
 @keyframes glitchText {
 
@@ -3890,8 +2821,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 @keyframes loadTech { 0% { width: 0%; } 100% { width: 100%; } }
 
 @keyframes flashBang { 0% { opacity: 0; } 50% { opacity: 0.8; } 100% { opacity: 0; } }
@@ -3900,8 +2829,6 @@ body.dashboard-active #ui-layer {
 
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-
-
 /* --- EXIT ANIMATION (Added by JS) --- */
 
 #cinematic-intro.warp-out {
@@ -3909,8 +2836,6 @@ body.dashboard-active #ui-layer {
     animation: warpSpeed 1s ease-in forwards;
 
 }
-
-
 
 @keyframes warpSpeed {
 
@@ -3922,8 +2847,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 @media (max-width: 768px) {
 
     .defender-logo { font-size: 50px; }
@@ -3932,15 +2855,11 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* =========================================
 
    📡 STORY & TUTORIAL STYLES
 
    ========================================= */
-
-
 
 #story-overlay {
 
@@ -3955,8 +2874,6 @@ body.dashboard-active #ui-layer {
     backdrop-filter: blur(10px);
 
 }
-
-
 
 .comm-panel {
 
@@ -3976,8 +2893,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 @keyframes panelSlideUp {
 
     from { transform: translateY(50px); opacity: 0; }
@@ -3985,8 +2900,6 @@ body.dashboard-active #ui-layer {
     to { transform: translateY(0); opacity: 1; }
 
 }
-
-
 
 .comm-header {
 
@@ -4002,8 +2915,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .comm-content {
 
     padding: 30px;
@@ -4013,8 +2924,6 @@ body.dashboard-active #ui-layer {
     align-items: flex-start;
 
 }
-
-
 
 /* AVATAR (Sound Wave Effect) */
 
@@ -4034,15 +2943,11 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .sound-wave {
 
     display: flex; gap: 3px; align-items: center; height: 40px;
 
 }
-
-
 
 .sound-wave .bar {
 
@@ -4060,11 +2965,7 @@ body.dashboard-active #ui-layer {
 
 .sound-wave .bar:nth-child(4) { height: 40%; animation-delay: 0.4s; }
 
-
-
 @keyframes wave { 0%, 100% { height: 20%; } 50% { height: 100%; } }
-
-
 
 .commander-label {
 
@@ -4072,13 +2973,9 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* DIALOGUE TEXT */
 
 .dialogue-box { flex-grow: 1; }
-
-
 
 #story-text {
 
@@ -4093,8 +2990,6 @@ body.dashboard-active #ui-layer {
     text-shadow: 0 0 5px rgba(255,255,255,0.5);
 
 }
-
-
 
 /* VISUAL DEMO BOX */
 
@@ -4118,8 +3013,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .demo-meteor {
 
     display: inline-block; padding: 10px 20px;
@@ -4134,8 +3027,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .comm-footer {
 
     padding: 15px 30px;
@@ -4146,21 +3037,17 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* BLINK ANIMATION */
 
 .blink { animation: blink 1s infinite; }
-
-
 
 .pulse-btn {
 
     animation: pulseRed 1s infinite;
 
-    border-color: #ffd700 !important;
+    border-color: #ffd700;
 
-    color: #ffd700 !important;
+    color: #ffd700;
 
 }
 
@@ -4174,8 +3061,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* MISSION DEBRIEF STYLES */
 
 #mission-debrief-container {
@@ -4188,29 +3073,23 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 #debrief-rank {
 
     text-shadow: 0 0 10px currentColor; /* Glowing text */
 
 }
 
-
-
 /* Rank Colors */
 
-.rank-s { color: #ffd700 !important; text-shadow: 0 0 20px #ffd700 !important; } /* Gold */
+.rank-s { color: #ffd700 ; text-shadow: 0 0 20px #ffd700 ; } /* Gold */
 
-.rank-a { color: #00ff41 !important; text-shadow: 0 0 15px #00ff41 !important; } /* Green */
+.rank-a { color: #00ff41 ; text-shadow: 0 0 15px #00ff41 ; } /* Green */
 
-.rank-b { color: #00e5ff !important; text-shadow: 0 0 15px #00e5ff !important; } /* Blue */
+.rank-b { color: #00e5ff ; text-shadow: 0 0 15px #00e5ff ; } /* Blue */
 
-.rank-c { color: #ff9900 !important; } /* Orange */
+.rank-c { color: #ff9900 ; } /* Orange */
 
-.rank-d { color: #ff0055 !important; } /* Red */
-
-
+.rank-d { color: #ff0055 ; } /* Red */
 
 /* OUTRO OVERLAY */
 
@@ -4238,8 +3117,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .outro-content h1 {
 
     font-family: 'Orbitron', sans-serif;
@@ -4256,8 +3133,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .outro-content p {
 
     font-family: 'Courier New', monospace;
@@ -4271,8 +3146,6 @@ body.dashboard-active #ui-layer {
     animation: blink 1s infinite;
 
 }
-
-
 
 .loader-line {
 
@@ -4290,8 +3163,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 @keyframes loadLine {
 
     0% { width: 0%; }
@@ -4300,8 +3171,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* Glitch Effect for Text */
 
 .glitch-text {
@@ -4309,8 +3178,6 @@ body.dashboard-active #ui-layer {
     animation: glitch-anim 0.3s infinite;
 
 }
-
-
 
 @keyframes glitch-anim {
 
@@ -4328,8 +3195,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* SHOP STYLES */
 
 .large-modal {
@@ -4345,8 +3210,6 @@ body.dashboard-active #ui-layer {
     flex-direction: column;
 
 }
-
-
 
 .shop-header {
 
@@ -4364,8 +3227,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .shop-balance {
 
     font-family: 'Orbitron', sans-serif;
@@ -4375,8 +3236,6 @@ body.dashboard-active #ui-layer {
     color: #ffd700;
 
 }
-
-
 
 .shop-tabs {
 
@@ -4389,8 +3248,6 @@ body.dashboard-active #ui-layer {
     margin: 20px 0;
 
 }
-
-
 
 .shop-grid {
 
@@ -4407,8 +3264,6 @@ body.dashboard-active #ui-layer {
     flex-grow: 1; /* Fills remaining height */
 
 }
-
-
 
 /* ITEM CARD */
 
@@ -4430,8 +3285,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .shop-item:hover {
 
     transform: translateY(-5px);
@@ -4442,15 +3295,11 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .shop-item.owned {
 
     border-color: #00ff41;
 
 }
-
-
 
 .shop-item.equipped {
 
@@ -4459,8 +3308,6 @@ body.dashboard-active #ui-layer {
     box-shadow: 0 0 15px gold;
 
 }
-
-
 
 .shop-item img {
 
@@ -4474,8 +3321,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .shop-item h4 {
 
     margin: 5px 0;
@@ -4486,8 +3331,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .shop-item .price {
 
     color: #ffd700;
@@ -4497,8 +3340,6 @@ body.dashboard-active #ui-layer {
     margin-bottom: 10px;
 
 }
-
-
 
 .shop-btn {
 
@@ -4516,15 +3357,11 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .btn-buy { background: #00e5ff; color: black; }
 
 .btn-equip { background: #333; color: white; border: 1px solid white; }
 
 .btn-equipped { background: gold; color: black; cursor: default; }
-
-
 
 /* Disable upgrades visual cue */
 
@@ -4535,8 +3372,6 @@ body.dashboard-active #ui-layer {
     pointer-events: none;
 
 }
-
-
 
 /* UPGRADE PROGRESS BAR */
 
@@ -4560,8 +3395,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .upgrade-fill {
 
     height: 100%;
@@ -4573,8 +3406,6 @@ body.dashboard-active #ui-layer {
     transition: width 0.3s ease;
 
 }
-
-
 
 /* LEVEL INDICATOR TEXT */
 
@@ -4589,8 +3420,6 @@ body.dashboard-active #ui-layer {
     justify-content: space-between;
 
 }
-
-
 
 /* BUNDLE CARD (For FX) */
 
@@ -4610,11 +3439,7 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* --- 🛠️ SHOP UPGRADES & FX (MISSING STYLES) --- */
-
-
 
 /* Upgrade Progress Bar (The Green Line) */
 
@@ -4640,8 +3465,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .upgrade-fill {
 
     height: 100%;
@@ -4655,8 +3478,6 @@ body.dashboard-active #ui-layer {
     box-shadow: 0 0 10px #00ff41;
 
 }
-
-
 
 /* Level Text (Lvl 1 / Max 7) */
 
@@ -4677,8 +3498,6 @@ body.dashboard-active #ui-layer {
     margin-bottom: 2px;
 
 }
-
-
 
 /* Battle FX Circle Preview (For Aura/Laser) */
 
@@ -4702,8 +3521,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 @keyframes pulseFX {
 
     0% { transform: scale(0.95); opacity: 0.8; }
@@ -4713,8 +3530,6 @@ body.dashboard-active #ui-layer {
     100% { transform: scale(0.95); opacity: 0.8; }
 
 }
-
-
 
 /* Tab Active State Fix */
 
@@ -4728,15 +3543,11 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* =========================================
 
    📖 THE ANCIENT CODEX (FIXED & POLISHED)
 
    ========================================= */
-
-
 
 .book-stage {
 
@@ -4756,8 +3567,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .book {
 
     position: relative;
@@ -4772,8 +3581,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* Kapag bumukas, umusog pakanan para nasa gitna ang spread */
 
 .book.opened {
@@ -4781,8 +3588,6 @@ body.dashboard-active #ui-layer {
     transform: translateX(210px); 
 
 }
-
-
 
 /* --- PAPER STYLING --- */
 
@@ -4808,8 +3613,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* FRONT & BACK FACES */
 
 .front, .back {
@@ -4824,8 +3627,6 @@ body.dashboard-active #ui-layer {
 
     top: 0; left: 0;
 
-    
-
     /* Solid Background para di tumagos ang text */
 
     background-color: #f3e5ce; 
@@ -4838,8 +3639,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* Front Face */
 
 .front {
@@ -4851,8 +3650,6 @@ body.dashboard-active #ui-layer {
     background: linear-gradient(to right, #e3d0a6, #f3e5ce 15%); 
 
 }
-
-
 
 /* Back Face (Rotated) */
 
@@ -4868,8 +3665,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* Flipped State (Nasa Kaliwa na) */
 
 .flipped .front, .flipped .back {
@@ -4883,8 +3678,6 @@ body.dashboard-active #ui-layer {
     transform: rotateY(-180deg);
 
 }
-
-
 
 /* --- COVER DESIGN (LEATHER) --- */
 
@@ -4922,25 +3715,19 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* =========================================
 
    📖 JESSBOOK VISUAL FIX (READABILITY)
 
    ========================================= */
 
-
-
 /* 1. Siguraduhing Dark Brown ang kulay ng papel (Fallback) */
 
 .front, .back {
 
-    color: #2c1e16 !important; 
+    color: #2c1e16; 
 
 }
-
-
 
 /* 2. Page Content Container */
 
@@ -4950,17 +3737,15 @@ body.dashboard-active #ui-layer {
 
     text-align: left; /* Gawing Left-align para mas madaling basahin kaysa center */
 
-    color: #2c1e16 !important; /* Dark Ink Color */
+    color: #2c1e16 ; /* Dark Ink Color */
 
-    font-family: 'Georgia', 'Times New Roman', serif !important; /* Gawing Serif font para mukhang libro */
+    font-family: 'Georgia', 'Times New Roman', serif ; /* Gawing Serif font para mukhang libro */
 
     overflow-y: auto; /* Lagyan ng scroll kung mahaba ang lesson */
 
     height: 85%; 
 
 }
-
-
 
 /* 3. Force Text Colors & Sizes for Paragraphs and Lists */
 
@@ -4972,15 +3757,13 @@ body.dashboard-active #ui-layer {
 
     margin-bottom: 12px;
 
-    color: #2c1e16 !important; /* Dark brown ink */
+    color: #2c1e16 ; /* Dark brown ink */
 
-    font-family: 'Georgia', 'Times New Roman', serif !important;
+    font-family: 'Georgia', 'Times New Roman', serif;
 
-    text-shadow: none !important; /* TANGGALIN ANG NEON GLOW */
+    text-shadow: none ; /* TANGGALIN ANG NEON GLOW */
 
 }
-
-
 
 /* 4. Force Colors & Fonts for Headings (Titles) */
 
@@ -4992,11 +3775,11 @@ body.dashboard-active #ui-layer {
 
     margin-top: 0;
 
-    color: #3e2723 !important; /* Darker heading color */
+    color: #3e2723 ; /* Darker heading color */
 
-    font-family: 'Georgia', 'Times New Roman', serif !important;
+    font-family: 'Georgia', 'Times New Roman', serif;
 
-    text-shadow: none !important;
+    text-shadow: none;
 
     font-weight: bold;
 
@@ -5006,23 +3789,21 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* 5. Ayusin ang Tip Box readability */
 
 .tip-box {
 
-    background: rgba(212, 175, 55, 0.15) !important; /* Transparent Gold Background */
+    background: rgba(212, 175, 55, 0.15) ; /* Transparent Gold Background */
 
     border: 2px dashed #d4af37; /* Dashed Gold Border */
 
-    color: #2c1e16 !important; /* Dark text inside box */
+    color: #2c1e16 ; /* Dark text inside box */
 
     padding: 15px;
 
     border-radius: 8px;
 
-    font-family: 'Rajdhani', sans-serif !important; /* Iba ang font para sa tips */
+    font-family: 'Rajdhani', sans-serif ; /* Iba ang font para sa tips */
 
     font-weight: bold;
 
@@ -5030,21 +3811,17 @@ body.dashboard-active #ui-layer {
 
     margin-top: 20px;
 
-    text-shadow: none !important;
+    text-shadow: none;
 
 }
-
-
 
 /* 6. Highlighted/Bold Text (Emphasis) */
 
 .page-content b, .page-content strong {
 
-    color: #bf360c !important; /* Reddish Brown para sa important words */
+    color: #bf360c ; /* Reddish Brown para sa important words */
 
 }
-
-
 
 /* 7. Code/Math Examples */
 
@@ -5056,9 +3833,9 @@ body.dashboard-active #ui-layer {
 
     border-radius: 4px;
 
-    font-family: 'Courier New', monospace !important;
+    font-family: 'Courier New', monospace;
 
-    color: #d84315 !important; /* Orange-Red para sa numbers */
+    color: #d84315 ; /* Orange-Red para sa numbers */
 
     font-weight: bold;
 
@@ -5075,8 +3852,6 @@ body.dashboard-active #ui-layer {
     padding: 10px; margin: 15px 0; font-style: italic; font-size: 18px;
 
 }
-
-
 
 /* Controls */
 
@@ -5096,8 +3871,6 @@ body.dashboard-active #ui-layer {
 
 .magic-btn.close:hover { background: red; color: white; }
 
-
-
 /* --- 🎨 BACK COVER (AUTHOR PAGE) --- */
 
 .back-cover-content {
@@ -5109,8 +3882,6 @@ body.dashboard-active #ui-layer {
     background-color: #3e2723;
 
     background-image: url("https://www.transparenttextures.com/patterns/leather.png");
-
-    
 
     display: flex; flex-direction: column;
 
@@ -5124,35 +3895,31 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .back-cover-content h1 {
 
-    font-family: 'Cinzel', serif !important;
+    font-family: 'Cinzel', serif;
 
-    font-size: 40px !important;
+    font-size: 40px;
 
-    color: #ffd700 !important;
+    color: #ffd700;
 
-    text-shadow: 2px 4px 5px #000 !important;
+    text-shadow: 2px 4px 5px #000;
 
-    border-bottom: none !important;
+    border-bottom: none;
 
-    margin: 10px 0 !important;
+    margin: 10px 0;
 
 }
 
-
-
 .back-cover-content h3 {
 
-    font-family: 'Orbitron', sans-serif !important;
+    font-family: 'Orbitron', sans-serif;
 
-    font-size: 14px !important;
+    font-size: 14px;
 
     letter-spacing: 4px;
 
-    color: #d4af37 !important;
+    color: #d4af37;
 
     opacity: 0.8;
 
@@ -5160,21 +3927,17 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 .back-cover-content p {
 
-    font-family: 'Rajdhani', sans-serif !important;
+    font-family: 'Rajdhani', sans-serif;
 
-    font-size: 16px !important;
+    font-size: 16px;
 
-    color: #f4e4bc !important;
+    color: #f4e4bc;
 
     margin-top: 5px;
 
 }
-
-
 
 .gold-divider {
 
@@ -5186,31 +3949,25 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* =========================================
 
    📖 JESSBOOK CROPPING FIX
 
    ========================================= */
 
-
-
 /* 1. I-adjust natin ng konti ang height para hindi sumagad sa page number */
 
 .page-content {
 
-    height: 78% !important; /* Mula 85%, binawasan natin para may allowance sa ilalim */
+    height: 78% ; /* Mula 85%, binawasan natin para may allowance sa ilalim */
 
-    overflow-y: auto !important; 
+    overflow-y: auto; 
 
-    padding-right: 15px !important; 
+    padding-right: 15px; 
 
     /* Tanggalin ang lumang padding-bottom dito, papalitan natin ng mas epektibong paraan */
 
 }
-
-
 
 /* 2. 🟢 THE SECRET FIX: Maglalagay tayo ng "invisible space" sa pinakadulo ng bawat pahina */
 
@@ -5226,8 +3983,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* 3. Siguraduhin na may margin sa ilalim ang tip-box mismo */
 
 .tip-box {
@@ -5236,31 +3991,27 @@ body.dashboard-active #ui-layer {
 
     font-size: 15px; 
 
-    margin-top: 15px !important;
+    margin-top: 15px;
 
-    margin-bottom: 20px !important; /* Extra tulak pataas */
+    margin-bottom: 20px ; /* Extra tulak pataas */
 
     line-height: 1.5;
 
-    background: rgba(212, 175, 55, 0.2) !important;
+    background: rgba(212, 175, 55, 0.2);
 
-    color: #2c1e16 !important; 
+    color: #2c1e16; 
 
     border: 1px dashed #d4af37;
 
-    text-shadow: none !important;
+    text-shadow: none;
 
 }
-
-
 
 /* =========================================
 
    📊 AGENT DASHBOARD STYLES (REDESIGNED)
 
    ========================================= */
-
-
 
 /* Badge Styling */
 
@@ -5300,8 +4051,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* Avatar Option Hover */
 
 .avatar-option {
@@ -5327,8 +4076,6 @@ body.dashboard-active #ui-layer {
     box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
 
 }
-
-
 
 /* Table Styling */
 
@@ -5364,41 +4111,37 @@ body.dashboard-active #ui-layer {
 
    ========================================= */
 
-
-
 /* 1. PALAKIHIN ANG JESSBOOK (CODEX) */
 
 .book {
 
-    width: 520px !important;  /* Mula 420px, mas malapad ang pahina */
+    width: 520px ;  /* Mula 420px, mas malapad ang pahina */
 
-    height: 740px !important; /* Mula 600px, mas matangkad */
+    height: 740px ; /* Mula 600px, mas matangkad */
 
 }
 
 .book.opened {
 
-    transform: translateX(260px) !important; /* Half ng 520px para laging gitna */
+    transform: translateX(260px) ; /* Half ng 520px para laging gitna */
 
 }
 
 .page-content p, .page-content ul, .page-content ol, .page-content li {
 
-    font-size: 18px !important; /* Mas malaki at kumportableng basahin */
+    font-size: 18px ; /* Mas malaki at kumportableng basahin */
 
-    line-height: 1.6 !important;
+    line-height: 1.6;
 
 }
-
-
 
 /* 2. PALAKIHIN ANG STORY / LIVE FEED PANEL */
 
 .comm-panel {
 
-    width: 950px !important; /* Wide screen dialogue box */
+    width: 950px ; /* Wide screen dialogue box */
 
-    max-width: 95vw !important;
+    max-width: 95vw;
 
     padding: 10px;
 
@@ -5406,39 +4149,35 @@ body.dashboard-active #ui-layer {
 
 .avatar-box {
 
-    width: 140px !important; /* Mas malaking Profile icon sa story */
+    width: 140px ; /* Mas malaking Profile icon sa story */
 
-    height: 140px !important;
+    height: 140px;
 
 }
 
 #story-text {
 
-    font-size: 22px !important; /* Mas malaking cinematic text */
+    font-size: 22px ; /* Mas malaking cinematic text */
 
-    line-height: 1.8 !important;
+    line-height: 1.8;
 
 }
 
 .demo-meteor {
 
-    font-size: 24px !important; /* Mas kitang-kita na examples */
+    font-size: 24px ; /* Mas kitang-kita na examples */
 
-    padding: 15px 30px !important;
+    padding: 15px 30px;
 
 }
-
-
 
 /* 3. GAWING WIDE (LANDSCAPE) ANG MGA DASHBOARD MODALS */
 
 .modal-content {
 
-    max-width: 95vw !important; /* Payagan lumapad ang lahat ng modals */
+    max-width: 95vw ; /* Payagan lumapad ang lahat ng modals */
 
 }
-
-
 
 /* Specific Widths para sa ibang dashboard */
 
@@ -5446,41 +4185,35 @@ body.dashboard-active #ui-layer {
 
 #classroom-setup-modal .modal-content {
 
-    width: 900px !important; 
+    width: 900px; 
 
 }
 
 #leaderboard-modal .modal-content {
 
-    width: 800px !important;
+    width: 800px;
 
 }
 
 #mp-menu-modal .modal-content {
 
-    width: 700px !important;
+    width: 700px;
 
 }
-
-
 
 /* 4. SHOP GRID ENHANCEMENT (More items per row) */
 
 #shop-grid {
 
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 
 }
-
-
 
 /* =========================================
 
    🏆 FINAL RESULT DASHBOARD STYLES
 
    ========================================= */
-
-
 
 /* Stat Cards (Glassmorphism) */
 
@@ -5535,8 +4268,6 @@ body.dashboard-active #ui-layer {
     font-weight: 900;
 
 }
-
-
 
 /* Podium Pillars */
 
@@ -5606,8 +4337,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* Rank Specifics */
 
 .rank-1 .podium-avatar { border-color: #ffd700; box-shadow: 0 0 20px #ffd700; }
@@ -5616,19 +4345,13 @@ body.dashboard-active #ui-layer {
 
 .rank-1 .rank-num { color: #ffd700; }
 
-
-
 .rank-2 .podium-avatar { border-color: #c0c0c0; }
 
 .rank-2 .podium-bar { height: 130px; border-color: #c0c0c0; }
 
-
-
 .rank-3 .podium-avatar { border-color: #cd7f32; }
 
 .rank-3 .podium-bar { height: 90px; border-color: #cd7f32; }
-
-
 
 /* Winner Name */
 
@@ -5639,8 +4362,6 @@ body.dashboard-active #ui-layer {
     background: #111; padding: 2px 8px; border-radius: 4px; border: 1px solid #333;
 
 }
-
-
 
 /* =========================================
 
@@ -5661,8 +4382,6 @@ body.dashboard-active #ui-layer {
     flex-direction: column;
 
 }
-
-
 
 /* Moving Grid Effect */
 
@@ -5686,11 +4405,7 @@ body.dashboard-active #ui-layer {
 
 @keyframes gridMove { from { transform: translateY(0); } to { transform: translateY(50px); } }
 
-
-
 .curtain-content { z-index: 2; text-align: center; }
-
-
 
 /* Spinning Loader */
 
@@ -5709,8 +4424,6 @@ body.dashboard-active #ui-layer {
 }
 
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-
 
 /* Typography */
 
@@ -5754,27 +4467,21 @@ body.dashboard-active #ui-layer {
 
 @keyframes blink { 50% { opacity: 0.5; } }
 
-
-
 /* =========================================
 
    🛸 CLASS SELECTION TERMINAL DESIGN
 
    ========================================= */
 
-
-
 /* 1. The Dark Overlay Background */
 
 #class-selection-modal {
 
-    background: rgba(0, 5, 16, 0.97) !important; /* Darker, deeper space background */
+    background: rgba(0, 5, 16, 0.97) ; /* Darker, deeper space background */
 
     backdrop-filter: blur(8px); /* Adds a futuristic blur effect to what's behind */
 
 }
-
-
 
 /* 2. The Main Terminal Box */
 
@@ -5792,7 +4499,7 @@ body.dashboard-active #ui-layer {
 
     border-radius: 12px;
 
-    padding: 50px 40px !important; /* More breathing room */
+    padding: 50px 40px ; /* More breathing room */
 
     position: relative;
 
@@ -5803,8 +4510,6 @@ body.dashboard-active #ui-layer {
     width: 90%;
 
 }
-
-
 
 /* 🌐 Decorative "Tech Corners" (Gold Accents) */
 
@@ -5842,8 +4547,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* 3. Typography Upgrades */
 
 #class-selection-modal h2 {
@@ -5876,8 +4579,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 #class-selection-modal p {
 
     font-family: 'Rajdhani', sans-serif;
@@ -5893,8 +4594,6 @@ body.dashboard-active #ui-layer {
     margin-bottom: 40px;
 
 }
-
-
 
 /* 4. The Input Field (Data Entry) */
 
@@ -5924,8 +4623,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 #class-code-direct:focus {
 
     border-color: #00e5ff; /* Glows cyan when typing */
@@ -5941,8 +4638,6 @@ body.dashboard-active #ui-layer {
     transform: scale(1.02);
 
 }
-
-
 
 #class-selection-modal label {
 
@@ -5960,8 +4655,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* 5. Buttons Overhaul */
 
 #class-selection-modal .modal-actions {
@@ -5971,8 +4664,6 @@ body.dashboard-active #ui-layer {
     gap: 20px;
 
 }
-
-
 
 /* Connect Button (Green/Cyan Gradient) */
 
@@ -6006,8 +4697,6 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 #class-selection-modal button.btn.primary:hover {
 
     transform: translateY(-3px) scale(1.03);
@@ -6015,8 +4704,6 @@ body.dashboard-active #ui-layer {
     box-shadow: 0 0 50px rgba(0, 229, 255, 0.9);
 
 }
-
-
 
 /* Cancel Button (Red Text) */
 
@@ -6046,15 +4733,11 @@ body.dashboard-active #ui-layer {
 
 }
 
-
-
 /* =========================================
 
    🌌 LIVE DEEP SPACE BACKGROUND (CSS ONLY)
 
    ========================================= */
-
-
 
 body {
 
@@ -6072,8 +4755,6 @@ body {
 
 }
 
-
-
 /* 1. MOVING STARS (Parallax Effect) */
 
 #star-field {
@@ -6087,8 +4768,6 @@ body {
     background: transparent;
 
 }
-
-
 
 #star-field::after {
 
@@ -6120,8 +4799,6 @@ body {
 
 }
 
-
-
 #star-field::before {
 
     content: " ";
@@ -6146,8 +4823,6 @@ body {
 
 }
 
-
-
 @keyframes starFly {
 
     from { transform: translateY(0); }
@@ -6155,8 +4830,6 @@ body {
     to { transform: translateY(100vh); }
 
 }
-
-
 
 /* 2. NEBULA FOG (Atmosphere) */
 
@@ -6178,8 +4851,6 @@ body {
 
 }
 
-
-
 @keyframes pulseNebula {
 
     0% { opacity: 0.5; transform: scale(1); }
@@ -6187,8 +4858,6 @@ body {
     100% { opacity: 1; transform: scale(1.05); }
 
 }
-
-
 
 /* 3. DIGITAL GRID FLOOR (Retro Arcade Feel) */
 
@@ -6220,8 +4889,6 @@ body {
 
 }
 
-
-
 @keyframes gridMove {
 
     0% { background-position: 0 0; }
@@ -6229,8 +4896,6 @@ body {
     100% { background-position: 0 50px; }
 
 }
-
-
 
 /* =========================================
 
@@ -6245,8 +4910,6 @@ body {
     overflow: hidden; 
 
 }
-
-
 
 #bgCanvas {
 
@@ -6266,15 +4929,11 @@ body {
 
 }
 
-
-
 /* =========================================
 
    PHASE 1 & 2: COMMS SIDEBAR & DOSSIER
 
    ========================================= */
-
-
 
 /* The Floating Toggle Button */
 
@@ -6318,8 +4977,6 @@ body {
 
 #comms-toggle-btn:hover { background: #00e5ff; color: black; }
 
-
-
 /* The Ping Dot (Notifications) */
 
 .ping-dot {
@@ -6335,8 +4992,6 @@ body {
     margin-top: 5px;
 
 }
-
-
 
 /* The Slide-out Sidebar */
 
@@ -6366,8 +5021,6 @@ body {
 
 #comms-sidebar.closed { right: -360px; }
 
-
-
 .comms-header {
 
     padding: 20px; border-bottom: 1px solid #333;
@@ -6396,8 +5049,6 @@ body {
 
 }
 
-
-
 /* Stat Lines inside Dossier */
 
 .stat-line {
@@ -6409,8 +5060,6 @@ body {
     color: #ccc; border-bottom: 1px dashed #333; padding: 8px 0;
 
 }
-
-
 
 /* Agent Card Row (For Search/Friends) */
 
@@ -6434,11 +5083,7 @@ body {
 
 .agent-row-rank { font-size: 10px; color: #888; font-family: 'Rajdhani'; }
 
-
-
 /* --- UI REFRESH FIXES --- */
-
-
 
 /* Ayusin ang Hover effects ng Tertiary Buttons para mas cool tignan */
 
@@ -6456,8 +5101,6 @@ body {
 
 }
 
-
-
 .btn.tertiary:hover {
 
     background: rgba(0, 243, 255, 0.05);
@@ -6474,8 +5117,6 @@ body {
 
 }
 
-
-
 /* Specific highlight for Jessbook */
 
 .btn.tertiary[onclick="window.openCodex()"]:hover {
@@ -6487,8 +5128,6 @@ body {
     box-shadow: 0 5px 15px rgba(0, 255, 65, 0.2);
 
 }
-
-
 
 /* --- SECURE CHAT BUBBLES --- */
 
@@ -6536,15 +5175,11 @@ body {
 
 }
 
-
-
 /* =========================================
 
    🌌 AAA CAMPAIGN MAP (CIRCUIT BOARD EDITION)
 
    ========================================= */
-
-
 
 .campaign-master-container {
 
@@ -6561,8 +5196,6 @@ body {
     display: flex; flex-direction: column; overflow: hidden;
 
 }
-
-
 
 /* --- HEADER --- */
 
@@ -6586,8 +5219,6 @@ body {
 
 .map-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #00e5ff, #ffd700); box-shadow: 0 0 10px #ffd700; transition: width 1s; }
 
-
-
 /* --- MAIN BODY SPLIT --- */
 
 .campaign-body-layout {
@@ -6603,8 +5234,6 @@ body {
     overflow: hidden; /* Pinipigilan ang pag-spill ng design sa labas */
 
 }
-
-
 
 /* --- LEFT: MAP VIEWPORT --- */
 
@@ -6630,8 +5259,6 @@ body {
 
 .circuit-viewport:active { cursor: grabbing; }
 
-
-
 .circuit-scroll-area {
 
     position: relative; 
@@ -6641,8 +5268,6 @@ body {
     background-color: #05070f;
 
 }
-
-
 
 /* The Blueprint Grid Background */
 
@@ -6662,15 +5287,11 @@ body {
 
 }
 
-
-
 .map-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 
 #campaign-grid { pointer-events: auto; z-index: 5; }
 
 #map-path-layer { z-index: 2; }
-
-
 
 /* SVG PATHS (CIRCUIT LINES) */
 
@@ -6679,8 +5300,6 @@ body {
 .circuit-line.cleared { stroke: #00e5ff; stroke-width: 5; filter: drop-shadow(0 0 8px #00e5ff); }
 
 .circuit-line.locked { stroke: #1a2b3c; stroke-width: 3; stroke-dasharray: 5 10; }
-
-
 
 /* --- RIGHT: MILESTONE SIDEBAR --- */
 
@@ -6703,8 +5322,6 @@ body {
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
 
 }
-
-
 
 /* Ayusin ang kulay ng Close Button na naging puti */
 
@@ -6732,15 +5349,11 @@ body {
 
 }
 
-
-
 /* 1. Normal Node (Small Circle) */
 
 .node-normal { width: 45px; height: 45px; border-radius: 50%; background: #111; border: 2px solid #555; font-size: 14px; }
 
 .node-normal.cleared { border-color: #00e5ff; background: rgba(0, 229, 255, 0.1); box-shadow: inset 0 0 10px #00e5ff; }
-
-
 
 /* 2. Supply Node (Diamond/Square) */
 
@@ -6750,41 +5363,27 @@ body {
 
 .node-supply.cleared { border-color: #ffd700; background: rgba(255, 215, 0, 0.15); box-shadow: 0 0 15px #ffd700; }
 
-
-
 /* 3. Boss Node (Large Hexagon or Octagon) */
 
 .node-boss { width: 75px; height: 75px; clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); background: #220000; border: 3px solid #ff0055; font-size: 24px; box-shadow: inset 0 0 20px #ff0055; }
 
 .node-boss.cleared { background: rgba(255, 0, 85, 0.3); box-shadow: 0 0 30px #ff0055; }
 
-
-
 /* Active Pulse */
 
-.c-node.unlocked { border-color: #fff !important; animation: nodePulse 1s infinite alternate; }
+.c-node.unlocked { border-color: #fff; animation: nodePulse 1s infinite alternate; }
 
 @keyframes nodePulse { from { filter: brightness(1); transform: translate(-50%, -50%) scale(1); } to { filter: brightness(1.5); transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 30px white; } }
-
-
 
 /* Player Marker */
 
 .circuit-ship { position: absolute; top: -35px; left: 50%; transform: translateX(-50%) rotate(90deg); font-size: 28px; filter: drop-shadow(0 0 10px #00e5ff); pointer-events: none; }
-
-
 
 /* Node Stars */
 
 .node-stars { position: absolute; bottom: -20px; width: 60px; text-align: center; font-size: 10px; letter-spacing: 1px; left: 50%; transform: translateX(-50%); }
 
 .node-supply .node-stars { bottom: -30px; transform: translate(-50%, 0) rotate(-45deg); }
-
-
-
-
-
-
 
 .reward-card {
 
@@ -6800,8 +5399,6 @@ body {
 
 .reward-info p { margin: 0; color: #fff; font-family: 'Rajdhani'; font-size: 14px; }
 
-
-
 .artifact-card {
 
     display: flex; align-items: center; background: rgba(255, 255, 255, 0.02);
@@ -6814,8 +5411,6 @@ body {
 
 .artifact-card.unlocked { border-color: #00e5ff; background: rgba(0, 229, 255, 0.1); filter: none; opacity: 1; }
 
-
-
 .art-img-box {
 
     width: 40px; height: 40px; background: #000; border: 1px solid #555; border-radius: 4px;
@@ -6826,23 +5421,17 @@ body {
 
 .artifact-card.unlocked .art-img-box { color: #00e5ff; border-color: #00e5ff; box-shadow: inset 0 0 10px #00e5ff; }
 
-
-
 .art-details { display: flex; flex-direction: column; }
 
 .art-lvl { font-family: 'Orbitron'; font-size: 10px; color: #00e5ff; font-weight: bold; }
 
 .art-name { font-family: 'Rajdhani'; font-size: 14px; color: #fff; letter-spacing: 1px; }
 
-
-
 /* =========================================
 
    🎁 REWARD MODAL & LOOT ANIMATIONS
 
    ========================================= */
-
-
 
 #reward-modal .reward-content {
 
@@ -6866,8 +5455,6 @@ body {
 
 }
 
-
-
 @keyframes rewardPop {
 
     0% { transform: scale(0.5); opacity: 0; }
@@ -6875,8 +5462,6 @@ body {
     100% { transform: scale(1); opacity: 1; }
 
 }
-
-
 
 .reward-glow-box {
 
@@ -6908,11 +5493,7 @@ body {
 
 }
 
-
-
 #reward-icon { font-size: 80px; filter: drop-shadow(0 0 10px white); }
-
-
 
 @keyframes floatItem {
 
@@ -6922,11 +5503,7 @@ body {
 
 }
 
-
-
 .reward-subtitle { color: #888; font-family: 'Rajdhani'; letter-spacing: 4px; margin: 0; }
-
-
 
 /* Spinning Sunburst Background */
 
@@ -6956,15 +5533,11 @@ body {
 
 @keyframes spinBurst { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
 
-
-
 /* =========================================
 
    🛸 TACTICAL TOOLTIP (HOLO-INTEL)
 
    ========================================= */
-
-
 
 .map-tooltip {
 
@@ -6986,8 +5559,6 @@ body {
 
     box-shadow: 0 15px 35px rgba(0,0,0,0.9), inset 0 0 20px rgba(0,229,255,0.1);
 
-    
-
     /* Animation positioning (Lalabas sa ibabaw ng planeta) */
 
     transform: translate(-50%, -110%) scale(0.9);
@@ -6999,8 +5570,6 @@ body {
     backdrop-filter: blur(10px);
 
 }
-
-
 
 /* Ang maliit na pointer/tatsulok sa ilalim ng tooltip */
 
@@ -7014,8 +5583,6 @@ body {
 
 }
 
-
-
 /* Kapag visible na siya */
 
 .map-tooltip.visible {
@@ -7026,8 +5593,6 @@ body {
 
 }
 
-
-
 /* Texts sa loob ng Tooltip */
 
 .tt-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
@@ -7036,15 +5601,11 @@ body {
 
 .tt-type { font-family: 'Courier New'; font-size: 10px; font-weight: bold; background: #222; padding: 2px 6px; border-radius: 3px; color: #ffd700; }
 
-
-
 .tt-sector { margin: 0; font-family: 'Orbitron'; font-size: 12px; letter-spacing: 2px; color: #00e5ff; }
 
 .tt-divider { height: 1px; background: linear-gradient(90deg, #00e5ff, transparent); margin: 8px 0; }
 
 .tt-topic { font-family: 'Rajdhani'; font-size: 13px; color: #ccc; margin: 0 0 12px 0; }
-
-
 
 .tt-stats-row { display: flex; justify-content: space-between; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 5px; border: 1px solid #223; }
 
@@ -7054,15 +5615,11 @@ body {
 
 .tt-value { font-family: 'Orbitron'; font-size: 11px; font-weight: bold; margin-top: 2px; }
 
-
-
 /* =========================================
 
    🤖 N.E.X.U.S. AI TERMINAL STYLES
 
    ========================================= */
-
-
 
 #nexus-ai-button {
 
@@ -7084,8 +5641,6 @@ body {
 
 #nexus-ai-button:hover { transform: scale(1.05); box-shadow: 0 0 30px #00e5ff; color: #00e5ff; }
 
-
-
 .ai-core-glow {
 
     position: absolute; width: 100%; height: 100%;
@@ -7097,8 +5652,6 @@ body {
 }
 
 @keyframes pulseAI { 0% { opacity: 0.3; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
-
-
 
 #nexus-terminal {
 
@@ -7122,8 +5675,6 @@ body {
 
 #nexus-terminal.hidden { transform: scale(0); opacity: 0; pointer-events: none; }
 
-
-
 .nexus-header {
 
     display: flex; justify-content: space-between; align-items: center;
@@ -7142,8 +5693,6 @@ body {
 
 @keyframes blinkEye { 0%, 95%, 100% { transform: scaleY(1); } 97% { transform: scaleY(0.1); } }
 
-
-
 #nexus-chat-history {
 
     flex-grow: 1; padding: 15px; overflow-y: auto;
@@ -7153,8 +5702,6 @@ body {
     scrollbar-width: thin; scrollbar-color: #00e5ff #111;
 
 }
-
-
 
 /* Chat Bubbles */
 
@@ -7170,13 +5717,9 @@ body {
 
 .user-msg { background: rgba(255, 215, 0, 0.1); border-right: 3px solid #ffd700; color: #fff; align-self: flex-end; border-bottom-right-radius: 0; text-align: right; }
 
-
-
 .ai-tag, .user-tag { font-family: 'Orbitron'; font-size: 10px; font-weight: bold; display: block; margin-bottom: 5px; }
 
 .ai-tag { color: #00e5ff; } .user-tag { color: #ffd700; }
-
-
 
 .nexus-input-area {
 
@@ -7194,8 +5737,6 @@ body {
 
 #nexus-input:focus { border-color: #00e5ff; box-shadow: inset 0 0 10px rgba(0,229,255,0.2); }
 
-
-
 /* GACHA SHAKE ANIMATION */
 
 .shake-core {
@@ -7207,8 +5748,6 @@ body {
     animation: gachaShake 0.1s infinite, gachaGlow 1s infinite alternate;
 
 }
-
-
 
 @keyframes gachaShake {
 
@@ -7236,8 +5775,6 @@ body {
 
 }
 
-
-
 @keyframes gachaGlow {
 
     from { text-shadow: 0 0 10px cyan; filter: brightness(1); }
@@ -7246,15 +5783,11 @@ body {
 
 }
 
-
-
 .pet-reveal {
 
     animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 
 }
-
-
 
 @keyframes popIn {
 
@@ -7263,8 +5796,6 @@ body {
     to { transform: scale(1); opacity: 1; }
 
 }
-
-
 
 /* 📢 GLOBAL ANNOUNCER STYLES */
 
@@ -7292,8 +5823,6 @@ body {
 
 }
 
-
-
 .marquee {
 
     white-space: nowrap;
@@ -7304,8 +5833,6 @@ body {
 
 }
 
-
-
 @keyframes scrollText {
 
     0% { transform: translateX(100vw); }
@@ -7313,12 +5840,6 @@ body {
     100% { transform: translateX(-100%); }
 
 }
-
-
-
-
-
-
 
 /* 3. LAYER 2: Holographic Scanning Line (Umaandar pataas-pababa) */
 
@@ -7329,8 +5850,6 @@ body {
     position: absolute;
 
     top: 0; left: 0; width: 100%; height: 100%;
-
-    
 
     /* Gradient na may manipis na Cyan line sa gitna na nagfi-fade out */
 
@@ -7352,21 +5871,15 @@ body {
 
     background-size: 100% 200%;
 
-    
-
     /* Ang animation na nagpapababa sa scanner line */
 
     animation: scanPulse 6s ease-in-out infinite; 
-
-    
 
     pointer-events: none;
 
     z-index: 0;
 
 }
-
-
 
 /* 4. SECURITY LOCK: Siguraduhing lahat ng Buttons at Text ay nasa Ibbaw (Z-index 1) */
 
@@ -7378,8 +5891,6 @@ body {
 
 }
 
-
-
 /* 5. THE LIVE ANIMATIONS */
 
 @keyframes radarSpin {
@@ -7389,8 +5900,6 @@ body {
     100% { transform: rotate(360deg); }
 
 }
-
-
 
 @keyframes scanPulse {
 
@@ -7402,15 +5911,11 @@ body {
 
 }
 
-
-
 /* =========================================
 
    🌟 THE PANELIST-BAIT UI UPGRADE 🌟
 
    ========================================= */
-
-
 
 /* --- 1. DASHBOARD RESTRUCTURE --- */
 
@@ -7430,19 +5935,15 @@ body {
 
 .sys-status { font-family: 'Orbitron'; font-size: 12px; color: #00ff41; letter-spacing: 2px; }
 
-.alert-text { color: #ff0055 !important; font-size: 12px; margin: 0; padding: 5px; }
+.alert-text { color: #ff0055; font-size: 12px; margin: 0; padding: 5px; }
 
-.alert-text:hover { box-shadow: none !important; text-shadow: 0 0 10px #ff0055; }
-
-
+.alert-text:hover { box-shadow: none; text-shadow: 0 0 10px #ff0055; }
 
 .dashboard-body {
 
     display: flex; gap: 30px; padding: 30px;
 
 }
-
-
 
 /* Glassmorphism Panels */
 
@@ -7460,8 +5961,6 @@ body {
 
 }
 
-
-
 .identity-panel {
 
     width: 35%; border-radius: 15px; padding: 30px;
@@ -7470,15 +5969,11 @@ body {
 
 }
 
-
-
 .mission-control-panel {
 
     width: 65%; display: flex; flex-direction: column; justify-content: center;
 
 }
-
-
 
 /* Avatar Hologram Effect */
 
@@ -7506,8 +6001,6 @@ body {
 
 @keyframes avatarScan { 0% { top: -10%; } 100% { top: 110%; } }
 
-
-
 /* Typography inside Dashboard */
 
 .agent-name { margin: 0; font-family: 'Orbitron'; font-size: 26px; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
@@ -7518,27 +6011,21 @@ body {
 
 .resource-box .coin-value { color: #ffd700; font-family: 'Orbitron'; font-size: 18px; font-weight: bold; }
 
-
-
 /* Grid Layouts */
 
 .sub-modes-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
 
 .terminals-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
 
-
-
 /* Buttons */
 
-.action-btn { padding: 15px 5px !important; font-size: 12px !important; }
+.action-btn { padding: 15px 5px; font-size: 12px; }
 
-.class-btn { border-color: #ffd700 !important; color: #ffd700 !important; }
+.class-btn { border-color: #ffd700; color: #ffd700; }
 
-.campaign-btn { font-size: 22px !important; padding: 25px !important; margin-bottom: 15px !important; position: relative; overflow: hidden; }
+.campaign-btn { font-size: 22px; padding: 25px; margin-bottom: 15px; position: relative; overflow: hidden; }
 
-.campaign-btn:hover { box-shadow: 0 0 40px #00e5ff !important; }
-
-
+.campaign-btn:hover { box-shadow: 0 0 40px #00e5ff; }
 
 .terminal-btn {
 
@@ -7558,13 +6045,9 @@ body {
 
 .terminal-btn:hover .label { color: #fff; }
 
-
-
 .jessbook-btn { border-color: #00ff41; } .jessbook-btn:hover { border-color: #00ff41; background: rgba(0,255,65,0.1); box-shadow: 0 5px 15px rgba(0,255,65,0.3); }
 
 .incubator-btn { border-color: #b000ff; } .incubator-btn:hover { border-color: #b000ff; background: rgba(176,0,255,0.1); box-shadow: 0 5px 15px rgba(176,0,255,0.3); }
-
-
 
 /* --- 2. JESSBOT HOLOGRAPHIC CORE (BOTTOM-LEFT) --- */
 
@@ -7575,8 +6058,6 @@ body {
     display: flex; flex-direction: column; align-items: flex-start;
 
 }
-
-
 
 #nexus-ai-button {
 
@@ -7589,8 +6070,6 @@ body {
 #nexus-ai-button:hover .orb-core { box-shadow: 0 0 30px #00e5ff, 0 0 60px #fff; background: #fff; }
 
 #nexus-ai-button:hover .ai-label { color: #fff; text-shadow: 0 0 10px #00e5ff; }
-
-
 
 .holographic-orb {
 
@@ -7624,19 +6103,13 @@ body {
 
 .ring-2 { border-left-color: transparent; border-right-color: transparent; animation: coreSpin 3s linear infinite reverse; scale: 1.2; opacity: 0.5; }
 
-
-
 .ai-label { font-family: 'Orbitron'; font-weight: 900; color: #00e5ff; font-size: 14px; letter-spacing: 2px; transition: 0.3s; }
-
-
 
 @keyframes orbFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
 @keyframes orbPulse { 0% { opacity: 0.7; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.1); } }
 
 @keyframes coreSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-
 
 /* AI Chat Terminal */
 
@@ -7656,8 +6129,6 @@ body {
 
 .ai-titles h3 { font-size: 18px; color: #fff; text-shadow: 0 0 10px #00e5ff; }
 
-
-
 /* AI Waveform (Thinking) */
 
 #ai-waveform { display: flex; justify-content: center; gap: 5px; padding: 10px; background: rgba(0, 229, 255, 0.05); }
@@ -7672,8 +6143,6 @@ body {
 
 @keyframes waveThink { 0% { height: 5px; } 100% { height: 25px; background: #fff; box-shadow: 0 0 10px #00e5ff; } }
 
-
-
 /* --- 3. COMMS RADAR PING (RIGHT-EDGE) --- */
 
 #comms-sidebar {
@@ -7685,8 +6154,6 @@ body {
     background: rgba(5, 10, 15, 0.75); /* More transparent to show blur */
 
 }
-
-
 
 /* The Radar Pulse effect on the toggle button */
 
@@ -7712,8 +6179,6 @@ body {
 
 }
 
-
-
 /* --- FIXED TERMINALS GRID (Naging 5 columns para kasya ang COMMS) --- */
 
 .terminals-grid { 
@@ -7725,8 +6190,6 @@ body {
     gap: 10px; 
 
 }
-
-
 
 /* COMMS Button Special Colors (Neon Pink/Red) */
 
@@ -7742,25 +6205,19 @@ body {
 
 }
 
-
-
 /* --- FORCE Z-INDEX PARA HINDI MATABUNAN ANG SIDEBAR --- */
 
 #comms-sidebar {
 
-    z-index: 9999999 !important; /* Siguradong nasa ibabaw ng lahat ng modals */
+    z-index: 9999999 ; /* Siguradong nasa ibabaw ng lahat ng modals */
 
 }
-
-
 
 #comms-toggle-btn {
 
-    z-index: 9999999 !important; /* Para sa floating button kung nasa loob ng laban */
+    z-index: 9999999 ; /* Para sa floating button kung nasa loob ng laban */
 
 }
-
-
 
 /* --- GLOBAL MODAL OVERLAY --- */
 
@@ -7798,8 +6255,6 @@ body {
 
 }
 
-
-
 #armory-modal.active, #teacher-mode-modal.active {
 
     opacity: 1;
@@ -7809,8 +6264,6 @@ body {
     transform: scale(1); /* Scale to full size on active */
 
 }
-
-
 
 /* --- LANDSCAPE MODAL CONTAINER --- */
 
@@ -7844,8 +6297,6 @@ body {
 
 }
 
-
-
 @keyframes modal-pulse {
 
     from { box-shadow: 0 0 40px rgba(0, 255, 255, 0.2), inset 0 0 20px rgba(0, 255, 255, 0.1); border-color: var(--neon-blue); }
@@ -7853,8 +6304,6 @@ body {
     to { box-shadow: 0 0 60px rgba(0, 200, 255, 0.4), inset 0 0 30px rgba(0, 200, 255, 0.2); border-color: #00ccff; }
 
 }
-
-
 
 /* --- MODAL HEADER --- */
 
@@ -7874,8 +6323,6 @@ body {
 
 }
 
-
-
 .modal-title {
 
     font-family: 'Orbitron', sans-serif;
@@ -7891,8 +6338,6 @@ body {
     letter-spacing: 2px;
 
 }
-
-
 
 .modal-close-btn {
 
@@ -7918,8 +6363,6 @@ body {
 
 }
 
-
-
 .modal-close-btn:hover {
 
     background: var(--neon-pink);
@@ -7929,8 +6372,6 @@ body {
     box-shadow: 0 0 20px var(--neon-pink);
 
 }
-
-
 
 /* --- ARMORY LAYOUT --- */
 
@@ -7945,8 +6386,6 @@ body {
     overflow: hidden;
 
 }
-
-
 
 .armory-sidebar {
 
@@ -7963,8 +6402,6 @@ body {
     padding-right: 20px;
 
 }
-
-
 
 .armory-tab {
 
@@ -7996,8 +6433,6 @@ body {
 
 }
 
-
-
 .armory-tab:hover, .armory-tab.active {
 
     background: rgba(0, 255, 255, 0.2);
@@ -8008,8 +6443,6 @@ body {
 
 }
 
-
-
 .armory-content-area {
 
     flex: 1;
@@ -8019,8 +6452,6 @@ body {
     padding-right: 10px;
 
 }
-
-
 
 /* Wider Item Cards for Landscape */
 
@@ -8033,8 +6464,6 @@ body {
     gap: 25px;
 
 }
-
-
 
 .item-card {
 
@@ -8054,8 +6483,6 @@ body {
 
 }
 
-
-
 .item-card:hover {
 
     transform: translateY(-5px) scale(1.03);
@@ -8065,10 +6492,6 @@ body {
     border-color: var(--neon-blue);
 
 }
-
-
-
-
 
 /* --- TEACHER MODE LAYOUT --- */
 
@@ -8086,8 +6509,6 @@ body {
 
 }
 
-
-
 .teacher-column {
 
     flex: 1;
@@ -8099,8 +6520,6 @@ body {
     gap: 25px;
 
 }
-
-
 
 .teacher-section {
 
@@ -8115,8 +6534,6 @@ body {
     box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.05);
 
 }
-
-
 
 .section-title {
 
@@ -8135,8 +6552,6 @@ body {
     padding-bottom: 10px;
 
 }
-
-
 
 /* Form Inputs Redesign */
 
@@ -8164,8 +6579,6 @@ body {
 
 }
 
-
-
 .teacher-input:focus {
 
     box-shadow: 0 0 15px var(--neon-blue);
@@ -8173,8 +6586,6 @@ body {
     background: rgba(0, 255, 255, 0.1);
 
 }
-
-
 
 /* Controls Container */
 
@@ -8195,8 +6606,6 @@ body {
     border: 1px solid rgba(0, 255, 255, 0.2);
 
 }
-
-
 
 /* Option Buttons (Threat, Mission Type) */
 
@@ -8230,8 +6639,6 @@ body {
 
 }
 
-
-
 .option-btn:hover {
 
     background: rgba(0, 255, 255, 0.1);
@@ -8239,8 +6646,6 @@ body {
     color: #fff;
 
 }
-
-
 
 .option-btn.active {
 
@@ -8255,8 +6660,6 @@ body {
     font-weight: bold;
 
 }
-
-
 
 /* Mission Summary Panel */
 
@@ -8274,8 +6677,6 @@ body {
 
 }
 
-
-
 .summary-item {
 
     display: flex;
@@ -8290,8 +6691,6 @@ body {
 
 }
 
-
-
 .summary-value {
 
     color: var(--neon-green);
@@ -8299,8 +6698,6 @@ body {
     font-weight: bold;
 
 }
-
-
 
 /* Initialize Button */
 
@@ -8338,8 +6735,6 @@ body {
 
 }
 
-
-
 .init-btn-large::before {
 
     content: '';
@@ -8360,15 +6755,11 @@ body {
 
 }
 
-
-
 .init-btn-large:hover::before {
 
     left: 100%;
 
 }
-
-
 
 .init-btn-large:hover {
 
@@ -8378,15 +6769,11 @@ body {
 
 }
 
-
-
 /* =========================================
 
    👨‍🏫 CLASSROOM SETUP OVERHAUL
 
    ========================================= */
-
-
 
 .setup-grid-layout {
 
@@ -8404,8 +6791,6 @@ body {
 
 }
 
-
-
 .setup-column {
 
     display: flex;
@@ -8415,8 +6800,6 @@ body {
     gap: 25px;
 
 }
-
-
 
 .setup-section-title {
 
@@ -8435,8 +6818,6 @@ body {
     border-bottom: 1px solid rgba(0, 229, 255, 0.3);
 
 }
-
-
 
 .setup-item {
 
@@ -8458,8 +6839,6 @@ body {
 
 }
 
-
-
 .setup-item:hover {
 
     border-color: rgba(0, 229, 255, 0.4);
@@ -8467,8 +6846,6 @@ body {
     background: rgba(0, 229, 255, 0.02);
 
 }
-
-
 
 .setup-item label {
 
@@ -8483,8 +6860,6 @@ body {
     letter-spacing: 2px;
 
 }
-
-
 
 /* Custom Cyber Input */
 
@@ -8516,8 +6891,6 @@ body {
 
 }
 
-
-
 .cyber-input:focus {
 
     border-color: #00e5ff;
@@ -8525,8 +6898,6 @@ body {
     box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
 
 }
-
-
 
 /* Custom Stepper Upgrade */
 
@@ -8548,8 +6919,6 @@ body {
 
 }
 
-
-
 .step-btn {
 
     background: #0b1521;
@@ -8568,8 +6937,6 @@ body {
 
 }
 
-
-
 .step-btn:hover {
 
     background: #00e5ff;
@@ -8577,8 +6944,6 @@ body {
     color: #000;
 
 }
-
-
 
 .step-display {
 
@@ -8602,8 +6967,6 @@ body {
 
 }
 
-
-
 /* Footer / Launch Button */
 
 .setup-footer {
@@ -8620,37 +6983,31 @@ body {
 
 }
 
-
-
 .launch-btn {
 
-    width: 100% !important;
+    width: 100%;
 
-    font-size: 20px !important;
+    font-size: 20px;
 
-    padding: 18px !important;
+    padding: 18px;
 
-    letter-spacing: 3px !important;
+    letter-spacing: 3px;
 
-    margin: 0 !important;
+    margin: 0;
 
-    background: linear-gradient(90deg, #00e5ff, #00ffaa) !important;
+    background: linear-gradient(90deg, #00e5ff, #00ffaa);
 
-    color: #000 !important;
+    color: #000;
 
 }
-
-
 
 .launch-btn:hover {
 
-    box-shadow: 0 0 40px rgba(0, 255, 170, 0.6) !important;
+    box-shadow: 0 0 40px rgba(0, 255, 170, 0.6);
 
-    transform: translateY(-2px) !important;
+    transform: translateY(-2px);
 
 }
-
-
 
 /* Responsive tweaks for Chips */
 
@@ -8660,15 +7017,11 @@ body {
 
 }
 
-
-
 /* =========================================
 
    🏆 LEADERBOARD STYLING UPGRADES
 
    ========================================= */
-
-
 
 .lb-filter-btn {
 
@@ -8694,8 +7047,6 @@ body {
 
 }
 
-
-
 .lb-filter-btn:hover {
 
     background: rgba(0, 229, 255, 0.1);
@@ -8707,8 +7058,6 @@ body {
     transform: translateX(5px);
 
 }
-
-
 
 .lb-filter-btn.active {
 
@@ -8724,8 +7073,6 @@ body {
 
 }
 
-
-
 #lb-table-body tr {
 
     border-bottom: 1px solid #222;
@@ -8734,15 +7081,11 @@ body {
 
 }
 
-
-
 #lb-table-body tr:hover {
 
     background: rgba(0, 229, 255, 0.05);
 
 }
-
-
 
 #lb-table-body td {
 
@@ -8750,15 +7093,11 @@ body {
 
 }
 
-
-
 /* =========================================
 
    🛸 IN-GAME TACTICAL COCKPIT OVERHAUL
 
    ========================================= */
-
-
 
 /* --- 1. THE TACTICAL VISOR (TOP HUD) --- */
 
@@ -8782,8 +7121,6 @@ body {
 
 }
 
-
-
 .visor-panel {
 
     background: rgba(5, 10, 20, 0.85);
@@ -8798,8 +7135,6 @@ body {
 
 }
 
-
-
 .left-visor {
 
     border-top: none; border-left: none;
@@ -8811,8 +7146,6 @@ body {
     width: 250px;
 
 }
-
-
 
 .right-visor {
 
@@ -8827,8 +7160,6 @@ body {
     display: flex; flex-direction: column; align-items: flex-end;
 
 }
-
-
 
 .center-visor {
 
@@ -8850,8 +7181,6 @@ body {
 
 }
 
-
-
 .visor-data {
 
     display: flex; justify-content: space-between; align-items: center;
@@ -8859,8 +7188,6 @@ body {
     width: 100%; margin-bottom: 5px;
 
 }
-
-
 
 .cyber-track {
 
@@ -8877,8 +7204,6 @@ body {
     transition: width 0.3s;
 
 }
-
-
 
 /* --- 2. AUTO-RETRACTING RADAR --- */
 
@@ -8902,8 +7227,6 @@ body {
 
 }
 
-
-
 /* The magic hover effect! */
 
 .radar-collapsed:hover {
@@ -8911,8 +7234,6 @@ body {
     transform: translateX(0); /* Slides in when hovered */
 
 }
-
-
 
 .radar-handle {
 
@@ -8944,8 +7265,6 @@ body {
 
 }
 
-
-
 /* --- 3. THE COMMAND CONSOLE (BOTTOM HUD) --- */
 
 .command-console {
@@ -8963,8 +7282,6 @@ body {
     z-index: 60;
 
 }
-
-
 
 .console-wing {
 
@@ -8986,8 +7303,6 @@ body {
 
 }
 
-
-
 /* Left Utility Buttons */
 
 .tactical-btn {
@@ -9005,8 +7320,6 @@ body {
 .alert-btn { border-color: #ffd700; color: #ffd700; }
 
 .alert-btn:hover { background: #ffd700; color: #000; box-shadow: 0 0 15px #ffd700; }
-
-
 
 /* Right Heavy Skill Triggers */
 
@@ -9028,8 +7341,6 @@ body {
 
 .trigger-btn:active { transform: translateY(2px); }
 
-
-
 .emp-trigger { border-bottom: 3px solid #ffaa00; }
 
 .emp-trigger:hover { box-shadow: 0 5px 20px rgba(255, 170, 0, 0.4); border-color: #ffaa00; }
@@ -9038,8 +7349,6 @@ body {
 
 .slow-trigger:hover { box-shadow: 0 5px 20px rgba(0, 229, 255, 0.4); border-color: #00e5ff; }
 
-
-
 .trigger-icon { font-size: 24px; filter: drop-shadow(0 0 5px currentColor); }
 
 .trigger-info { display: flex; flex-direction: column; }
@@ -9047,8 +7356,6 @@ body {
 .t-name { font-family: 'Orbitron'; font-size: 14px; font-weight: bold; }
 
 .t-key { font-family: 'Rajdhani'; font-size: 10px; color: #888; }
-
-
 
 /* Center Input Engine */
 
@@ -9063,8 +7370,6 @@ body {
     margin-bottom: -10px; /* Pushes it slightly down into the bezel */
 
 }
-
-
 
 .core-hologram {
 
@@ -9086,41 +7391,35 @@ body {
 
 }
 
-
-
 /* OVERRIDE the old input box styling */
 
 #player-input {
 
     width: 100%;
 
-    background: transparent !important;
+    background: transparent;
 
-    border: none !important;
+    border: none;
 
-    border-bottom: 2px dashed rgba(0, 229, 255, 0.5) !important;
+    border-bottom: 2px dashed rgba(0, 229, 255, 0.5);
 
-    border-radius: 0 !important;
+    border-radius: 0;
 
-    box-shadow: none !important;
+    box-shadow: none;
 
-    font-size: 32px !important;
+    font-size: 32px;
 
-    padding: 5px !important;
+    padding: 5px;
 
 }
-
-
 
 #player-input:focus {
 
-    border-bottom: 2px solid #ffd700 !important;
+    border-bottom: 2px solid #ffd700;
 
-    text-shadow: 0 0 20px #ffd700 !important;
+    text-shadow: 0 0 20px #ffd700;
 
 }
-
-
 
 .console-core .input-hint {
 
@@ -9148,31 +7447,25 @@ body {
 
 }
 
-
-
 /* =========================================
 
    🛸 IN-GAME TACTICAL COCKPIT (HOTFIXES)
 
    ========================================= */
 
-
-
 /* 1. Z-INDEX FIX: Force UI Layer to stay on top of the Canvas */
 
 #ui-layer {
 
-    z-index: 100 !important;
+    z-index: 100;
 
 }
 
 canvas {
 
-    z-index: 1 !important;
+    z-index: 1;
 
 }
-
-
 
 /* 2. LOWER THE INPUT BOX */
 
@@ -9194,19 +7487,15 @@ canvas {
 
 }
 
-
-
 #player-input {
 
-    font-size: 24px !important; /* 🟢 Medyo pinaliit para mas sleek */
+    font-size: 24px ; /* 🟢 Medyo pinaliit para mas sleek */
 
-    padding: 8px !important;
+    padding: 8px;
 
-    background: rgba(0, 5, 10, 0.95) !important;
+    background: rgba(0, 5, 10, 0.95);
 
 }
-
-
 
 /* 3. RELOCATE COMMS TO THE LEFT */
 
@@ -9236,8 +7525,6 @@ canvas {
 
 }
 
-
-
 #comms-sidebar {
 
     left: 0; right: auto; /* 🟢 Nilipat sa kaliwa */
@@ -9252,15 +7539,11 @@ canvas {
 
 }
 
-
-
 #comms-sidebar.closed { 
 
     left: -360px; right: auto; /* Slide palabas pa-kaliwa */
 
 }
-
-
 
 /* 4. JESSBOT CORE (BOTTOM LEFT) - Adjust para hindi matabunan */
 
@@ -9276,8 +7559,6 @@ canvas {
 
 }
 
-
-
 /* 5. TIGHTEN COMMAND CONSOLE (BOTTOM HUD) */
 
 .command-console {
@@ -9288,8 +7569,6 @@ canvas {
 
 }
 
-
-
 .console-wing {
 
     background: rgba(0, 5, 10, 0.8);
@@ -9299,8 +7578,6 @@ canvas {
     padding: 8px;
 
 }
-
-
 
 /* Make utility buttons slightly smaller */
 
@@ -9316,15 +7593,11 @@ canvas {
 
 }
 
-
-
 /* =========================================
 
    🕹️ FREEFORM UI & MAGNETIC DOCKING CSS
 
    ========================================= */
-
-
 
 /* --- 1. COMMS MASTER WRAPPER --- */
 
@@ -9343,8 +7616,6 @@ canvas {
     align-items: center;
 
 }
-
-
 
 /* --- 2. COMMS HANDLE (The Draggable Button) --- */
 
@@ -9374,13 +7645,9 @@ canvas {
 
 }
 
-
-
 .comms-handle:active { cursor: grabbing; }
 
 .comms-handle:hover { background: #00e5ff; color: #000; }
-
-
 
 .handle-lines {
 
@@ -9394,8 +7661,6 @@ canvas {
 
 }
 
-
-
 .comms-text {
 
     font-family: 'Orbitron'; font-weight: bold; font-size: 14px; letter-spacing: 2px;
@@ -9403,8 +7668,6 @@ canvas {
     writing-mode: vertical-rl; /* Text flows top to bottom */
 
 }
-
-
 
 /* --- 3. MAGNETIC ORIENTATION LOGIC --- */
 
@@ -9428,8 +7691,6 @@ canvas {
 
 }
 
-
-
 /* DOCKED RIGHT */
 
 .docked-right { right: 0; flex-direction: row; } /* Button is on the left of the sidebar */
@@ -9447,8 +7708,6 @@ canvas {
     transform-origin: right center;
 
 }
-
-
 
 /* --- 4. MILITARY ACRYLIC PANELS (Sidebar & Terminal) --- */
 
@@ -9468,21 +7727,15 @@ canvas {
 
 }
 
-
-
 /* Open/Close states for sidebar inside wrapper */
 
 #comms-sidebar.closed { transform: scaleX(0); opacity: 0; pointer-events: none; width: 0; }
 
 #comms-sidebar:not(.closed) { transform: scaleX(1); opacity: 1; width: 350px; }
 
-
-
 /* Internal Details */
 
 .empty-state { color: #556; font-size: 12px; text-align: center; margin-top: 30px; font-family: 'Orbitron'; font-style: italic; }
-
-
 
 /* Neon Tab Underlines */
 
@@ -9502,8 +7755,6 @@ canvas {
 
 }
 
-
-
 /* --- 5. JESSBOT FREE-ROAM TERMINAL --- */
 
 #nexus-ai-wrapper {
@@ -9516,13 +7767,9 @@ canvas {
 
 }
 
-
-
 #nexus-ai-button { cursor: grab; }
 
 #nexus-ai-button:active { cursor: grabbing; }
-
-
 
 #nexus-terminal {
 
@@ -9552,8 +7799,6 @@ canvas {
 
 }
 
-
-
 /* Scanline Effect inside Jessbot Chat */
 
 #nexus-terminal::before {
@@ -9566,31 +7811,23 @@ canvas {
 
 }
 
-
-
 #nexus-chat-history { z-index: 1; position: relative; } /* Sit above scanlines */
-
-
 
 /* Sharp Data-Block Chat Bubbles */
 
 .holo-msg {
 
-    border-radius: 0 !important; /* Sharp edges */
+    border-radius: 0 ; /* Sharp edges */
 
     clip-path: polygon(0 0, 95% 0, 100% 10px, 100% 100%, 5% 100%, 0 calc(100% - 10px));
 
 }
-
-
 
 /* =========================================
 
    🛡️ SYMMETRICAL TACTICAL SIDEBARS (COMMS & JESSBOT)
 
    ========================================= */
-
-
 
 .tactical-sidebar {
 
@@ -9622,8 +7859,6 @@ canvas {
 
 }
 
-
-
 /* Symmetrical Positioning */
 
 .left-side {
@@ -9638,8 +7873,6 @@ canvas {
 
 .left-side.closed { transform: translateX(-100%); }
 
-
-
 .right-side {
 
     right: 0;
@@ -9652,8 +7885,6 @@ canvas {
 
 .right-side.closed { transform: translateX(100%); }
 
-
-
 /* Subtle internal scanline */
 
 .sidebar-scanline {
@@ -9665,8 +7896,6 @@ canvas {
     pointer-events: none; z-index: 0;
 
 }
-
-
 
 /* Headers */
 
@@ -9688,8 +7917,6 @@ canvas {
 
 .ts-close-btn:hover { transform: scale(1.2); text-shadow: 0 0 10px currentColor; }
 
-
-
 /* Tabs (Comms) */
 
 .ts-tabs { display: flex; background: rgba(0,0,0,0.6); border-bottom: 1px solid #333; z-index: 1; }
@@ -9708,15 +7935,11 @@ canvas {
 
 .ts-tab.active { color: #00e5ff; border-bottom-color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
 
-
-
 /* Content Area */
 
 .ts-content { flex-grow: 1; padding: 20px; overflow-y: auto; z-index: 1; position: relative; }
 
 .scanning-text { color: #555; font-family: 'Courier New'; text-align: center; margin-top: 50px; animation: blink 1.5s infinite; }
-
-
 
 /* Tactical CLI Input Box */
 
@@ -9748,8 +7971,6 @@ canvas {
 
 .cli-send-btn:hover { text-shadow: 0 0 10px currentColor; transform: scale(1.1); }
 
-
-
 /* --- JESSBOT SPECIFIC (Data Blocks instead of Bubbles) --- */
 
 .data-block {
@@ -9770,8 +7991,6 @@ canvas {
 
 }
 
-
-
 .ai-block { 
 
     background: rgba(0, 229, 255, 0.05); border-left: 3px solid #ffd700; 
@@ -9782,8 +8001,6 @@ canvas {
 
 .ai-block .block-label { color: #ffd700; }
 
-
-
 .user-block { 
 
     background: rgba(255, 255, 255, 0.05); border-right: 3px solid #00e5ff; 
@@ -9793,8 +8010,6 @@ canvas {
 }
 
 .user-block .block-label { color: #00e5ff; }
-
-
 
 /* AI Waveform */
 
@@ -9809,8 +8024,6 @@ canvas {
 .wave-bar:nth-child(4) { animation-delay: 0.3s; }
 
 .wave-bar:nth-child(5) { animation-delay: 0.4s; }
-
-
 
 /* Comms Agent Cards */
 
@@ -9828,15 +8041,11 @@ canvas {
 
 .encryption-notice { text-align: center; color: #ff0055; font-size: 10px; font-family: 'Courier New'; margin-bottom: 15px; }
 
-
-
 /* =========================================
 
    🧠 JESSBOT RIGHT-SIDE & COMMAND BUTTONS
 
    ========================================= */
-
-
 
 /* Ensure Right Side Positioning is Absolute */
 
@@ -9856,8 +8065,6 @@ canvas {
 
 }
 
-
-
 /* Correct Slide-out Animation for Right Side */
 
 .tactical-sidebar.right-side.closed {
@@ -9865,8 +8072,6 @@ canvas {
     transform: translateX(100%); /* Slides completely out to the right */
 
 }
-
-
 
 /* Command Grid layout at the bottom of JessBot */
 
@@ -9887,8 +8092,6 @@ canvas {
     z-index: 5;
 
 }
-
-
 
 .ai-cmd-btn {
 
@@ -9922,8 +8125,6 @@ canvas {
 
 }
 
-
-
 .ai-cmd-btn:hover {
 
     background: rgba(255, 215, 0, 0.2);
@@ -9936,8 +8137,6 @@ canvas {
 
 }
 
-
-
 .cmd-icon {
 
     font-size: 16px;
@@ -9945,8 +8144,6 @@ canvas {
     filter: drop-shadow(0 0 5px #ffd700);
 
 }
-
-
 
 /* AI Readout Formatting (For the generated reports) */
 
@@ -9978,15 +8175,11 @@ canvas {
 
 .ai-readout .highlight-gold { color: #ffd700; font-weight: bold; }
 
-
-
 /* =========================================
 
    🧠 JESSBOT RIGHT-SIDE & COMMAND BUTTONS
 
    ========================================= */
-
-
 
 /* The Right Edge Toggle Button */
 
@@ -10030,8 +8223,6 @@ canvas {
 
 #jessbot-toggle-btn:hover { background: #ffd700; color: black; }
 
-
-
 /* Ensure Right Side Positioning is Absolute */
 
 .tactical-sidebar.right-side {
@@ -10050,15 +8241,11 @@ canvas {
 
 }
 
-
-
 .tactical-sidebar.right-side.closed {
 
     transform: translateX(100%); /* Slides completely out to the right */
 
 }
-
-
 
 /* Command Grid layout at the bottom of JessBot */
 
@@ -10079,8 +8266,6 @@ canvas {
     z-index: 5;
 
 }
-
-
 
 .ai-cmd-btn {
 
@@ -10114,8 +8299,6 @@ canvas {
 
 }
 
-
-
 .ai-cmd-btn:hover {
 
     background: rgba(255, 215, 0, 0.2);
@@ -10128,8 +8311,6 @@ canvas {
 
 }
 
-
-
 .cmd-icon {
 
     font-size: 16px;
@@ -10137,8 +8318,6 @@ canvas {
     filter: drop-shadow(0 0 5px #ffd700);
 
 }
-
-
 
 /* AI Readout Formatting (For the generated reports) */
 
@@ -10170,15 +8349,11 @@ canvas {
 
 .ai-readout .highlight-gold { color: #ffd700; font-weight: bold; }
 
-
-
 /* =========================================
 
    🧠 JESSBOT CHATHEAD TOGGLE (AAA UPGRADE)
 
    ========================================= */
-
-
 
 /* The Wall Mount / Bracket */
 
@@ -10224,8 +8399,6 @@ canvas {
 
 }
 
-
-
 /* Hovering pulls it out slightly and brightens it */
 
 #jessbot-toggle-btn:hover {
@@ -10239,8 +8412,6 @@ canvas {
     padding-right: 15px;
 
 }
-
-
 
 /* 🟢 The 3D Holographic Orb */
 
@@ -10259,8 +8430,6 @@ canvas {
     align-items: center;
 
 }
-
-
 
 /* The Breathing AI Core */
 
@@ -10282,8 +8451,6 @@ canvas {
 
 }
 
-
-
 /* The Spinning Orbit Rings */
 
 .chathead-orb .gold-ring {
@@ -10302,8 +8469,6 @@ canvas {
 
 }
 
-
-
 .chathead-orb .ring-1 { 
 
     border-top-color: transparent; 
@@ -10313,8 +8478,6 @@ canvas {
     animation: coreSpin 3s linear infinite; 
 
 }
-
-
 
 .chathead-orb .ring-2 { 
 
@@ -10332,8 +8495,6 @@ canvas {
 
 }
 
-
-
 /* When hovered, the core goes full supernova */
 
 #jessbot-toggle-btn:hover .gold-core {
@@ -10345,8 +8506,6 @@ canvas {
     transform: scale(1.3);
 
 }
-
-
 
 /* Typography */
 
@@ -10372,8 +8531,6 @@ canvas {
 
 }
 
-
-
 #jessbot-toggle-btn:hover .chathead-label {
 
     color: #fff;
@@ -10381,8 +8538,6 @@ canvas {
     text-shadow: 0 0 15px #ffd700;
 
 }
-
-
 
 /* Keyframes for the heartbeat of the AI */
 
@@ -10394,8 +8549,6 @@ canvas {
 
 }
 
-
-
 /* Reusing the spin keyframe if you don't already have it */
 
 @keyframes coreSpin { 
@@ -10405,10 +8558,6 @@ canvas {
     100% { transform: rotate(360deg); } 
 
 }
-
-
-
-
 
 /* =========================================
 
@@ -10440,8 +8589,6 @@ canvas {
 
 }
 
-
-
 .decryption-step.final-answer {
 
     border-left: 4px solid #ffd700;
@@ -10458,8 +8605,6 @@ canvas {
 
 }
 
-
-
 .step-label {
 
     color: #00ff41;
@@ -10469,8 +8614,6 @@ canvas {
     margin-right: 8px;
 
 }
-
-
 
 @keyframes slideInLeft {
 
@@ -10483,8 +8626,6 @@ canvas {
     }
 
 }
-
-
 
 /* =========================================
 
@@ -10512,8 +8653,6 @@ canvas {
 
 }
 
-
-
 /* MINIMIZED (Picture-in-Picture Mode) */
 
 #nexus-meet-app.pip-mode {
@@ -10530,8 +8669,6 @@ canvas {
 
 }
 
-
-
 #nexus-meet-app.pip-mode .meet-sidebar, 
 
 #nexus-meet-app.pip-mode .meet-footer {
@@ -10539,8 +8676,6 @@ canvas {
     display: none; /* Hide chat and buttons when minimized */
 
 }
-
-
 
 /* Header */
 
@@ -10566,9 +8701,7 @@ canvas {
 
 .meet-window-controls button:hover { color: #fff; }
 
-.btn-close-meet:hover { color: #ff0055 !important; }
-
-
+.btn-close-meet:hover { color: #ff0055; }
 
 /* Body Layout */
 
@@ -10577,8 +8710,6 @@ canvas {
     flex-grow: 1; display: flex; overflow: hidden;
 
 }
-
-
 
 /* Video Area */
 
@@ -10620,8 +8751,6 @@ canvas {
 
 }
 
-
-
 /* Sidebar */
 
 .meet-sidebar {
@@ -10647,8 +8776,6 @@ canvas {
 .meet-tabs button.active { color: #00e5ff; border-bottom: 2px solid #00e5ff; }
 
 .meet-tab-content { padding: 15px; flex-grow: 1; overflow-y: auto; }
-
-
 
 /* Footer Controls (The GMeet Buttons) */
 
@@ -10678,15 +8805,11 @@ canvas {
 
 .meet-ctrl-btn.danger:hover { background: #cc0044; }
 
-
-
 /* =========================================
 
    🔥 N.E.X.U.S. OVERDRIVE: STRIKE 1
 
    ========================================= */
-
-
 
 /* --- 1. 3D PARALLAX HELMET EFFECT --- */
 
@@ -10710,8 +8833,6 @@ canvas {
 
 }
 
-
-
 #ui-layer {
 
     transform-style: preserve-3d;
@@ -10720,11 +8841,9 @@ canvas {
 
     /* Z-index fix to ensure it stays above canvas but below modals */
 
-    z-index: 50 !important;
+    z-index: 50;
 
 }
-
-
 
 /* --- 2. DIEGETIC CLOAKING (Hide the old input box) --- */
 
@@ -10742,21 +8861,17 @@ canvas {
 
 }
 
-
-
 /* --- 3. DYNAMIC HUD GLOWS --- */
 
 .visor-panel {
 
-    background: rgba(2, 5, 10, 0.6) !important; /* Darker, less distracting */
+    background: rgba(2, 5, 10, 0.6) ; /* Darker, less distracting */
 
-    border: 1px solid rgba(0, 229, 255, 0.1) !important;
+    border: 1px solid rgba(0, 229, 255, 0.1);
 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
 
 }
-
-
 
 /* Add a faint CRT Vignette to the whole screen */
 
@@ -10776,15 +8891,11 @@ body::after {
 
 }
 
-
-
 /* =========================================
 
    💥 OVERDRIVE STRIKE 2: COMBAT IMPACT VFX
 
    ========================================= */
-
-
 
 /* 1. The Hit-Stop Flash (When destroying an enemy) */
 
@@ -10803,8 +8914,6 @@ body.hit-stop-active canvas {
     animation: hitStopFlash 0.1s ease-out;
 
 }
-
-
 
 /* 2. The Critical Damage Glitch (When player takes damage) */
 
@@ -10830,11 +8939,9 @@ body.hit-stop-active canvas {
 
     /* Nagdadagdag ng pulang dugo sa paligid ng screen */
 
-    box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.8) !important; 
+    box-shadow: inset 0 0 150px rgba(255, 0, 0, 0.8); 
 
 }
-
-
 
 /* =========================================
 
@@ -10842,19 +8949,15 @@ body.hit-stop-active canvas {
 
    ========================================= */
 
-
-
 /* The Golden Screen Vignette */
 
 body.overdrive-active::after {
 
-    background: radial-gradient(circle at center, transparent 40%, rgba(255, 215, 0, 0.3) 100%) !important;
+    background: radial-gradient(circle at center, transparent 40%, rgba(255, 215, 0, 0.3) 100%);
 
     animation: overdrivePulse 1s infinite alternate;
 
 }
-
-
 
 @keyframes overdrivePulse {
 
@@ -10864,25 +8967,21 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* Make the Input Box look like pure golden energy */
 
 .overdrive-active #player-input {
 
-    border-bottom: 4px solid #ffd700 !important;
+    border-bottom: 4px solid #ffd700;
 
-    color: #ffd700 !important;
+    color: #ffd700;
 
-    text-shadow: 0 0 30px #ffd700, 0 0 10px #ffffff !important;
+    text-shadow: 0 0 30px #ffd700, 0 0 10px #ffffff;
 
     transform: scale(1.1);
 
     animation: inputTremble 0.1s infinite;
 
 }
-
-
 
 @keyframes inputTremble {
 
@@ -10893,8 +8992,6 @@ body.overdrive-active::after {
     100% { transform: scale(1.1) translateX(-2px); }
 
 }
-
-
 
 /* Hyper-Glow for Combo Counter */
 
@@ -10908,8 +9005,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* =========================================
 
    ☢️ ABSOLUTE DASHBOARD OVERRIDE 
@@ -10918,31 +9013,29 @@ body.overdrive-active::after {
 
 .nuclear-show {
 
-    display: flex !important;
+    display: flex;
 
-    visibility: visible !important;
+    visibility: visible;
 
-    opacity: 1 !important;
+    opacity: 1;
 
-    position: fixed !important;
+    position: fixed;
 
-    top: 0 !important;
+    top: 0;
 
-    left: 0 !important;
+    left: 0;
 
-    width: 100vw !important;
+    width: 100vw;
 
-    height: 100vh !important;
+    height: 100vh;
 
-    z-index: 2147483647 !important; /* Pinakamataas na limit ng browser! */
+    z-index: 2147483647 ; /* Pinakamataas na limit ng browser! */
 
-    pointer-events: auto !important;
+    pointer-events: auto;
 
-    background: #05070a !important; /* Para matakpan ang background stars */
+    background: #05070a ; /* Para matakpan ang background stars */
 
 }
-
-
 
 /* =========================================
 
@@ -10950,73 +9043,63 @@ body.overdrive-active::after {
 
    ========================================= */
 
-
-
 /* 1. Banatin ang Game Wrapper sa buong screen para hindi mag 0x0 pixels */
 
 #game-wrapper {
 
-    position: fixed !important;
+    position: fixed;
 
-    top: 0 !important;
+    top: 0;
 
-    left: 0 !important;
+    left: 0;
 
-    width: 100vw !important;
+    width: 100vw;
 
-    height: 100vh !important;
+    height: 100vh;
 
     perspective: 1200px;
 
-    overflow: visible !important; /* Tanggalin ang pagiging invisible */
+    overflow: visible ; /* Tanggalin ang pagiging invisible */
 
-    z-index: 10 !important;
+    z-index: 10;
 
 }
-
-
 
 /* 2. Piliting umibabaw at mag-full screen ang Main Dashboard at ibang Modals */
 
 .modal {
 
-    position: fixed !important; 
+    position: fixed; 
 
-    top: 0 !important;
+    top: 0;
 
-    left: 0 !important;
+    left: 0;
 
-    width: 100vw !important;
+    width: 100vw;
 
-    height: 100vh !important;
+    height: 100vh;
 
-    z-index: 999999 !important; /* Pinakamataas sa buong system */
+    z-index: 999999 ; /* Pinakamataas sa buong system */
 
 }
-
-
 
 /* 3. Siguraduhing naitatago talaga ang hidden elements */
 
 .hidden {
 
-    display: none !important;
+    display: none;
 
-    opacity: 0 !important;
+    opacity: 0;
 
-    pointer-events: none !important;
+    pointer-events: none;
 
 }
-
-
 
 /* =========================================
 
    🔥 GOD-LEVEL TEACHER COMMAND CENTER 🔥
 
    ========================================= */
-
-
 
 /* 1. 📡 LIVE ROSTER (The Fleet) */
 
@@ -11031,8 +9114,6 @@ body.overdrive-active::after {
     padding: 20px;
 
 }
-
-
 
 .roster-card-god {
 
@@ -11058,8 +9139,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .roster-card-god:hover {
 
     transform: translateY(-5px) scale(1.02);
@@ -11069,8 +9148,6 @@ body.overdrive-active::after {
     background: linear-gradient(135deg, rgba(0, 255, 65, 0.2) 0%, rgba(0, 10, 20, 0.9) 100%);
 
 }
-
-
 
 /* Radar Sweep inside Roster */
 
@@ -11085,8 +9162,6 @@ body.overdrive-active::after {
     pointer-events: none;
 
 }
-
-
 
 /* 2. 🕵️‍♂️ SPY GRID (Live Telemetry) */
 
@@ -11110,8 +9185,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .spy-card-god:hover {
 
     border-color: #00e5ff;
@@ -11119,8 +9192,6 @@ body.overdrive-active::after {
     box-shadow: 0 5px 25px rgba(0, 229, 255, 0.2);
 
 }
-
-
 
 /* Target Crosshair Pattern inside Spy Card */
 
@@ -11148,8 +9219,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* Segmented Progress Bar (Hindi na solid line, putol-putol na parang sci-fi energy bar) */
 
 .spy-bar-hitech {
@@ -11171,8 +9240,6 @@ body.overdrive-active::after {
 .spy-fill-segment.active { opacity: 1; box-shadow: 0 0 10px #00e5ff; }
 
 .spy-fill-segment.jammed { background: #ff0055; opacity: 1; box-shadow: 0 0 10px #ff0055; animation: blink 0.2s infinite; }
-
-
 
 /* 3. 🏆 RANKINGS (The Holographic Podium) */
 
@@ -11208,8 +9275,6 @@ body.overdrive-active::after {
 
 .bronze::after { background: radial-gradient(ellipse, rgba(205, 127, 50, 0.4) 0%, transparent 70%); }
 
-
-
 /* Animated Floating Avatars on Podium */
 
 .podium-avatar-god {
@@ -11221,8 +9286,6 @@ body.overdrive-active::after {
     animation: orbFloat 3s ease-in-out infinite;
 
 }
-
-
 
 /* 4. 📄 DATA REPORTS (Tactical List) */
 
@@ -11248,15 +9311,13 @@ body.overdrive-active::after {
 
 .report-row-god td { border-bottom: 1px solid rgba(0, 229, 255, 0.1); }
 
-
-
 /* Warning Scanline for struggling students */
 
 .on-fire-row {
 
-    background: repeating-linear-gradient(45deg, rgba(255, 0, 85, 0.1), rgba(255, 0, 85, 0.1) 10px, rgba(0, 0, 0, 0.8) 10px, rgba(0, 0, 0, 0.8) 20px) !important;
+    background: repeating-linear-gradient(45deg, rgba(255, 0, 85, 0.1), rgba(255, 0, 85, 0.1) 10px, rgba(0, 0, 0, 0.8) 10px, rgba(0, 0, 0, 0.8) 20px);
 
-    border-left: 4px solid #ff0055 !important;
+    border-left: 4px solid #ff0055;
 
     animation: slideBg 2s linear infinite;
 
@@ -11264,13 +9325,11 @@ body.overdrive-active::after {
 
 @keyframes slideBg { from { background-position: 0 0; } to { background-position: 40px 0; } }
 
-
-
 /* 5. 🎖️ FINAL AWARDING MODAL (Cinematic End) */
 
 #awarding-modal .modal-content {
 
-    background: radial-gradient(circle at center, #0a0a1a 0%, #000000 100%) !important;
+    background: radial-gradient(circle at center, #0a0a1a 0%, #000000 100%);
 
     border: 2px solid #ffd700;
 
@@ -11308,15 +9367,11 @@ body.overdrive-active::after {
 
 @keyframes glassShine { 0% { left: -100%; } 20%, 100% { left: 200%; } }
 
-
-
 /* =========================================
 
    👑 GOD-LEVEL DASHBOARD AESTHETICS 👑
 
    ========================================= */
-
-
 
 /* --- 1. SPY GRID (CCTV PANOPTICON) --- */
 
@@ -11331,8 +9386,6 @@ body.overdrive-active::after {
     padding: 20px;
 
 }
-
-
 
 .spy-card-god {
 
@@ -11352,8 +9405,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .spy-card-god:hover {
 
     transform: translateY(-5px);
@@ -11364,8 +9415,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .spy-header {
 
     display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
@@ -11375,8 +9424,6 @@ body.overdrive-active::after {
 .spy-name { font-family: 'Orbitron'; font-size: 16px; font-weight: bold; color: white; }
 
 .spy-status { font-family: 'Rajdhani'; font-size: 10px; letter-spacing: 1px; font-weight: 900; }
-
-
 
 /* The Live CCTV Monitor */
 
@@ -11398,8 +9445,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .spy-cctv-screen {
 
     width: 100%; height: 100%; object-fit: cover;
@@ -11407,8 +9452,6 @@ body.overdrive-active::after {
     filter: contrast(1.2) saturation(1.5); /* Enhances the game colors */
 
 }
-
-
 
 /* CRT Scanline Overlay */
 
@@ -11423,8 +9466,6 @@ body.overdrive-active::after {
     pointer-events: none;
 
 }
-
-
 
 /* Camera Target UI */
 
@@ -11452,8 +9493,6 @@ body.overdrive-active::after {
 
 .cctv-crosshair::after { left: 50%; top: -10px; bottom: -10px; width: 1px; }
 
-
-
 /* REC Blinker */
 
 .cctv-rec {
@@ -11466,8 +9505,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .spy-footer {
 
     display: flex; justify-content: space-between;
@@ -11478,23 +9515,17 @@ body.overdrive-active::after {
 
 .spy-stat { font-family: 'Courier New', monospace; font-size: 11px; color: #888; font-weight: bold; }
 
-
-
-
-
 /* =========================================
 
    👑 N.E.X.U.S. GOD-TIER RANKINGS 👑
 
    ========================================= */
 
-
-
 /* The Main Tab Area */
 
 #view-podium {
 
-    display: flex !important;
+    display: flex;
 
     flex-direction: column;
 
@@ -11507,8 +9538,6 @@ body.overdrive-active::after {
     overflow-y: auto;
 
 }
-
-
 
 /* 3D Container for Pillars */
 
@@ -11532,8 +9561,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* Individual Holographic Pillar */
 
 .nexus-holo-pillar {
@@ -11552,15 +9579,11 @@ body.overdrive-active::after {
 
 }
 
-
-
 .nexus-holo-pillar:hover {
 
     transform: translateY(-20px) scale(1.05); /* Pops out significantly on hover */
 
 }
-
-
 
 /* 1. THE HOLOGRAM PROJECTOR BASE (Sa Sahig) */
 
@@ -11588,8 +9611,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* 2. THE GLOWING ENERGY BEAM (The Pillar Itself) */
 
 .nexus-energy-core {
@@ -11612,8 +9633,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* Laser Scanning Animation inside the beam */
 
 .nexus-energy-core::after {
@@ -11634,8 +9653,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 @keyframes beamScan {
 
     0% { transform: translateY(0); opacity: 0; }
@@ -11645,8 +9662,6 @@ body.overdrive-active::after {
     100% { transform: translateY(-350px); opacity: 0; }
 
 }
-
-
 
 /* 3. THE AGENT INFO CARD (Floating Glass) */
 
@@ -11676,8 +9691,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .nexus-name {
 
     font-family: 'Orbitron', sans-serif;
@@ -11694,8 +9707,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .nexus-score {
 
     font-family: 'Rajdhani', sans-serif;
@@ -11706,11 +9717,7 @@ body.overdrive-active::after {
 
 }
 
-
-
 .nexus-score span { font-size: 12px; opacity: 0.7; }
-
-
 
 /* 4. THE AVATAR (Crown/Medal) */
 
@@ -11726,11 +9733,7 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* 👑 SPECIFIC TIER COLOR SETTINGS 👑 */
-
-
 
 /* GOLD (Top 1) */
 
@@ -11746,8 +9749,6 @@ body.overdrive-active::after {
 
 .god-float { animation: godFloat 3s ease-in-out infinite; font-size: 85px; filter: drop-shadow(0 0 30px #ffd700); }
 
-
-
 /* SILVER (Top 2) */
 
 .silver-tier { z-index: 2; }
@@ -11759,8 +9760,6 @@ body.overdrive-active::after {
 .silver-tier .nexus-score { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
 
 .silver-tier .nexus-agent-card { border-bottom: 3px solid #00e5ff; }
-
-
 
 /* BRONZE (Top 3) */
 
@@ -11774,8 +9773,6 @@ body.overdrive-active::after {
 
 .bronze-tier .nexus-agent-card { border-bottom: 3px solid #ff6600; }
 
-
-
 /* Animation for the God Crown */
 
 @keyframes godFloat {
@@ -11785,8 +9782,6 @@ body.overdrive-active::after {
     50% { transform: translateY(-25px) scale(1.15); }
 
 }
-
-
 
 /* =========================================
 
@@ -11814,8 +9809,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .nexus-list-title {
 
     color: #00e5ff;
@@ -11837,8 +9830,6 @@ body.overdrive-active::after {
     text-align: left;
 
 }
-
-
 
 .nexus-list-row {
 
@@ -11862,8 +9853,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .nexus-list-row:hover {
 
     background: linear-gradient(90deg, rgba(0, 229, 255, 0.15), transparent);
@@ -11875,8 +9864,6 @@ body.overdrive-active::after {
     box-shadow: 0 5px 20px rgba(0, 229, 255, 0.2);
 
 }
-
-
 
 .nexus-row-rank {
 
@@ -11896,8 +9883,6 @@ body.overdrive-active::after {
 
 .nexus-list-row:hover .nexus-row-rank { color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
 
-
-
 .nexus-row-name {
 
     font-family: 'Rajdhani';
@@ -11914,8 +9899,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .nexus-row-score {
 
     font-family: 'Orbitron';
@@ -11928,15 +9911,11 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* =========================================
 
    👁️‍🗨️ N.E.X.U.S. LIVE TELEMETRY & SPY GRID
 
    ========================================= */
-
-
 
 #spy-grid-container {
 
@@ -11951,8 +9930,6 @@ body.overdrive-active::after {
     align-items: start;
 
 }
-
-
 
 /* 1. THE MAIN TELEMETRY CARD */
 
@@ -11980,8 +9957,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .tel-card:hover {
 
     transform: translateY(-5px);
@@ -11991,8 +9966,6 @@ body.overdrive-active::after {
     border-color: var(--card-theme, #00e5ff);
 
 }
-
-
 
 /* Header Plate */
 
@@ -12008,8 +9981,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .tel-agent-info { display: flex; align-items: center; gap: 12px; }
 
 .tel-avatar { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--card-theme); box-shadow: 0 0 10px var(--card-theme-glow); }
@@ -12017,8 +9988,6 @@ body.overdrive-active::after {
 .tel-name { font-family: 'Orbitron'; font-size: 16px; font-weight: bold; color: #fff; margin: 0; letter-spacing: 1px;}
 
 .tel-status { font-family: 'Rajdhani'; font-size: 10px; font-weight: 900; color: var(--card-theme); letter-spacing: 2px; text-transform: uppercase; }
-
-
 
 /* 2. THE BLACK BOX (Canvas Container for Graph) */
 
@@ -12038,8 +10007,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* CRT Scanline over the Graph */
 
 .tel-graph-container::after {
@@ -12051,8 +10018,6 @@ body.overdrive-active::after {
     pointer-events: none;
 
 }
-
-
 
 /* Gridlines inside the graph */
 
@@ -12072,8 +10037,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* 3. LIVE STATS STRIP */
 
 .tel-stats-strip {
@@ -12088,15 +10051,11 @@ body.overdrive-active::after {
 
 }
 
-
-
 .tel-stat-block { display: flex; flex-direction: column; align-items: center; width: 33%; }
 
 .tel-stat-label { font-family: 'Orbitron'; font-size: 9px; color: #667; margin-bottom: 2px; }
 
 .tel-stat-val { font-family: 'Rajdhani'; font-size: 18px; font-weight: 900; color: #fff; }
-
-
 
 /* 4. THE TACTICAL COMMAND BUTTONS (TEACHER INTERVENTION) */
 
@@ -12109,8 +10068,6 @@ body.overdrive-active::after {
     background: rgba(0,0,0,0.4);
 
 }
-
-
 
 .tel-cmd-btn {
 
@@ -12140,8 +10097,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* Dynamic Button Hovers */
 
 .cmd-freeze:hover { background: rgba(0, 229, 255, 0.1); border-color: #00e5ff; color: #00e5ff; box-shadow: inset 0 0 10px #00e5ff; }
@@ -12150,19 +10105,13 @@ body.overdrive-active::after {
 
 .cmd-dossier:hover { background: rgba(0, 255, 65, 0.1); border-color: #00ff41; color: #00ff41; box-shadow: inset 0 0 10px #00ff41; }
 
-
-
 .tel-cmd-btn:active { transform: scale(0.95); }
-
-
 
 /* Tiny Tooltip text for buttons */
 
 .cmd-icon { font-size: 16px; }
 
 .cmd-text { font-size: 9px; letter-spacing: 1px; }
-
-
 
 /* 5. INPUT SENSOR LOG */
 
@@ -12184,31 +10133,25 @@ body.overdrive-active::after {
 
 .tel-footer span { color: #fff; font-weight: bold; }
 
-
-
 /* =========================================
 
    👁️‍🗨️ N.E.X.U.S. LIVE TELEMETRY MATRIX 
 
    ========================================= */
 
-
-
 #spy-grid-container {
 
-    display: grid !important;
+    display: grid;
 
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 
-    gap: 25px !important;
+    gap: 25px;
 
-    padding: 20px !important;
+    padding: 20px;
 
     align-items: start;
 
 }
-
-
 
 /* 1. THE MAIN TELEMETRY CARD */
 
@@ -12236,8 +10179,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .tel-card:hover {
 
     transform: translateY(-5px);
@@ -12247,8 +10188,6 @@ body.overdrive-active::after {
     border-color: var(--card-theme, #00e5ff);
 
 }
-
-
 
 /* Glowing Top Accent */
 
@@ -12261,8 +10200,6 @@ body.overdrive-active::after {
     box-shadow: 0 0 15px var(--card-theme, #00e5ff);
 
 }
-
-
 
 /* Header Plate */
 
@@ -12278,8 +10215,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 .tel-agent-info { display: flex; align-items: center; gap: 12px; }
 
 .tel-avatar { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--card-theme); box-shadow: 0 0 10px var(--card-theme-glow); }
@@ -12287,8 +10222,6 @@ body.overdrive-active::after {
 .tel-name { font-family: 'Orbitron'; font-size: 16px; font-weight: bold; color: #fff; margin: 0; letter-spacing: 1px;}
 
 .tel-status { font-family: 'Rajdhani'; font-size: 10px; font-weight: 900; color: var(--card-theme); letter-spacing: 2px; text-transform: uppercase; }
-
-
 
 /* 2. THE BLACK BOX (Canvas Container for Custom Graph) */
 
@@ -12308,8 +10241,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* CRT Scanline over the Graph */
 
 .tel-graph-container::after {
@@ -12321,8 +10252,6 @@ body.overdrive-active::after {
     pointer-events: none;
 
 }
-
-
 
 /* Gridlines inside the graph */
 
@@ -12342,8 +10271,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* 3. LIVE STATS STRIP */
 
 .tel-stats-strip {
@@ -12358,15 +10285,11 @@ body.overdrive-active::after {
 
 }
 
-
-
 .tel-stat-block { display: flex; flex-direction: column; align-items: center; width: 33%; }
 
 .tel-stat-label { font-family: 'Orbitron'; font-size: 9px; color: #667; margin-bottom: 2px; }
 
 .tel-stat-val { font-family: 'Rajdhani'; font-size: 18px; font-weight: 900; color: #fff; }
-
-
 
 .tel-combo-pulse { animation: hypePulse 0.5s infinite alternate; }
 
@@ -12377,8 +10300,6 @@ body.overdrive-active::after {
     to { text-shadow: 0 0 20px #ff0055; transform: scale(1.1); color: #ff0055; }
 
 }
-
-
 
 /* 4. 🔥 THE GOD-TIER TACTICAL COMMAND BUTTONS 🔥 */
 
@@ -12391,8 +10312,6 @@ body.overdrive-active::after {
     background: rgba(0,0,0,0.4);
 
 }
-
-
 
 .tel-cmd-btn {
 
@@ -12426,8 +10345,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* Light Sweep Hover Effect */
 
 .tel-cmd-btn::before {
@@ -12442,8 +10359,6 @@ body.overdrive-active::after {
 
 .tel-cmd-btn:hover::before { left: 100%; }
 
-
-
 /* Dynamic Button Hovers */
 
 .cmd-freeze:hover { border-color: #00e5ff; color: #00e5ff; box-shadow: 0 0 15px rgba(0, 229, 255, 0.4), inset 0 0 10px rgba(0, 229, 255, 0.2); }
@@ -12452,17 +10367,11 @@ body.overdrive-active::after {
 
 .cmd-dossier:hover { border-color: #00ff41; color: #00ff41; box-shadow: 0 0 15px rgba(0, 255, 65, 0.4), inset 0 0 10px rgba(0, 255, 65, 0.2); }
 
-
-
 .tel-cmd-btn:active { transform: scale(0.9); }
-
-
 
 .cmd-icon { font-size: 16px; }
 
 .cmd-text { font-size: 9px; letter-spacing: 1px; }
-
-
 
 /* 5. INPUT SENSOR LOG */
 
@@ -12484,11 +10393,7 @@ body.overdrive-active::after {
 
 .tel-footer span { color: #fff; font-weight: bold; }
 
-
-
 /* --- THE FIX FOR CUT-OFF SCREENS --- */
-
-
 
 /* Ensures the viewport itself doesn't scroll, forcing children to handle it */
 
@@ -12502,19 +10407,17 @@ body.overdrive-active::after {
 
     padding: 20px 30px 10px 30px; /* Reduced bottom padding */
 
-    overflow: hidden !important; 
+    overflow: hidden; 
 
     height: 100%;
 
 }
 
-
-
 /* Make sure active tabs take exactly full height and allow internal scrolling */
 
 .dash-view:not(.hidden) {
 
-    display: flex !important;
+    display: flex;
 
     flex-direction: column;
 
@@ -12523,8 +10426,6 @@ body.overdrive-active::after {
     overflow: hidden; 
 
 }
-
-
 
 /* Responsive Podium Layout */
 
@@ -12546,15 +10447,11 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* Resize Pillars for smaller laptops */
 
 .nexus-holo-pillar { width: 120px; }
 
 .nexus-projector-base { width: 130px; height: 35px; bottom: -15px; }
-
-
 
 /* Runner up list container fix */
 
@@ -12570,8 +10467,6 @@ body.overdrive-active::after {
 
 }
 
-
-
 /* Custom Scrollbar specifically for the teacher dashboard lists */
 
 .dash-view ::-webkit-scrollbar { width: 8px; }
@@ -12582,15 +10477,11 @@ body.overdrive-active::after {
 
 .dash-view ::-webkit-scrollbar-thumb:hover { background: #ffd700; }
 
-
-
 /* =========================================
 
    🎓 THE N.E.X.U.S. HOLODECK (CLASSROOM MODE)
 
    ========================================= */
-
-
 
 /* 1. VR Grid Background (Hidden by default, shown in class mode) */
 
@@ -12610,13 +10501,9 @@ body.overdrive-active::after {
 
 }
 
-
-
 body.classroom-mode #vr-grid-bg { display: block; }
 
 body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background */
-
-
 
 /* The Moving 3D Floor */
 
@@ -12644,8 +10531,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
 
 }
 
-
-
 @keyframes holodeckMove {
 
     0% { transform: rotateX(75deg) translateY(0); }
@@ -12653,8 +10538,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
     100% { transform: rotateX(75deg) translateY(60px); }
 
 }
-
-
 
 /* 2. THE PANOPTICON ALERT (When Teacher is watching) */
 
@@ -12670,8 +10553,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
 
 }
 
-
-
 #panopticon-alert.active {
 
     opacity: 1;
@@ -12680,8 +10561,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
 
 }
 
-
-
 .cyber-eye {
 
     font-size: 50px; filter: drop-shadow(0 0 20px #ff0055);
@@ -12689,8 +10568,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
     animation: eyeScan 4s infinite ease-in-out;
 
 }
-
-
 
 .alert-text {
 
@@ -12703,8 +10580,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
     text-shadow: 0 0 15px #ff0055;
 
 }
-
-
 
 @keyframes eyeScan {
 
@@ -12722,8 +10597,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
 
 }
 
-
-
 /* 3. CLASSROOM HUD OVERRIDES */
 
 /* Hide Coins and Maximize Timer/Accuracy Focus */
@@ -12734,11 +10607,9 @@ body.classroom-mode .right-visor .visor-data:nth-child(2) {
 
 }
 
-body.classroom-mode .center-visor .label { color: #00e5ff !important; }
+body.classroom-mode .center-visor .label { color: #00e5ff; }
 
-body.classroom-mode .center-visor .value { color: #fff !important; text-shadow: 0 0 15px #00e5ff; font-size: 40px; }
-
-
+body.classroom-mode .center-visor .value { color: #fff; text-shadow: 0 0 15px #00e5ff; font-size: 40px; }
 
 /* =========================================
 
@@ -12746,55 +10617,45 @@ body.classroom-mode .center-visor .value { color: #fff !important; text-shadow: 
 
    ========================================= */
 
-
-
 /* In Classroom mode, force the HTML input box to be visible and styled nicely
 
    just in case the Canvas Holo-Input fails to draw */
 
 body.classroom-mode #input-container {
 
-    opacity: 1 !important;
+    opacity: 1;
 
-    transform: scale(1) translateX(-50%) !important;
+    transform: scale(1) translateX(-50%);
 
-    bottom: 30px !important;
+    bottom: 30px;
 
 }
-
-
 
 body.classroom-mode #player-input {
 
-    background: rgba(0, 229, 255, 0.1) !important;
+    background: rgba(0, 229, 255, 0.1);
 
-    border: 2px solid #00e5ff !important;
+    border: 2px solid #00e5ff;
 
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4) !important;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
 
 }
-
-
 
 body.classroom-mode #player-input:focus {
 
-    background: rgba(0, 229, 255, 0.2) !important;
+    background: rgba(0, 229, 255, 0.2);
 
-    border-color: #fff !important;
+    border-color: #fff;
 
 }
-
-
 
 /* Hide Coins in Classroom Mode */
 
 body.classroom-mode .right-visor .visor-data:nth-child(2) {
 
-    display: none !important;
+    display: none;
 
 }
-
-
 
 /* Emphasize Timer */
 
@@ -12805,8 +10666,6 @@ body.classroom-mode .center-visor {
     box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
 
 }
-
-
 
 /* 🚨 THE IN-COMBAT CLEAN SCREEN PROTOCOL 🚨 */
 
@@ -12820,17 +10679,15 @@ body.in-combat #teacher-dashboard,
 
 body.in-combat #guest-option {
 
-    display: none !important;
+    display: none;
 
-    opacity: 0 !important;
+    opacity: 0;
 
-    pointer-events: none !important;
+    pointer-events: none;
 
-    visibility: hidden !important;
+    visibility: hidden;
 
 }
-
-
 
 /* =========================================
 
@@ -12838,25 +10695,21 @@ body.in-combat #guest-option {
 
    ========================================= */
 
-
-
 /* Piliting punuin ang buong screen, walang labis, walang kulang */
 
 #teacher-dashboard {
 
-    position: fixed !important;
+    position: fixed;
 
-    top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    top: 0; left: 0; right: 0; bottom: 0;
 
-    width: 100vw !important;
+    width: 100vw;
 
-    height: 100vh !important;
+    height: 100vh;
 
-    overflow: hidden !important; /* BAWAL MAG-SCROLL ANG BUONG SCREEN */
+    overflow: hidden ; /* BAWAL MAG-SCROLL ANG BUONG SCREEN */
 
 }
-
-
 
 /* Header stays exactly at the top */
 
@@ -12868,13 +10721,11 @@ body.in-combat #guest-option {
 
 }
 
-
-
 /* Viewport takes exactly the remaining space below the header */
 
 .dashboard-viewport {
 
-    height: calc(100vh - 80px) !important;
+    height: calc(100vh - 80px);
 
     flex-grow: 1;
 
@@ -12882,13 +10733,11 @@ body.in-combat #guest-option {
 
     flex-direction: column;
 
-    padding: 20px !important;
+    padding: 20px;
 
-    overflow: hidden !important;
+    overflow: hidden;
 
 }
-
-
 
 /* Tabs stay fixed at the top of the viewport */
 
@@ -12900,13 +10749,11 @@ body.in-combat #guest-option {
 
 }
 
-
-
 /* The actual views (Roster, Spy Grid, Reports) */
 
 .dash-view:not(.hidden) {
 
-    display: flex !important;
+    display: flex;
 
     flex-direction: column;
 
@@ -12914,25 +10761,21 @@ body.in-combat #guest-option {
 
     height: 100%;
 
-    overflow: hidden !important; /* Papasa natin ang scrolling sa mga container sa loob */
+    overflow: hidden ; /* Papasa natin ang scrolling sa mga container sa loob */
 
 }
-
-
 
 /* Fix Spy Grid Scrolling */
 
 #spy-grid-container {
 
-    overflow-y: auto !important;
+    overflow-y: auto;
 
     height: 100%;
 
     padding-bottom: 50px;
 
 }
-
-
 
 /* Fix Data Reports Scrolling */
 
@@ -12946,23 +10789,19 @@ body.in-combat #guest-option {
 
 }
 
-
-
 /* The container that holds the table */
 
 #view-reports > div:nth-child(2) {
 
     flex-grow: 1;
 
-    overflow-y: auto !important;
+    overflow-y: auto;
 
     border-radius: 8px;
 
     margin-bottom: 20px;
 
 }
-
-
 
 /* Make Table Header Sticky */
 
@@ -12981,8 +10820,8 @@ body.in-combat #guest-option {
 }
 
 .pangalan-ng-container-mo {
-    border: 5px solid red !important;
-    background-color: rgba(255, 0, 0, 0.1) !important; /* Para makita ang loob */
+    border: 5px solid red;
+    background-color: rgba(255, 0, 0, 0.1) ; /* Para makita ang loob */
 }
 
 /* =========================================
@@ -12991,47 +10830,47 @@ body.in-combat #guest-option {
 
 /* 1. Force the active tab to pull everything UP */
 .dash-view.force-top-align:not(.hidden) {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important; /* 🟢 ANG MAGIC HATAK PATAAS! */
-    align-items: stretch !important;
-    flex-grow: 1 !important;
-    height: 100% !important;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start ; /* 🟢 ANG MAGIC HATAK PATAAS! */
+    align-items: stretch;
+    flex-grow: 1;
+    height: 100%;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 /* 2. Stats Header (Locks directly under the tabs) */
 .stats-header-fixed {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: stretch !important;
-    margin-bottom: 20px !important;
-    flex-shrink: 0 !important; /* Wag liliit, wag lalaki */
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    margin-bottom: 20px;
+    flex-shrink: 0 ; /* Wag liliit, wag lalaki */
 }
 
 /* 3. Table Wrapper (Fills remaining bottom space & handles scrolling) */
 .table-scroll-container {
-    flex-grow: 1 !important; 
-    min-height: 0 !important; /* CRITICAL: Allows flex child to scroll */
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    background: rgba(0,0,0,0.6) !important;
-    border: 1px solid #334 !important;
-    border-radius: 8px !important;
-    display: block !important;
+    flex-grow: 1; 
+    min-height: 0 ; /* CRITICAL: Allows flex child to scroll */
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid #334;
+    border-radius: 8px;
+    display: block;
 }
 
 /* 4. Spy Grid Specific Alignment */
 .grid-layout-start {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
-    gap: 15px !important;
-    align-content: flex-start !important; /* 🟢 Pipigilan ang cards na bumagsak sa baba */
-    flex-grow: 1 !important;
-    overflow-y: auto !important;
-    min-height: 0 !important;
-    padding: 10px 5px 20px 0 !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    align-content: flex-start ; /* 🟢 Pipigilan ang cards na bumagsak sa baba */
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 10px 5px 20px 0;
 }
 
 /* Sleek Cyberpunk Scrollbar inside the containers */
@@ -13171,8 +11010,8 @@ body.in-combat #guest-option {
 .middle-ring {
     width: 80%; height: 80%;
     border: 2px solid;
-    border-bottom-color: transparent !important;
-    border-top-color: transparent !important;
+    border-bottom-color: transparent;
+    border-top-color: transparent;
     opacity: 0.8;
     animation: spinCounter 8s linear infinite;
 }
@@ -13268,76 +11107,76 @@ body.in-combat #guest-option {
 
 /* 1. The Main Container (Locked to Screen) */
 body.dashboard-active #teacher-dashboard:not(.hidden) {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    display: flex;
+    visibility: visible;
+    opacity: 1;
 }
 
 #teacher-dashboard {
-    position: fixed !important;
-    top: 0 !important; 
-    left: 0 !important; 
-    width: 100vw !important;
-    height: 100vh !important;
-    background: #05070a !important;
-    z-index: 999999 !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    align-items: stretch !important;
-    overflow: hidden !important; /* 🚨 BAWAL MAG-SCROLL ANG BUONG SCREEN */
-    margin: 0 !important;
-    padding: 0 !important;
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100vw;
+    height: 100vh;
+    background: #05070a;
+    z-index: 999999;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow: hidden ; /* 🚨 BAWAL MAG-SCROLL ANG BUONG SCREEN */
+    margin: 0;
+    padding: 0;
 }
 
 /* 2. The Header (Fixed Height, Stays at Top) */
 .dashboard-header {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 15px 30px !important;
-    background: rgba(0, 20, 40, 0.9) !important;
-    border-bottom: 2px solid #00e5ff !important;
-    box-shadow: 0 5px 20px rgba(0, 229, 255, 0.2) !important;
-    flex-shrink: 0 !important; /* 🚨 WAG LILIIT */
-    height: 80px !important;
-    box-sizing: border-box !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: rgba(0, 20, 40, 0.9);
+    border-bottom: 2px solid #00e5ff;
+    box-shadow: 0 5px 20px rgba(0, 229, 255, 0.2);
+    flex-shrink: 0 ; /* 🚨 WAG LILIIT */
+    height: 80px;
+    box-sizing: border-box;
 }
 
 /* 3. The Viewport (Takes all remaining space below header) */
 .dashboard-viewport {
-    display: flex !important;
-    flex-direction: column !important;
-    flex-grow: 1 !important; /* 🚨 SAKUPIN ANG NATITIRANG SPACE */
-    padding: 20px 30px !important;
-    overflow: hidden !important; /* Ang loob lang ang mag-i-scroll, hindi ito */
-    height: calc(100vh - 80px) !important;
-    box-sizing: border-box !important;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1 ; /* 🚨 SAKUPIN ANG NATITIRANG SPACE */
+    padding: 20px 30px;
+    overflow: hidden ; /* Ang loob lang ang mag-i-scroll, hindi ito */
+    height: calc(100vh - 80px);
+    box-sizing: border-box;
 }
 
 /* 4. Tabs Container (Stays at the top of the viewport) */
 .dash-tabs {
-    display: flex !important;
-    gap: 10px !important;
-    border-bottom: 1px solid #333 !important;
-    margin: 0 0 20px 0 !important;
-    padding: 0 0 10px 0 !important;
-    flex-shrink: 0 !important; /* 🚨 WAG MATUTULAK O MAIIPIT */
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid #333;
+    margin: 0 0 20px 0;
+    padding: 0 0 10px 0;
+    flex-shrink: 0 ; /* 🚨 WAG MATUTULAK O MAIIPIT */
 }
 
 /* 5. The Active View Container (Scrollable Area) */
 .dash-view {
-    display: none !important; /* Tago by default */
+    display: none ; /* Tago by default */
 }
 
 .dash-view:not(.hidden) {
-    display: flex !important;
-    flex-direction: column !important;
-    flex-grow: 1 !important;
-    justify-content: flex-start !important;
-    height: 100% !important;
-    overflow-y: auto !important; /* 🟢 ANG SECRET: Dito lang pwedeng mag-scroll! */
-    overflow-x: hidden !important;
-    padding-bottom: 20px !important;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: flex-start;
+    height: 100%;
+    overflow-y: auto ; /* 🟢 ANG SECRET: Dito lang pwedeng mag-scroll! */
+    overflow-x: hidden;
+    padding-bottom: 20px;
 }
 
 /* =========================================
@@ -13346,20 +11185,20 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 /* Fix Data Reports Table Squishing */
 #view-reports {
-    padding: 0 !important;
+    padding: 0;
 }
 
 #view-reports > div:first-child {
     /* The Stats Header (Class Avg, Accuracy, Export) */
-    flex-shrink: 0 !important;
-    margin-bottom: 15px !important;
+    flex-shrink: 0;
+    margin-bottom: 15px;
 }
 
 #view-reports > div:last-child {
     /* The Table Wrapper */
-    flex-grow: 1 !important;
-    overflow-y: auto !important;
-    min-height: 0 !important; /* 🟢 CRITICAL: Payagang mag-scroll ang table imbes na lumagpas sa screen */
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: 0 ; /* 🟢 CRITICAL: Payagang mag-scroll ang table imbes na lumagpas sa screen */
     border: 1px solid #333;
     border-radius: 8px;
     background: rgba(0,0,0,0.6);
@@ -13380,11 +11219,11 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 /* Fix Spy Grid Alignment (Dikit sa taas) */
 #spy-grid-container {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
-    gap: 20px !important;
-    align-content: flex-start !important; /* 🟢 Pushes items to top instead of spacing them out */
-    padding-bottom: 20px !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    align-content: flex-start ; /* 🟢 Pushes items to top instead of spacing them out */
+    padding-bottom: 20px;
 }
 
 /* Custom Scrollbar for Dashboard Views */
@@ -13399,24 +11238,24 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 /* 1. Piliting ilagay sa GITNA (vertically) ang lahat ng views */
 .dash-view:not(.hidden) {
-    justify-content: center !important; 
+    justify-content: center; 
 }
 
 /* 2. Gitna para sa mga Grids (Live Roster & Spy Cam) */
 #spy-grid-container, #roster-grid {
-    align-content: center !important; /* Vertical center */
-    justify-content: center !important; /* Horizontal center */
-    min-height: 100% !important; /* Para sakupin ang buong screen bago mag-gitna */
+    align-content: center ; /* Vertical center */
+    justify-content: center ; /* Horizontal center */
+    min-height: 100% ; /* Para sakupin ang buong screen bago mag-gitna */
 }
 
 /* 3. Gitna para sa Podium */
 #view-podium {
-    justify-content: center !important;
+    justify-content: center;
 }
 
 /* 4. Gitna para sa Data Reports Table */
 #view-reports {
-    justify-content: center !important;
+    justify-content: center;
 }
 
 /* =========================================
@@ -13424,8 +11263,6 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
    🎓 THE N.E.X.U.S. HOLODECK (CLASSROOM MODE)
 
    ========================================= */
-
-
 
 /* 1. VR Grid Background (Hidden by default, shown in class mode) */
 
@@ -13445,13 +11282,9 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 }
 
-
-
 body.classroom-mode #vr-grid-bg { display: block; }
 
 body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background */
-
-
 
 /* The Moving 3D Floor */
 
@@ -13479,8 +11312,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
 
 }
 
-
-
 @keyframes holodeckMove {
 
     0% { transform: rotateX(75deg) translateY(0); }
@@ -13488,8 +11319,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
     100% { transform: rotateX(75deg) translateY(60px); }
 
 }
-
-
 
 /* 2. THE PANOPTICON ALERT (When Teacher is watching) */
 
@@ -13505,8 +11334,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
 
 }
 
-
-
 #panopticon-alert.active {
 
     opacity: 1;
@@ -13515,8 +11342,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
 
 }
 
-
-
 .cyber-eye {
 
     font-size: 50px; filter: drop-shadow(0 0 20px #ff0055);
@@ -13524,8 +11349,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
     animation: eyeScan 4s infinite ease-in-out;
 
 }
-
-
 
 .alert-text {
 
@@ -13538,8 +11361,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
     text-shadow: 0 0 15px #ff0055;
 
 }
-
-
 
 @keyframes eyeScan {
 
@@ -13557,8 +11378,6 @@ body.classroom-mode #bgCanvas { opacity: 0; } /* Hide the outer space background
 
 }
 
-
-
 /* 3. CLASSROOM HUD OVERRIDES */
 
 /* Hide Coins and Maximize Timer/Accuracy Focus */
@@ -13569,11 +11388,9 @@ body.classroom-mode .right-visor .visor-data:nth-child(2) {
 
 }
 
-body.classroom-mode .center-visor .label { color: #00e5ff !important; }
+body.classroom-mode .center-visor .label { color: #00e5ff; }
 
-body.classroom-mode .center-visor .value { color: #fff !important; text-shadow: 0 0 15px #00e5ff; font-size: 40px; }
-
-
+body.classroom-mode .center-visor .value { color: #fff; text-shadow: 0 0 15px #00e5ff; font-size: 40px; }
 
 /* =========================================
 
@@ -13581,55 +11398,45 @@ body.classroom-mode .center-visor .value { color: #fff !important; text-shadow: 
 
    ========================================= */
 
-
-
 /* In Classroom mode, force the HTML input box to be visible and styled nicely
 
    just in case the Canvas Holo-Input fails to draw */
 
 body.classroom-mode #input-container {
 
-    opacity: 1 !important;
+    opacity: 1;
 
-    transform: scale(1) translateX(-50%) !important;
+    transform: scale(1) translateX(-50%);
 
-    bottom: 30px !important;
+    bottom: 30px;
 
 }
-
-
 
 body.classroom-mode #player-input {
 
-    background: rgba(0, 229, 255, 0.1) !important;
+    background: rgba(0, 229, 255, 0.1);
 
-    border: 2px solid #00e5ff !important;
+    border: 2px solid #00e5ff;
 
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4) !important;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
 
 }
-
-
 
 body.classroom-mode #player-input:focus {
 
-    background: rgba(0, 229, 255, 0.2) !important;
+    background: rgba(0, 229, 255, 0.2);
 
-    border-color: #fff !important;
+    border-color: #fff;
 
 }
-
-
 
 /* Hide Coins in Classroom Mode */
 
 body.classroom-mode .right-visor .visor-data:nth-child(2) {
 
-    display: none !important;
+    display: none;
 
 }
-
-
 
 /* Emphasize Timer */
 
@@ -13640,8 +11447,6 @@ body.classroom-mode .center-visor {
     box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2);
 
 }
-
-
 
 /* 🚨 THE IN-COMBAT CLEAN SCREEN PROTOCOL 🚨 */
 
@@ -13655,17 +11460,15 @@ body.in-combat #teacher-dashboard,
 
 body.in-combat #guest-option {
 
-    display: none !important;
+    display: none;
 
-    opacity: 0 !important;
+    opacity: 0;
 
-    pointer-events: none !important;
+    pointer-events: none;
 
-    visibility: hidden !important;
+    visibility: hidden;
 
 }
-
-
 
 /* =========================================
 
@@ -13673,25 +11476,21 @@ body.in-combat #guest-option {
 
    ========================================= */
 
-
-
 /* Piliting punuin ang buong screen, walang labis, walang kulang */
 
 #teacher-dashboard {
 
-    position: fixed !important;
+    position: fixed;
 
-    top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    top: 0; left: 0; right: 0; bottom: 0;
 
-    width: 100vw !important;
+    width: 100vw;
 
-    height: 100vh !important;
+    height: 100vh;
 
-    overflow: hidden !important; /* BAWAL MAG-SCROLL ANG BUONG SCREEN */
+    overflow: hidden ; /* BAWAL MAG-SCROLL ANG BUONG SCREEN */
 
 }
-
-
 
 /* Header stays exactly at the top */
 
@@ -13703,13 +11502,11 @@ body.in-combat #guest-option {
 
 }
 
-
-
 /* Viewport takes exactly the remaining space below the header */
 
 .dashboard-viewport {
 
-    height: calc(100vh - 80px) !important;
+    height: calc(100vh - 80px);
 
     flex-grow: 1;
 
@@ -13717,13 +11514,11 @@ body.in-combat #guest-option {
 
     flex-direction: column;
 
-    padding: 20px !important;
+    padding: 20px;
 
-    overflow: hidden !important;
+    overflow: hidden;
 
 }
-
-
 
 /* Tabs stay fixed at the top of the viewport */
 
@@ -13735,13 +11530,11 @@ body.in-combat #guest-option {
 
 }
 
-
-
 /* The actual views (Roster, Spy Grid, Reports) */
 
 .dash-view:not(.hidden) {
 
-    display: flex !important;
+    display: flex;
 
     flex-direction: column;
 
@@ -13749,25 +11542,21 @@ body.in-combat #guest-option {
 
     height: 100%;
 
-    overflow: hidden !important; /* Papasa natin ang scrolling sa mga container sa loob */
+    overflow: hidden ; /* Papasa natin ang scrolling sa mga container sa loob */
 
 }
-
-
 
 /* Fix Spy Grid Scrolling */
 
 #spy-grid-container {
 
-    overflow-y: auto !important;
+    overflow-y: auto;
 
     height: 100%;
 
     padding-bottom: 50px;
 
 }
-
-
 
 /* Fix Data Reports Scrolling */
 
@@ -13781,15 +11570,13 @@ body.in-combat #guest-option {
 
 }
 
-
-
 /* The container that holds the table */
 
 #view-reports > div:nth-child(2) {
 
     flex-grow: 1;
 
-    overflow-y: auto !important;
+    overflow-y: auto;
 
     border-radius: 8px;
 
@@ -13797,20 +11584,18 @@ body.in-combat #guest-option {
 
 }
 
-
-
 #view-reports th {
-    position: sticky !important;
-    top: 0 !important;
-    background: #0a0f1a !important;
-    z-index: 100 !important;
-    border-bottom: 2px solid #00e5ff !important;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.5) !important;
+    position: sticky;
+    top: 0;
+    background: #0a0f1a;
+    z-index: 100;
+    border-bottom: 2px solid #00e5ff;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
 }
 
 .pangalan-ng-container-mo {
-    border: 5px solid red !important;
-    background-color: rgba(255, 0, 0, 0.1) !important; /* Para makita ang loob */
+    border: 5px solid red;
+    background-color: rgba(255, 0, 0, 0.1) ; /* Para makita ang loob */
 }
 
 /* =========================================
@@ -13819,47 +11604,47 @@ body.in-combat #guest-option {
 
 /* 1. Force the active tab to pull everything UP */
 .dash-view.force-top-align:not(.hidden) {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important; /* 🟢 ANG MAGIC HATAK PATAAS! */
-    align-items: stretch !important;
-    flex-grow: 1 !important;
-    height: 100% !important;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start ; /* 🟢 ANG MAGIC HATAK PATAAS! */
+    align-items: stretch;
+    flex-grow: 1;
+    height: 100%;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 /* 2. Stats Header (Locks directly under the tabs) */
 .stats-header-fixed {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: stretch !important;
-    margin-bottom: 20px !important;
-    flex-shrink: 0 !important; /* Wag liliit, wag lalaki */
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    margin-bottom: 20px;
+    flex-shrink: 0 ; /* Wag liliit, wag lalaki */
 }
 
 /* 3. Table Wrapper (Fills remaining bottom space & handles scrolling) */
 .table-scroll-container {
-    flex-grow: 1 !important; 
-    min-height: 0 !important; /* CRITICAL: Allows flex child to scroll */
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    background: rgba(0,0,0,0.6) !important;
-    border: 1px solid #334 !important;
-    border-radius: 8px !important;
-    display: block !important;
+    flex-grow: 1; 
+    min-height: 0 ; /* CRITICAL: Allows flex child to scroll */
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid #334;
+    border-radius: 8px;
+    display: block;
 }
 
 /* 4. Spy Grid Specific Alignment */
 .grid-layout-start {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
-    gap: 15px !important;
-    align-content: flex-start !important; /* 🟢 Pipigilan ang cards na bumagsak sa baba */
-    flex-grow: 1 !important;
-    overflow-y: auto !important;
-    min-height: 0 !important;
-    padding: 10px 5px 20px 0 !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    align-content: flex-start ; /* 🟢 Pipigilan ang cards na bumagsak sa baba */
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 10px 5px 20px 0;
 }
 
 /* Sleek Cyberpunk Scrollbar inside the containers */
@@ -13874,62 +11659,62 @@ body.in-combat #guest-option {
 
 /* 1. FORCE VIEWPORT TO LOCK HEIGHT */
 .dashboard-viewport {
-    height: calc(100vh - 80px) !important; 
-    max-height: calc(100vh - 80px) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
+    height: calc(100vh - 80px); 
+    max-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 /* 2. FORCE ACTIVE TAB TO FILL ALL SPACE */
 .dash-view:not(.hidden) {
-    flex-grow: 1 !important;
-    height: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    overflow: hidden !important; /* Pipigilan ang pag-scroll sa labas */
-    padding-bottom: 0 !important;
-    margin-bottom: 0 !important;
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden ; /* Pipigilan ang pag-scroll sa labas */
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 /* 3. DATA REPORTS FULL SCREEN FIX */
 #view-reports {
-    padding: 10px 0 0 0 !important;
+    padding: 10px 0 0 0;
 }
 #view-reports > div:first-child {
-    flex-shrink: 0 !important; /* Lock Class Avg Score Header */
+    flex-shrink: 0 ; /* Lock Class Avg Score Header */
 }
 #view-reports > div:last-child {
-    flex-grow: 1 !important;
-    height: 100% !important; /* 🟢 Banat hanggang sahig! */
-    overflow-y: auto !important; /* Dito lang pwede mag-scroll ang table */
-    display: block !important;
-    margin-bottom: 0 !important;
-    border-bottom: none !important;
-    border-radius: 8px 8px 0 0 !important; /* Flatten ang ilalim para lapat sa sahig */
+    flex-grow: 1;
+    height: 100% ; /* 🟢 Banat hanggang sahig! */
+    overflow-y: auto ; /* Dito lang pwede mag-scroll ang table */
+    display: block;
+    margin-bottom: 0;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0 ; /* Flatten ang ilalim para lapat sa sahig */
 }
 
 /* 4. SPY GRID & LIVE ROSTER FULL SCREEN FIX */
 #view-grid, #view-roster {
-    padding: 10px 0 0 0 !important; 
+    padding: 10px 0 0 0; 
 }
 #spy-grid-container, #roster-grid {
-    flex-grow: 1 !important;
-    height: 100% !important; /* 🟢 Banat hanggang sahig! */
-    overflow-y: auto !important; /* Dito mag-s-scroll ang mga camera/cards */
-    align-content: flex-start !important; /* Dikitin ang cards sa itaas */
-    padding: 0 5px 30px 5px !important;
-    margin-bottom: 0 !important;
+    flex-grow: 1;
+    height: 100% ; /* 🟢 Banat hanggang sahig! */
+    overflow-y: auto ; /* Dito mag-s-scroll ang mga camera/cards */
+    align-content: flex-start ; /* Dikitin ang cards sa itaas */
+    padding: 0 5px 30px 5px;
+    margin-bottom: 0;
 }
 
 /* 5. MAKE THE TABLE HEADER STICKY (Laging nakikita kahit mag-scroll) */
 #view-reports th {
-    position: sticky !important;
-    top: 0 !important;
-    background: #0a0f1a !important;
-    z-index: 100 !important;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.5) !important;
+    position: sticky;
+    top: 0;
+    background: #0a0f1a;
+    z-index: 100;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
 }
 
 /* =========================================
@@ -13938,67 +11723,67 @@ body.in-combat #guest-option {
 
 /* 1. Center the whole view */
 #view-reports {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important; /* 🟢 GIGITNA ANG BUONG CONTENT */
-    justify-content: flex-start !important;
-    width: 100% !important;
-    padding: 20px 0 0 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center ; /* 🟢 GIGITNA ANG BUONG CONTENT */
+    justify-content: flex-start;
+    width: 100%;
+    padding: 20px 0 0 0;
 }
 
 /* 2. Stats Header (Class Avg, Accuracy, Export) - Gawing Wide */
 #view-reports > div:first-child {
-    width: 95% !important; /* 🟢 Sakop ang halos buong lapad */
-    max-width: 1400px !important;
-    flex-shrink: 0 !important;
-    margin-bottom: 20px !important;
+    width: 95% ; /* 🟢 Sakop ang halos buong lapad */
+    max-width: 1400px;
+    flex-shrink: 0;
+    margin-bottom: 20px;
 }
 
 /* 3. Table Container - The Landscape Canvas */
 #view-reports > div:last-child {
-    width: 95% !important; /* 🟢 Parehas ng lapad sa header */
-    max-width: 1400px !important;
-    flex-grow: 1 !important; /* Banat pababa hanggang sahig */
-    overflow-y: auto !important; 
-    min-height: 0 !important; 
-    background: rgba(5, 10, 15, 0.8) !important;
-    border: 2px solid #334 !important;
-    border-bottom: none !important; /* Lapat sa sahig */
-    border-radius: 12px 12px 0 0 !important;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(0, 229, 255, 0.05) !important;
+    width: 95% ; /* 🟢 Parehas ng lapad sa header */
+    max-width: 1400px;
+    flex-grow: 1 ; /* Banat pababa hanggang sahig */
+    overflow-y: auto; 
+    min-height: 0; 
+    background: rgba(5, 10, 15, 0.8);
+    border: 2px solid #334;
+    border-bottom: none ; /* Lapat sa sahig */
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(0, 229, 255, 0.05);
 }
 
 /* 4. The Table Itself - Force Wide Columns */
 #view-reports table {
-    width: 100% !important;
-    table-layout: fixed !important; /* 🟢 ITO ANG MAGIC: Pantay-pantay ang lapad ng columns! */
-    border-collapse: collapse !important;
+    width: 100%;
+    table-layout: fixed ; /* 🟢 ITO ANG MAGIC: Pantay-pantay ang lapad ng columns! */
+    border-collapse: collapse;
 }
 
 /* 5. Sticky Header & Spacing */
 #view-reports th {
-    position: sticky !important;
-    top: 0 !important;
-    background: #0a0f1a !important;
-    z-index: 100 !important;
-    border-bottom: 3px solid #00e5ff !important; /* Makapal na border sa header */
-    padding: 20px 10px !important; /* Maluwag na space */
-    font-size: 13px !important;
-    color: #00e5ff !important;
+    position: sticky;
+    top: 0;
+    background: #0a0f1a;
+    z-index: 100;
+    border-bottom: 3px solid #00e5ff ; /* Makapal na border sa header */
+    padding: 20px 10px ; /* Maluwag na space */
+    font-size: 13px;
+    color: #00e5ff;
 }
 
 #view-reports td {
-    padding: 22px 10px !important; /* Maluwag na rows para sa 3-5 students (Hindi siksik) */
-    border-bottom: 1px solid rgba(0, 229, 255, 0.1) !important;
-    vertical-align: middle !important;
+    padding: 22px 10px ; /* Maluwag na rows para sa 3-5 students (Hindi siksik) */
+    border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+    vertical-align: middle;
 }
 
 /* 6. I-left align ang Agent Name, i-center ang iba */
 #view-reports th:first-child, 
 #view-reports td:first-child {
-    text-align: left !important;
-    padding-left: 30px !important;
-    width: 25% !important; /* Mas malaking space para sa mahabang pangalan */
+    text-align: left;
+    padding-left: 30px;
+    width: 25% ; /* Mas malaking space para sa mahabang pangalan */
 }
 
 /* =========================================
@@ -14006,12 +11791,12 @@ body.in-combat #guest-option {
    ========================================= */
 
 .dashboard-master-layout {
-    position: fixed !important;
-    top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important;
-    background: #05070a !important;
-    z-index: 999999 !important;
-    display: flex !important;
-    flex-direction: column !important;
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: #05070a;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
 }
 
 .dashboard-header {
@@ -14038,7 +11823,7 @@ body.in-combat #guest-option {
 
 /* 🟢 ABSOLUTE TAB SYSTEM (IMPOSIBLENG MAG-OVERLAP) */
 .dash-view {
-    display: none !important; /* Patay lahat by default */
+    display: none ; /* Patay lahat by default */
     width: 100%;
     height: 100%;
     flex-direction: column;
@@ -14046,7 +11831,7 @@ body.in-combat #guest-option {
 }
 
 .dash-view.active-view {
-    display: flex !important; /* Bubuhayin lang ang may .active-view */
+    display: flex ; /* Bubuhayin lang ang may .active-view */
 }
 
 @keyframes fadeInTab {
@@ -14061,7 +11846,7 @@ body.in-combat #guest-option {
     overflow-y: auto;
 }
 #roster-grid, #spy-grid-container {
-    align-content: flex-start !important; /* Dikit sa taas */
+    align-content: flex-start ; /* Dikit sa taas */
 }
 
 /* Podium (Center vertically) */
@@ -14108,7 +11893,7 @@ body.in-combat #guest-option {
 
 /* --- 1. Background Environment --- */
 #view-podium {
-    background: radial-gradient(ellipse at bottom, #0a1128 0%, #010205 100%) !important;
+    background: radial-gradient(ellipse at bottom, #0a1128 0%, #010205 100%);
 }
 
 .grand-orbits {
@@ -14279,92 +12064,92 @@ body.in-combat #guest-option {
 
 /* The Main Dashboard Container */
 #teacher-dashboard {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    z-index: 999999 !important;
-    display: none !important;
-    flex-direction: column !important;
-    background: #05070a !important;
-    overflow: hidden !important; /* Stop the entire screen from scrolling */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999999;
+    display: none;
+    flex-direction: column;
+    background: #05070a;
+    overflow: hidden ; /* Stop the entire screen from scrolling */
 }
 
 body.dashboard-active #teacher-dashboard:not(.hidden) {
-    display: flex !important;
+    display: flex;
 }
 
 /* The Header */
 .dashboard-header {
-    height: 80px !important;
-    flex-shrink: 0 !important; /* Never shrink */
+    height: 80px;
+    flex-shrink: 0 ; /* Never shrink */
 }
 
 /* The Viewport (Container for tabs and views) */
 .dashboard-viewport {
-    flex-grow: 1 !important; /* Fills remaining space */
-    display: flex !important;
-    flex-direction: column !important;
-    padding: 15px 30px !important;
-    overflow: hidden !important; /* Content inside should scroll, not this */
+    flex-grow: 1 ; /* Fills remaining space */
+    display: flex;
+    flex-direction: column;
+    padding: 15px 30px;
+    overflow: hidden ; /* Content inside should scroll, not this */
 }
 
 /* The Active Tab Content Area */
 .dash-view:not(.hidden) {
-    display: flex !important;
-    flex-direction: column !important;
-    flex-grow: 1 !important; /* Takes up all available space inside viewport */
-    height: 100% !important;
-    overflow: hidden !important;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1 ; /* Takes up all available space inside viewport */
+    height: 100%;
+    overflow: hidden;
 }
 
 /* Fix Podium View */
 #view-podium {
-    align-items: center !important;
-    justify-content: flex-start !important;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 /* Fix Data Reports Table & Fix Roster Scroll */
 #view-reports > div:last-child,
 #spy-grid-container, 
 #roster-grid {
-    flex-grow: 1 !important;
-    overflow-y: auto !important; /* Allow internal scrolling here! */
-    min-height: 0 !important; /* The magic property for nested flex scrolling */
+    flex-grow: 1;
+    overflow-y: auto ; /* Allow internal scrolling here! */
+    min-height: 0 ; /* The magic property for nested flex scrolling */
 }
 
 /* Sticky Table Header */
 #view-reports th {
-    position: sticky !important;
-    top: 0 !important;
-    background: #0a0f1a !important;
-    z-index: 10 !important;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.5) !important;
+    position: sticky;
+    top: 0;
+    background: #0a0f1a;
+    z-index: 10;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
 }
 
 /* Adjust runner-up list to scroll properly */
 .nexus-runner-up-list {
-    flex-grow: 1 !important;
-    overflow-y: auto !important;
-    min-height: 0 !important;
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: 0;
 }
 
 /* =========================================
    📄 DATA REPORTS WIDE LAYOUT FIX
    ========================================= */
 #view-reports {
-    align-items: center !important;
-    padding-top: 10px !important;
+    align-items: center;
+    padding-top: 10px;
 }
 
 #reports-header-bar {
-    width: 95% !important;
-    max-width: 1400px !important;
-    flex-shrink: 0 !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    margin-bottom: 20px !important;
+    width: 95%;
+    max-width: 1400px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .reports-stats-group {
@@ -14378,23 +12163,23 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 .stat-value { font-size: 22px; font-family: 'Orbitron'; font-weight: bold; line-height: 1; }
 .yellow-text { color: #ffd700; } .green-text { color: #00ff41; }
 
-.export-btn { margin: 0 !important; padding: 0 20px !important; border-color: #00e5ff !important; color: #00e5ff !important; font-weight: bold !important; }
+.export-btn { margin: 0; padding: 0 20px; border-color: #00e5ff; color: #00e5ff; font-weight: bold; }
 
 #reports-table-container {
-    width: 95% !important;
-    max-width: 1400px !important;
-    flex-grow: 1 !important; /* BANAT HANGGANG SAHIG */
-    overflow-y: auto !important;
-    background: rgba(5, 10, 15, 0.8) !important;
-    border: 2px solid #334 !important;
-    border-bottom: none !important;
-    border-radius: 12px 12px 0 0 !important;
+    width: 95%;
+    max-width: 1400px;
+    flex-grow: 1 ; /* BANAT HANGGANG SAHIG */
+    overflow-y: auto;
+    background: rgba(5, 10, 15, 0.8);
+    border: 2px solid #334;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
 }
 
-#reports-table-container table { width: 100% !important; border-collapse: collapse !important; table-layout: fixed !important; }
+#reports-table-container table { width: 100%; border-collapse: collapse; table-layout: fixed; }
 #reports-table-container th { position: sticky; top: 0; background: #0a0f1a; z-index: 100; border-bottom: 3px solid #00e5ff; padding: 20px 10px; color: #00e5ff; font-family: 'Orbitron'; font-size: 13px; }
 #reports-table-container td { padding: 22px 10px; border-bottom: 1px solid rgba(0,229,255,0.1); }
-.center-text { text-align: center !important; }
+.center-text { text-align: center; }
 
 /* =========================================
    🌌 GOD-LEVEL STORY & BRIEFING CINEMATICS
@@ -14402,27 +12187,27 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 /* 1. The Holographic Backdrop */
 #story-overlay {
-    background: radial-gradient(circle at center, rgba(0, 15, 30, 0.85) 0%, rgba(0, 2, 5, 0.98) 100%) !important;
-    backdrop-filter: blur(15px) !important; /* Blurs the game behind it */
-    z-index: 9999999 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
+    background: radial-gradient(circle at center, rgba(0, 15, 30, 0.85) 0%, rgba(0, 2, 5, 0.98) 100%);
+    backdrop-filter: blur(15px) ; /* Blurs the game behind it */
+    z-index: 9999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     animation: hologram-fade-in 0.8s ease-out;
 }
 
 /* 2. The Main Comm Panel (Edgy Sci-Fi Look) */
 .comm-panel {
-    background: linear-gradient(135deg, rgba(0, 25, 50, 0.6) 0%, rgba(0, 0, 10, 0.9) 100%) !important;
-    border: 1px solid rgba(0, 229, 255, 0.3) !important;
-    box-shadow: 0 0 50px rgba(0, 229, 255, 0.1), inset 0 0 30px rgba(0, 229, 255, 0.05) !important;
-    max-width: 900px !important;
-    width: 90% !important;
-    border-radius: 4px !important;
-    clip-path: polygon(0 15px, 15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px)) !important;
+    background: linear-gradient(135deg, rgba(0, 25, 50, 0.6) 0%, rgba(0, 0, 10, 0.9) 100%);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    box-shadow: 0 0 50px rgba(0, 229, 255, 0.1), inset 0 0 30px rgba(0, 229, 255, 0.05);
+    max-width: 900px;
+    width: 90%;
+    border-radius: 4px;
+    clip-path: polygon(0 15px, 15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px));
     position: relative;
-    overflow: visible !important;
-    padding: 2px !important; /* Frame border trick */
+    overflow: visible;
+    padding: 2px ; /* Frame border trick */
 }
 
 /* HUD Targeting Corners */
@@ -14435,25 +12220,25 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 /* 3. Header Styling */
 .comm-header {
-    background: rgba(0, 229, 255, 0.15) !important;
-    border-bottom: 2px solid #00e5ff !important;
-    padding: 15px 30px !important;
-    font-family: 'Orbitron', sans-serif !important;
-    font-size: 16px !important;
-    color: #fff !important;
-    letter-spacing: 4px !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    text-shadow: 0 0 10px #00e5ff !important;
+    background: rgba(0, 229, 255, 0.15);
+    border-bottom: 2px solid #00e5ff;
+    padding: 15px 30px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    color: #fff;
+    letter-spacing: 4px;
+    display: flex;
+    justify-content: space-between;
+    text-shadow: 0 0 10px #00e5ff;
 }
 
 /* 4. Content Area & Typography */
 .comm-content {
-    display: grid !important;
-    grid-template-columns: 200px 1fr !important;
-    gap: 30px !important;
-    padding: 40px !important;
-    align-items: flex-start !important;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 30px;
+    padding: 40px;
+    align-items: flex-start;
 }
 
 /* 5. Avatar Scanner Effect */
@@ -14482,11 +12267,11 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 /* 6. The Typewriter Text Box */
 .dialogue-box {
-    font-family: 'Rajdhani', monospace !important;
-    font-size: 24px !important;
-    color: #ddd !important;
-    line-height: 1.6 !important;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3) !important;
+    font-family: 'Rajdhani', monospace;
+    font-size: 24px;
+    color: #ddd;
+    line-height: 1.6;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
     min-height: 150px;
 }
 
@@ -14494,23 +12279,23 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 /* 7. Tutorial Visuals Box (Nag-g-glow at lumulutang) */
 #tutorial-visual {
-    margin-top: 20px !important;
-    text-align: center !important;
-    font-family: 'Orbitron', sans-serif !important;
+    margin-top: 20px;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
     animation: slight-float 3s ease-in-out infinite;
 }
 
 /* 8. Footer Controls */
 .comm-footer {
-    padding: 20px 30px !important;
-    background: rgba(0, 0, 0, 0.6) !important;
-    border-top: 1px solid #334 !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
+    padding: 20px 30px;
+    background: rgba(0, 0, 0, 0.6);
+    border-top: 1px solid #334;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.comm-footer button { margin: 0 !important; font-size: 16px !important; padding: 12px 30px !important; }
+.comm-footer button { margin: 0; font-size: 16px; padding: 12px 30px; }
 
 /* --- GOD-LEVEL ANIMATIONS --- */
 @keyframes hologram-fade-in {
@@ -14544,30 +12329,30 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 /* 1. THE MAIN CONTAINER (Locks to Screen Size) */
 #teacher-dashboard {
-    position: fixed !important;
-    top: 0 !important; left: 0 !important;
-    width: 100vw !important; height: 100vh !important;
-    background: #05070a !important;
-    z-index: 999999 !important;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: #05070a;
+    z-index: 999999;
     display: none; /* Controlled by JS .hidden */
-    flex-direction: column !important;
-    overflow: hidden !important; /* Walang labis, walang kulang */
+    flex-direction: column;
+    overflow: hidden ; /* Walang labis, walang kulang */
 }
 
 body.dashboard-active #teacher-dashboard:not(.hidden) {
-    display: flex !important;
+    display: flex;
 }
 
 /* 2. THE TOP HEADER */
 .dash-top-bar {
-    flex: 0 0 80px !important; /* Laging 80px ang taas, bawal lumiit */
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 0 30px !important;
-    background: rgba(0, 15, 30, 0.95) !important;
-    border-bottom: 2px solid #00e5ff !important;
-    box-shadow: 0 5px 20px rgba(0, 229, 255, 0.15) !important;
+    flex: 0 0 80px ; /* Laging 80px ang taas, bawal lumiit */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    background: rgba(0, 15, 30, 0.95);
+    border-bottom: 2px solid #00e5ff;
+    box-shadow: 0 5px 20px rgba(0, 229, 255, 0.15);
     z-index: 100;
 }
 .dash-branding h2 { margin: 0; font-size: 26px; font-family: 'Orbitron'; color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
@@ -14578,82 +12363,82 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 /* 3. TABS CONTAINER */
 .dash-tabs-container {
-    flex: 0 0 60px !important; /* Laging 60px ang taas */
-    display: flex !important;
-    gap: 10px !important;
-    padding: 15px 30px 0 30px !important;
-    background: #020408 !important;
-    border-bottom: 1px solid #223 !important;
+    flex: 0 0 60px ; /* Laging 60px ang taas */
+    display: flex;
+    gap: 10px;
+    padding: 15px 30px 0 30px;
+    background: #020408;
+    border-bottom: 1px solid #223;
     z-index: 90;
 }
 
 /* 4. THE MAIN VIEWPORT (Ang sikreto para hindi mag-half screen) */
 .dash-main-viewport {
-    flex: 1 1 auto !important; /* Kukunin niya LAHAT ng natitirang espasyo pababa */
-    position: relative !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important; /* Ang loob lang dapat ang mag-scroll! */
-    padding: 15px 30px !important;
+    flex: 1 1 auto ; /* Kukunin niya LAHAT ng natitirang espasyo pababa */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden ; /* Ang loob lang dapat ang mag-scroll! */
+    padding: 15px 30px;
 }
 
 /* 5. INDIVIDUAL VIEWS (Roster, Spy, Podium, Reports) */
 .dash-view {
-    display: none !important; /* Default hidden */
-    flex: 1 1 auto !important; /* Banat mula taas hanggang baba */
-    flex-direction: column !important;
-    width: 100% !important;
-    height: 100% !important;
-    overflow: hidden !important;
+    display: none ; /* Default hidden */
+    flex: 1 1 auto ; /* Banat mula taas hanggang baba */
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 .dash-view:not(.hidden) {
-    display: flex !important; /* Ipakita kapag active */
+    display: flex ; /* Ipakita kapag active */
 }
 
 /* --- SPECIFIC VIEW TWEAKS --- */
 
 /* Spy Grid & Roster Grid Scrolling */
 #spy-grid-container, #roster-grid {
-    flex: 1 1 auto !important;
-    overflow-y: auto !important;
-    align-content: flex-start !important;
-    padding-bottom: 50px !important;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    align-content: flex-start;
+    padding-bottom: 50px;
 }
 
 /* Podium View Strict Positioning */
 #view-podium {
-    align-items: center !important;
-    justify-content: flex-start !important;
+    align-items: center;
+    justify-content: flex-start;
 }
 .nexus-runner-up-list {
-    flex: 1 1 auto !important;
-    width: 100% !important;
-    max-width: 1200px !important;
-    overflow-y: auto !important;
-    margin-top: 30px !important;
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 1200px;
+    overflow-y: auto;
+    margin-top: 30px;
     background: rgba(0,0,0,0.5);
     border-top: 1px solid rgba(0, 229, 255, 0.3);
     z-index: 10;
 }
 
 /* Reports Table Full Screen */
-#view-reports { align-items: center !important; }
+#view-reports { align-items: center; }
 .reports-header-bar {
-    flex: 0 0 auto !important; /* Wag liliit */
-    width: 100% !important;
-    max-width: 1400px !important;
-    display: flex !important; justify-content: space-between !important;
-    margin-bottom: 20px !important;
+    flex: 0 0 auto ; /* Wag liliit */
+    width: 100%;
+    max-width: 1400px;
+    display: flex; justify-content: space-between;
+    margin-bottom: 20px;
 }
 .reports-stats-group { display: flex; gap: 15px; }
 .reports-table-container {
-    flex: 1 1 auto !important; /* Banat pababa ang table */
-    width: 100% !important;
-    max-width: 1400px !important;
-    overflow-y: auto !important; /* TABLE SCROLLING */
-    background: rgba(5, 10, 15, 0.8) !important;
-    border: 2px solid #334 !important; border-bottom: none !important;
-    border-radius: 12px 12px 0 0 !important;
+    flex: 1 1 auto ; /* Banat pababa ang table */
+    width: 100%;
+    max-width: 1400px;
+    overflow-y: auto ; /* TABLE SCROLLING */
+    background: rgba(5, 10, 15, 0.8);
+    border: 2px solid #334; border-bottom: none;
+    border-radius: 12px 12px 0 0;
 }
 .reports-table-container table { width: 100%; border-collapse: collapse; }
 .reports-table-container th { position: sticky; top: 0; background: #0a0f1a; z-index: 10; border-bottom: 3px solid #00e5ff; padding: 20px 15px; color: #00e5ff; font-family: 'Orbitron'; font-size: 13px; }
@@ -14665,77 +12450,77 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 /* 1. Main Dashboard Body */
 #teacher-dashboard {
-    position: fixed !important;
-    top: 0 !important; left: 0 !important;
-    width: 100vw !important; height: 100vh !important;
-    background: #05070a !important;
-    z-index: 999999 !important;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: #05070a;
+    z-index: 999999;
     display: none; 
-    flex-direction: column !important;
-    overflow: hidden !important;
+    flex-direction: column;
+    overflow: hidden;
 }
 body.dashboard-active #teacher-dashboard:not(.hidden) {
-    display: flex !important;
+    display: flex;
 }
 
 /* 2. Top Bar & Tabs (Naka-Lock ang Taas) */
 #dash-header-bar {
-    height: 80px !important; flex-shrink: 0 !important;
-    display: flex !important; justify-content: space-between !important; align-items: center !important;
-    padding: 0 30px !important; background: rgba(0, 15, 30, 0.95) !important;
-    border-bottom: 2px solid #00e5ff !important;
+    height: 80px; flex-shrink: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 30px; background: rgba(0, 15, 30, 0.95);
+    border-bottom: 2px solid #00e5ff;
 }
 #dash-tabs-bar {
-    height: 60px !important; flex-shrink: 0 !important;
-    display: flex !important; gap: 10px !important;
-    padding: 15px 30px 0 30px !important; background: #020408 !important;
-    border-bottom: 1px solid #223 !important;
+    height: 60px; flex-shrink: 0;
+    display: flex; gap: 10px;
+    padding: 15px 30px 0 30px; background: #020408;
+    border-bottom: 1px solid #223;
 }
 
 /* 3. THE MAGIC CONTAINER: Absolute Viewport */
 #dash-absolute-viewport {
-    position: relative !important; /* Ito ang Anchor! */
-    flex-grow: 1 !important; /* Sakupin ang natitirang height */
-    width: 100% !important;
-    overflow: hidden !important;
+    position: relative ; /* Ito ang Anchor! */
+    flex-grow: 1 ; /* Sakupin ang natitirang height */
+    width: 100%;
+    overflow: hidden;
 }
 
 /* 4. THE ABSOLUTE CARDS (Hinding-hindi na maghahati!) */
 .absolute-card {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    padding: 20px 30px !important;
-    box-sizing: border-box !important;
-    display: flex !important;
-    flex-direction: column !important;
-    background: #05070a !important; /* Solid background para takpan ang nasa ilalim */
-    z-index: 1 !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    transition: opacity 0.2s ease-in-out !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background: #05070a ; /* Solid background para takpan ang nasa ilalim */
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
 }
 
 /* Pag tinawag ng JS, lilitaw sa pinakataas */
 .absolute-card:not(.hidden) {
-    z-index: 10 !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
+    z-index: 10;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 /* --- Internal Formatting --- */
-#view-podium { align-items: center !important; justify-content: flex-start !important; }
-.nexus-runner-up-list { flex-grow: 1 !important; width: 100%; max-width: 1200px; overflow-y: auto; margin-top: 30px; }
-#spy-grid-container, #roster-grid { flex-grow: 1 !important; overflow-y: auto !important; align-content: flex-start !important; }
+#view-podium { align-items: center; justify-content: flex-start; }
+.nexus-runner-up-list { flex-grow: 1; width: 100%; max-width: 1200px; overflow-y: auto; margin-top: 30px; }
+#spy-grid-container, #roster-grid { flex-grow: 1; overflow-y: auto; align-content: flex-start; }
 
-#view-reports { align-items: center !important; }
+#view-reports { align-items: center; }
 .reports-header-bar { width: 100%; max-width: 1400px; display: flex; justify-content: space-between; margin-bottom: 20px; flex-shrink: 0; }
 .reports-stats-group { display: flex; gap: 15px; }
 .reports-table-container { 
-    width: 100%; max-width: 1400px; flex-grow: 1 !important; 
-    overflow-y: auto !important; border: 2px solid #334; 
+    width: 100%; max-width: 1400px; flex-grow: 1; 
+    overflow-y: auto; border: 2px solid #334; 
     border-radius: 12px 12px 0 0; background: rgba(5,10,15,0.8);
 }
 .reports-table-container table { width: 100%; border-collapse: collapse; }
@@ -14748,19 +12533,19 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 /* 1. Ang buong JessBot Screen (Naka-lock ang size) */
 #nexus-view-jessbot {
-    display: flex !important;
-    flex-direction: column !important;
-    height: 100% !important; 
-    overflow: hidden !important; /* Bawal mag-scroll ang buong sidebar */
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+    overflow: hidden ; /* Bawal mag-scroll ang buong sidebar */
 }
 
 /* 2. Ang Chat History (Ito lang dapat ang nag-i-scroll!) */
 #nexus-chat-history {
-    flex-grow: 1 !important;     /* Hihigupin ang lahat ng space sa taas */
-    overflow-y: auto !important; /* Magkakaroon ng scrollbar kapag dumami ang message */
-    min-height: 0 !important;    /* Magic CSS para hindi niya itulak ang buttons pababa */
-    padding-bottom: 20px !important;
-    padding-right: 5px !important; /* Space para sa scrollbar */
+    flex-grow: 1 ;     /* Hihigupin ang lahat ng space sa taas */
+    overflow-y: auto ; /* Magkakaroon ng scrollbar kapag dumami ang message */
+    min-height: 0 ;    /* Magic CSS para hindi niya itulak ang buttons pababa */
+    padding-bottom: 20px;
+    padding-right: 5px ; /* Space para sa scrollbar */
 }
 
 /* Custom Scrollbar para sa Jessbot History para aesthetic */
@@ -14769,13 +12554,13 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
 
 /* 3. Ang Command Grid (Naka-lock sa ilalim) */
 .ai-command-grid {
-    flex-shrink: 0 !important;   /* BAWAL LUMIIT O MATULAK PABABA */
-    position: relative !important;
-    bottom: 0 !important;
-    padding: 15px 5px 5px 5px !important;
-    background: #020408 !important; /* Solid background para takpan ang nag-i-scroll na text */
-    border-top: 1px solid rgba(255, 215, 0, 0.3) !important; /* Gold line separator */
-    z-index: 10 !important;
+    flex-shrink: 0 ;   /* BAWAL LUMIIT O MATULAK PABABA */
+    position: relative;
+    bottom: 0;
+    padding: 15px 5px 5px 5px;
+    background: #020408 ; /* Solid background para takpan ang nag-i-scroll na text */
+    border-top: 1px solid rgba(255, 215, 0, 0.3) ; /* Gold line separator */
+    z-index: 10;
 }
 
 /* =========================================
@@ -14959,321 +12744,316 @@ body.dashboard-active #teacher-dashboard:not(.hidden) {
     font-family: 'Rajdhani', sans-serif;
 }
 
-
 /* === FIX: HOLOGRAM CLICKABLE + FREEZE FIX - Added at end, does not delete original === */
 #game-wrapper {
-    perspective: none !important;
-    transform-style: flat !important;
-    overflow: visible !important;
+    perspective: none;
+    transform-style: flat;
+    overflow: visible;
 }
 #ui-layer {
-    pointer-events: none !important;
-    z-index: 50 !important;
+    pointer-events: none;
+    z-index: 50;
 }
 #hud-top, #hud-bottom, .command-console, .console-wing, .console-core, #side-feed, #virtual-numpad, #boss-hud, #input-container, #comms-wrapper, #jessbot-wrapper {
-    pointer-events: auto !important;
-    z-index: 100 !important;
-    position: relative !important;
+    pointer-events: auto;
+    z-index: 100;
+    position: relative;
 }
 .tactical-btn, .trigger-btn, .num-btn, #player-input {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    z-index: 150 !important;
-    position: relative !important;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 150;
+    position: relative;
 }
 #gameCanvas {
-    z-index: 1 !important;
+    z-index: 1;
 }
 #start-countdown.hidden, #curtain-countdown.hidden, #class-curtain.hidden {
-    display: none !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
+    display: none;
+    opacity: 0;
+    pointer-events: none;
 }
 #glitch-overlay {
-    display: none !important;
-    pointer-events: none !important;
+    display: none;
+    pointer-events: none;
 }
 .modal {
-    z-index: 99999 !important;
-    pointer-events: auto !important;
+    z-index: 99999;
+    pointer-events: auto;
 }
-
-
 
 /* === V13 CRASH FIX: HOLOGRAM CLICKABLE OVERRIDE - Must be at very end === */
 #game-wrapper {
-    perspective: none !important;
-    transform-style: flat !important;
-    overflow: visible !important;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    z-index: 10 !important;
+    perspective: none;
+    transform-style: flat;
+    overflow: visible;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
 }
 #ui-layer {
-    pointer-events: none !important;
-    z-index: 50 !important;
+    pointer-events: none;
+    z-index: 50;
 }
 #hud-top, #hud-bottom, .command-console, .console-wing, .console-core, #side-feed, #virtual-numpad, #boss-hud, #input-container, #comms-wrapper, #jessbot-wrapper, #nexus-ai-wrapper {
-    pointer-events: auto !important;
-    z-index: 100 !important;
-    position: relative !important;
+    pointer-events: auto;
+    z-index: 100;
+    position: relative;
 }
 .tactical-btn, .trigger-btn, .num-btn, #player-input, .icon-btn, .wing-btn, .core-btn {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    z-index: 150 !important;
-    position: relative !important;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 150;
+    position: relative;
 }
 #gameCanvas, #bgCanvas {
-    z-index: 1 !important;
-    pointer-events: none !important;
+    z-index: 1;
+    pointer-events: none;
 }
 #start-countdown.hidden, #curtain-countdown.hidden, #class-curtain.hidden, #glitch-overlay {
-    display: none !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
+    display: none;
+    opacity: 0;
+    pointer-events: none;
 }
 .modal {
-    z-index: 99999 !important;
-    pointer-events: auto !important;
+    z-index: 99999;
+    pointer-events: auto;
 }
-
-
 
 /* === V14: MOBILE / TABLET / IPAD RESPONSIVE - No crash, no lag === */
 
 /* Prevent iOS zoom on input */
 input, textarea, select {
-    font-size: 16px !important;
+    font-size: 16px;
 }
 
 /* Base: Ensure game-wrapper fills screen on all devices */
 #game-wrapper {
-    width: 100vw !important;
-    height: 100vh !important;
-    height: 100dvh !important; /* Dynamic viewport for mobile */
-    overflow: hidden !important;
-    touch-action: manipulation !important;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh ; /* Dynamic viewport for mobile */
+    overflow: hidden;
+    touch-action: manipulation;
 }
 
 /* HUD responsive */
 #hud-top {
-    padding: 5px 10px !important;
-    flex-wrap: wrap !important;
-    gap: 5px !important;
+    padding: 5px 10px;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 #hud-bottom {
-    padding: 10px !important;
-    gap: 8px !important;
+    padding: 10px;
+    gap: 8px;
 }
 
 /* Command console - stack on mobile */
 @media (max-width: 768px) {
     .command-console {
-        flex-direction: column !important;
-        bottom: 5px !important;
-        left: 5px !important;
-        right: 5px !important;
-        width: auto !important;
-        max-height: 40vh !important;
-        overflow-y: auto !important;
+        flex-direction: column;
+        bottom: 5px;
+        left: 5px;
+        right: 5px;
+        width: auto;
+        max-height: 40vh;
+        overflow-y: auto;
     }
     
     .console-wing {
-        width: 100% !important;
-        flex-direction: row !important;
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-        gap: 5px !important;
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
     }
     
     .console-core {
-        width: 100% !important;
-        order: -1 !important;
+        width: 100%;
+        order: -1;
     }
     
     #player-input {
-        font-size: 18px !important;
-        height: 45px !important;
-        min-height: 45px !important;
+        font-size: 18px;
+        height: 45px;
+        min-height: 45px;
     }
     
     .tactical-btn, .trigger-btn {
-        min-width: 44px !important;
-        min-height: 44px !important;
-        padding: 8px 12px !important;
-        font-size: 14px !important;
-        touch-action: manipulation !important;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 8px 12px;
+        font-size: 14px;
+        touch-action: manipulation;
     }
     
     #virtual-numpad {
-        bottom: 50% !important;
-        transform: translateY(50%) !important;
-        right: 5px !important;
-        left: auto !important;
-        gap: 5px !important;
+        bottom: 50%;
+        transform: translateY(50%);
+        right: 5px;
+        left: auto;
+        gap: 5px;
     }
     
     .num-btn {
-        width: 50px !important;
-        height: 50px !important;
-        font-size: 20px !important;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
     }
     
     #side-feed {
-        display: none !important; /* Hide on mobile to save space */
+        display: none ; /* Hide on mobile to save space */
     }
     
     .modal-content {
-        width: 95vw !important;
-        max-width: 95vw !important;
-        max-height: 90vh !important;
-        max-height: 90dvh !important;
-        overflow-y: auto !important;
-        padding: 15px !important;
-        margin: 5px !important;
+        width: 95vw;
+        max-width: 95vw;
+        max-height: 90vh;
+        max-height: 90dvh;
+        overflow-y: auto;
+        padding: 15px;
+        margin: 5px;
     }
     
     #start-modal .modal-content {
-        width: 98vw !important;
+        width: 98vw;
     }
 }
 
 /* Tablet / iPad (768px - 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
     .command-console {
-        bottom: 10px !important;
-        left: 10px !important;
-        right: 10px !important;
-        width: auto !important;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        width: auto;
     }
     
     .console-wing {
-        gap: 8px !important;
+        gap: 8px;
     }
     
     .tactical-btn {
-        padding: 10px 15px !important;
-        font-size: 15px !important;
-        min-height: 44px !important;
+        padding: 10px 15px;
+        font-size: 15px;
+        min-height: 44px;
     }
     
     #virtual-numpad {
-        right: 10px !important;
-        bottom: 120px !important;
+        right: 10px;
+        bottom: 120px;
     }
     
     .num-btn {
-        width: 55px !important;
-        height: 55px !important;
+        width: 55px;
+        height: 55px;
     }
     
     #side-feed {
-        width: 200px !important;
-        font-size: 12px !important;
+        width: 200px;
+        font-size: 12px;
     }
 }
 
 /* iPad Pro and large tablets */
 @media (min-width: 1025px) and (max-width: 1366px) {
     .command-console {
-        max-width: 90vw !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        right: auto !important;
+        max-width: 90vw;
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
     }
 }
 
 /* Landscape mobile */
 @media (max-height: 500px) and (orientation: landscape) {
     #hud-top {
-        padding: 2px 5px !important;
-        font-size: 12px !important;
+        padding: 2px 5px;
+        font-size: 12px;
     }
     
     #hud-bottom {
-        padding: 5px !important;
+        padding: 5px;
     }
     
     .command-console {
-        flex-direction: row !important;
-        max-height: 35vh !important;
-        bottom: 2px !important;
+        flex-direction: row;
+        max-height: 35vh;
+        bottom: 2px;
     }
     
     .console-wing {
-        flex-direction: column !important;
-        width: auto !important;
+        flex-direction: column;
+        width: auto;
     }
     
     #virtual-numpad {
-        bottom: 5px !important;
-        top: auto !important;
-        right: 5px !important;
-        flex-direction: row !important;
-        flex-wrap: wrap !important;
-        max-width: 180px !important;
+        bottom: 5px;
+        top: auto;
+        right: 5px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 180px;
     }
     
     .modal-content {
-        max-height: 95vh !important;
-        max-height: 95dvh !important;
+        max-height: 95vh;
+        max-height: 95dvh;
     }
 }
 
 /* Prevent text selection on buttons (mobile) */
 .tactical-btn, .trigger-btn, .num-btn, .icon-btn {
-    -webkit-touch-callout: none !important;
-    -webkit-user-select: none !important;
-    -khtml-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Fix iOS rubber banding */
 body, html {
-    overscroll-behavior: none !important;
-    position: fixed !important;
-    overflow: hidden !important;
-    width: 100% !important;
-    height: 100% !important;
+    overscroll-behavior: none;
+    position: fixed;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
 }
 
 #game-wrapper {
-    overscroll-behavior: none !important;
-    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* High DPI optimization for tablets */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     #gameCanvas, #bgCanvas {
-        image-rendering: -webkit-optimize-contrast !important;
-        image-rendering: crisp-edges !important;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
     }
 }
 
 /* Reduce motion for users who prefer it (accessibility + performance) */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms;
+        animation-iteration-count: 1;
+        transition-duration: 0.01ms;
     }
     
     #gameCanvas {
-        will-change: auto !important;
+        will-change: auto;
     }
 }
 
 /* Dark mode safe */
 @media (prefers-color-scheme: dark) {
     body {
-        background: #000 !important;
+        background: #000;
     }
 }

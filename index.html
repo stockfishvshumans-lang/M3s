@@ -10,11 +10,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
-    <style>
-      /* FIX BLANK: Makes hidden truly hidden - your teacher-dashboard has z-index 999999 + bg #05070a covering dashboard */
-      .hidden{ display:none !important; pointer-events:none !important; opacity:0 !important; visibility:hidden !important; z-index:-1 !important; }
-      #cyber-warp-door.hidden, #class-curtain.hidden, #teacher-dashboard.hidden, #glitch-overlay.hidden, #boot-overlay.hidden, #cinematic-intro.hidden, #story-overlay.hidden, #cinematic-outro.hidden{ display:none !important; pointer-events:none !important; }
-    </style>
+    <style>.hidden{ display:none !important; }</style>
     <script>
     (function(){
       try{
@@ -38,13 +34,9 @@
 <div id="socket-status" style="position:fixed;top:2px;right:5px;background:rgba(0,0,0,0.9);color:#ffaa00;padding:3px 8px;font-size:9px;font-family:monospace;border:1px solid #ffaa00;z-index:100000;pointer-events:none;border-radius:4px;display:none">Connecting...</div>
 <div id="gadget-debug" style="position:fixed;top:2px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.9);color:#00e5ff;padding:3px 10px;font-size:10px;font-family:monospace;border:1px solid #00e5ff;z-index:100000;pointer-events:none;border-radius:4px;display:none">M3SH Fixed</div>
 
-
-
-
-
         <canvas id="bgCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-10;"></canvas>
 
-        ```
+
         <div id="cyber-warp-door" class="hidden">
             <div class="warp-panel panel-top"></div>
             <div class="warp-panel panel-bottom"></div>
@@ -52,20 +44,9 @@
             <div class="warp-status-text">RE-ROUTING TO COMMAND CENTER...</div>
         </div>
 
-        
-
-
-
-
-
-
-        
-
-
-
-        <div id="boot-overlay" class="god-boot-screen">
+       <div id="boot-overlay" class="god-boot-screen">
             <button id="fullscreen-btn" onclick="window.toggleFullScreen()" style="position: absolute; top: 20px; right: 20px; z-index: 9999999; background: rgba(0, 229, 255, 0.1); border: 1px solid #00e5ff; color: #00e5ff; padding: 8px 15px; cursor: pointer; font-family: 'Orbitron'; font-size: 12px; letter-spacing: 2px; border-radius: 4px; box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);">
-                [ ] ENTER FULLSCREEN
+                [ ]
             </button>
 
             <div class="boot-lightning"></div>
@@ -86,38 +67,18 @@
             </div>
         </div>
 
-
-
         <div id="cinematic-intro">
-
             <div class="space-bg"></div>
-
             <div class="stars-1"></div>
-
             <div class="stars-2"></div>
-
             <div class="nebula-layer"></div>
-
-            
-
             <div id="war-container"></div> 
-
-            
-
             <div class="intro-ui">
-
                 <div class="logo-wrapper">
-
                     <h1 class="defender-logo" data-text="MATH DEFENDER">MATH DEFENDER</h1>
-
                     <div class="logo-scanline"></div>
-
                 </div>
-
                 <div class="subtitle-text">HUMANITY'S LAST STAND</div>
-
-                
-
                 <div class="loading-system">
 
                     <div class="tech-bar">
@@ -2981,165 +2942,10 @@
 
         <div class="scanline-overlay"></div>
 
-        <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
-    <!-- FIX: Removed duplicate audio.js - loaded via import in script.js -->
-    <script src="./gadget-detector.js"></script>
-    <script src="./m3sh-socket.js"></script>
-    <!-- FIX: Removed duplicate tactical-solver.js - loaded via import in script.js -->
-    <script type="module" src="./script.js"></script>
-
-
-
-    
-<!-- FIX: Senior dev - One shared Socket.IO connection to Render, not GitHub Pages -->
-<script>
-// FIX: Single shared Socket.IO connection to Render backend, not GitHub Pages
-window.M3SH_SOCKET_URL = 'https://m33sh.onrender.com';
-window.M3SHSharedSocket = null;
-
-function getSharedSocket(){
-  if(window.M3SHSharedSocket && window.M3SHSharedSocket.connected) return window.M3SHSharedSocket;
-  if(typeof io === 'undefined'){
-    console.warn('[M3SH] Socket.IO CDN not loaded yet');
-    return null;
-  }
-  // Explicitly point to Render backend, not GitHub Pages origin
-  window.M3SHSharedSocket = io(window.M3SH_SOCKET_URL, {
-    transports: ['websocket', 'polling'],
-    timeout: 10000,
-    reconnectionAttempts: 3
-  });
-  
-  window.M3SHSharedSocket.on('connect', () => {
-    console.log('[M3SH] Connected to Render:', window.M3SH_SOCKET_URL);
-    const statusEl = document.getElementById('socket-status');
-    if(statusEl){
-      statusEl.textContent = 'ONLINE - Render';
-      statusEl.style.color = '#00ff41';
-      statusEl.style.display = 'block';
-    }
-  });
-  
-  window.M3SHSharedSocket.on('connect_error', (err) => {
-    console.warn('[M3SH] Render connection error:', err.message);
-    const statusEl = document.getElementById('socket-status');
-    if(statusEl){
-      statusEl.textContent = 'OFFLINE - Solo Mode';
-      statusEl.style.color = '#ffaa00';
-      statusEl.style.display = 'block';
-    }
-  });
-  
-  return window.M3SHSharedSocket;
-}
-
-// Override plain io() call that targets GitHub Pages - prevent 404s
-(function(){
-  const originalIo = window.io;
-  if(originalIo){
-    window.io = function(url, opts){
-      // If called without URL or with GitHub Pages URL, redirect to Render
-      if(!url || url.includes('github.io') || url === window.location.origin){
-        console.log('[M3SH FIX] Redirecting io() without URL from GitHub Pages to Render:', window.M3SH_SOCKET_URL);
-        return getSharedSocket() || originalIo(window.M3SH_SOCKET_URL, opts);
-      }
-      return originalIo(url, opts);
-    };
-    // Copy properties
-    Object.assign(window.io, originalIo);
-  }
-})();
-
-// Initialize shared socket after DOM loaded
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    getSharedSocket();
-  }, 1000);
-});
-</script>
-
-
-<script>
-// FIX: Chrome blocking audio before click - wait for user click to start AudioContext
-(function(){
-  let audioContextStarted = false;
-  
-  function startAudioOnClick(){
-    if(audioContextStarted) return;
-    audioContextStarted = true;
-    
-    // Resume AudioContext if exists
-    if(window.audioContext && window.audioContext.state === 'suspended'){
-      window.audioContext.resume().then(()=>{
-        console.log('[M3SH FIX] AudioContext resumed after user click');
-      });
-    }
-    
-    // Start audio if Sound exists
-    if(window.Sound && window.Sound.init){
-      try{
-        window.Sound.init();
-        console.log('[M3SH FIX] Audio started after user click');
-      }catch(e){}
-    }
-    
-    // Remove listeners after first click
-    document.removeEventListener('click', startAudioOnClick);
-    document.removeEventListener('keydown', startAudioOnClick);
-  }
-  
-  // Wait for user interaction
-  document.addEventListener('click', startAudioOnClick);
-  document.addEventListener('keydown', startAudioOnClick);
-  
-  // Override audio.js load-time auto-play
-  const originalAudioInit = window.AudioContext || window.webkitAudioContext;
-})();
-</script>
-
-
-<script>
-// FIX: Reload should skip intro/story -> Dashboard, Game finished -> Dashboard (your screenshot)
-(function(){
-  const hasSeenIntro = localStorage.getItem('m3sh_hasSeenIntro') === 'true';
-  
-  if(hasSeenIntro){
-    document.addEventListener('DOMContentLoaded', () => {
-      ['boot-overlay','cinematic-intro','story-overlay'].forEach(id=>{
-        const el=document.getElementById(id);
-        if(el){el.classList.add('hidden'); el.style.display='none';}
-      });
-    });
-  }
-  
-  const origStart = window.startSystem;
-  window.startSystem = function(){
-    localStorage.setItem('m3sh_hasSeenIntro','true');
-    if(origStart) return origStart.apply(this, arguments);
-  };
-  
-  const origGoHome = window.goHome;
-  window.goHome = function(){
-    console.log('[M3SH] Game finished -> Dashboard');
-    try{
-      if(window.state){window.state.isPlaying=false;}
-      document.querySelectorAll('.modal').forEach(el=>{el.classList.add('hidden');});
-      ['boot-overlay','cinematic-intro','story-overlay'].forEach(id=>{
-        const el=document.getElementById(id);
-        if(el){el.classList.add('hidden'); el.style.display='none';}
-      });
-      // Show dashboard with DEPLOYMENT VECTORS
-      document.querySelectorAll('*').forEach(el=>{
-        if(el.textContent && el.textContent.includes('DEPLOYMENT VECTORS')){
-          let p=el; for(let i=0;i<6&&p;i++){p.classList.remove('hidden'); if(p.style)p.style.display=''; p=p.parentElement;}
-        }
-      });
-      localStorage.setItem('m3sh_hasSeenIntro','true');
-    }catch(e){}
-  };
-})();
-</script>
-
+        
+<script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+<script src="./gadget-detector.js"></script>
+<script src="./m3sh-socket.js"></script>
+<script type="module" src="./script.js"></script>
 </body>
-
-    </html>
+</html>
