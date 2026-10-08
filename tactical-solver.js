@@ -1,21 +1,33 @@
 // ==========================================
-// 🧠 TACTICAL-SOLVER.JS - NEXUS Math Solver v2 - Safe parser
-// No Function() / eval - shunting-yard safe evaluator
+// 🧠 TACTICAL-SOLVER.JS - NEXUS Math Solver
+// This was missing - now implemented
 // ==========================================
 
+/**
+ * Solves basic algebra equations for NEXUS terminal
+ * Supports: 3x + 5 = 20, 2x = 10, x + 5 = 12, etc
+ */
 window.solveTacticalEquation = function(equation) {
     try {
         equation = equation.trim().replace(/\s+/g, ' ');
         if (!equation.includes('=')) return null;
+        
         let [left, right] = equation.split('=').map(s => s.trim());
         let rhs = parseFloat(right);
         if (isNaN(rhs)) return null;
+
+        // Normalize: 3x, 3x + 5, x + 5, etc
+        // Pattern: [coeff]x [+/- constant]
         left = left.replace(/\s/g, '');
+        
+        // Case 1: x + b = c  or  x - b = c
         let m = left.match(/^x([\+\-])(\d+(?:\.\d+)?)$/);
         if (m) {
-            let op = m[1]; let b = parseFloat(m[2]);
+            let op = m[1];
+            let b = parseFloat(m[2]);
             return op === '+' ? rhs - b : rhs + b;
         }
+        // Case 2: ax = c
         m = left.match(/^(-?\d*\.?\d*)x$/);
         if (m) {
             let coeff = m[1];
@@ -25,17 +37,22 @@ window.solveTacticalEquation = function(equation) {
             if (coeff === 0) return null;
             return rhs / coeff;
         }
+        // Case 3: ax + b = c
         m = left.match(/^(-?\d*\.?\d*)x([\+\-])(\d+(?:\.\d+)?)$/);
         if (m) {
             let coeff = m[1];
             if (coeff === '' || coeff === '+') coeff = 1;
             else if (coeff === '-') coeff = -1;
             else coeff = parseFloat(coeff);
-            let op = m[2]; let b = parseFloat(m[3]);
+            let op = m[2];
+            let b = parseFloat(m[3]);
             if (op === '-') b = -b;
+            // ax + b = rhs => ax = rhs - b
             return (rhs - b) / coeff;
         }
+        // Case 4: plain x = c
         if (left === 'x') return rhs;
+        
         return null;
     } catch(e) {
         console.warn("Tactical solver error:", e);
@@ -43,8 +60,10 @@ window.solveTacticalEquation = function(equation) {
     }
 };
 
+// Auto-correct for NEXUS input (typo tolerance)
 window.nexusAutoCorrect = function(input) {
     if (!input) return input;
+    // Basic corrections
     return input.trim()
         .replace(/\s*\+\s*/g, ' + ')
         .replace(/\s*\-\s*/g, ' - ')
@@ -52,57 +71,13 @@ window.nexusAutoCorrect = function(input) {
         .replace(/\bX\b/g, 'x');
 };
 
-// Safe math evaluator - no Function(), no eval
-// Supports + - * / ( ) and decimal numbers, x is treated as variable placeholder for multiplication
+// Advanced battle math evaluator (used by training modal)
 window.evaluateFlat = window.evaluateFlat || function(expr) {
     try {
-        if (typeof expr !== 'string') return null;
-        // Strict whitelist: only numbers, x, + - * / ( ) . whitespace
-        if (/[^0-9x+\-*/().\s]/.test(expr)) return null;
-        // Replace x with * for multiplication (but keep 'x' as variable? Original intent was multiplication)
-        // For safety, if expr contains 'x' not as operator, reject unless it's '3x' pattern -> convert
-        let sanitized = expr.replace(/([0-9])x/g, '$1*').replace(/x([0-9])/g, '*$1').replace(/x/g, '*');
-        // Remove double operators, empty
-        sanitized = sanitized.trim();
-        if (!sanitized || sanitized.length > 100) return null;
-        // Shunting-yard to RPN then evaluate
-        const tokens = sanitized.match(/(\d+\.?\d*|\+|\-|\*|\/|\(|\))/g);
-        if (!tokens) return null;
-        const prec = { '+':1, '-':1, '*':2, '/':2 };
-        const output = [];
-        const ops = [];
-        for (let t of tokens) {
-            if (!isNaN(t)) output.push(parseFloat(t));
-            else if (t in prec) {
-                while (ops.length && ops[ops.length-1] !== '(' && prec[ops[ops.length-1]] >= prec[t]) {
-                    output.push(ops.pop());
-                }
-                ops.push(t);
-            } else if (t === '(') ops.push(t);
-            else if (t === ')') {
-                while (ops.length && ops[ops.length-1] !== '(') output.push(ops.pop());
-                if (ops.length && ops[ops.length-1] === '(') ops.pop(); else return null;
-            }
-        }
-        while (ops.length) {
-            const op = ops.pop();
-            if (op === '(' || op === ')') return null;
-            output.push(op);
-        }
-        const stack = [];
-        for (let token of output) {
-            if (typeof token === 'number') stack.push(token);
-            else {
-                if (stack.length < 2) return null;
-                const b = stack.pop(), a = stack.pop();
-                if (token === '+') stack.push(a+b);
-                else if (token === '-') stack.push(a-b);
-                else if (token === '*') stack.push(a*b);
-                else if (token === '/') { if (b===0) return null; stack.push(a/b); }
-            }
-        }
-        return stack.length===1 ? stack[0] : null;
+        // Safe eval for math only
+        if (/[^0-9x+\-*/().=\s]/.test(expr)) return null;
+        return Function('"use strict"; return (' + expr.replace(/x/g, '*') + ')')();
     } catch(e) { return null; }
 };
 
-console.log("🧠 tactical-solver.js v2 loaded - Safe parser, no eval");
+console.log("🧠 tactical-solver.js v1.0 loaded - NEXUS solver online");

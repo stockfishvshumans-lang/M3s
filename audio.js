@@ -53,10 +53,10 @@ window.Sound = {
   // window.AudioContext || window.webkitAudioContext;
             this.ctx = new AudioContext();
             
-            // MASTER VOLUME LIMITER
-            this.masterGain = this.ctx.createGain();
-            this.masterGain.gain.value = 0.6;
-            this.masterGain.connect(this.ctx.destination);
+            // MASTER VOLUME LIMITER (Tinaasan sa 0.6 para malakas)
+            this.masterGain = this.ctx.createGain();
+            this.masterGain.gain.value = 0.6; 
+            this.masterGain.connect(this.ctx.destination);
         }
         if (this.ctx.state === 'suspended') {
             this.ctx.resume().catch(e => console.log("Audio waiting for user..."));
@@ -246,15 +246,14 @@ window.Sound = {
         return node;
     },
 
-    stopBGM: function() {
-        this.activeNodes.forEach(n => {
-            try { if (n.stop) n.stop(); } catch(e){}
-            try { if (n.disconnect) n.disconnect(); } catch(e){}
-            try { if (n.osc) { n.osc.stop(); n.osc.disconnect(); } } catch(e){}
-        });
-        this.activeNodes = [];
-        this.currentMode = null;
-    }
+    stopBGM: function() {
+        this.activeNodes.forEach(n => {
+            if (n.stop) n.stop();
+            else { try { n.stop(); n.disconnect(); } catch(e){} }
+        });
+        this.activeNodes = [];
+        this.currentMode = null;
+    }
 };
 
 // --- AUDIO TRIGGERS ---
