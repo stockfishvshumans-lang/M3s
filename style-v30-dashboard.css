@@ -1,0 +1,67 @@
+/* MAIN DASHBOARD VISUAL ENHANCEMENT */
+#start-modal{
+  background: radial-gradient(ellipse at center, #0a0f1e 0%, #020205 100%) !important;
+}
+#start-modal .modal-content.neon-border{
+  background: rgba(5,7,10,0.95) !important;
+  border: 2px solid #00f3ff !important;
+  box-shadow: 0 0 60px rgba(0,243,255,0.2), inset 0 0 40px rgba(0,243,255,0.05) !important;
+}
+#profile-section.dashboard-container{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
+}
+.dashboard-body{
+  display:grid;
+  grid-template-columns: 280px 1fr;
+  gap:20px;
+  width:100%;
+}
+@media (max-width: 700px){
+  .dashboard-body{ grid-template-columns: 1fr; }
+}
+
+/* Main dashboard active state */
+body.main-dashboard-active #start-modal{
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+}
+body.main-dashboard-active #profile-section{
+  animation: dashboardFadeIn 0.6s ease-out;
+}
+@keyframes dashboardFadeIn{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+/* Loading screen fix */
+#cinematic-intro .tech-fill{
+  animation: techLoad 3s ease-in-out forwards !important;
+}
+@keyframes techLoad{
+  0%{ width:0%; }
+  80%{ width:85%; }
+  100%{ width:100%; }
+}
+#cinematic-intro.stuck-fix{
+  animation: fadeOutIntro 0.5s forwards;
+}
+@keyframes fadeOutIntro{
+  to{ opacity:0; visibility:hidden; }
+}
+
+/* Ensure main dashboard title */
+.dashboard-title{
+  font-family:'Orbitron';
+  font-size:14px;
+  color:#00f3ff;
+  letter-spacing:3px;
+  text-align:center;
+  margin-bottom:20px;
+  opacity:0.8;
+}
