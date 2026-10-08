@@ -1,211 +1,442 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<title>JESSMATH: ELITE DEFENSE</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700;900&family=Cinzel:wght@700&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!DOCTYPE html>
+
+    <html lang="en">
+
+    <head>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>"> <!-- FIX: Favicon 404 - using data URI -->
+
+        <meta charset="UTF-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>JESSMATH: ELITE DEFENSE</title>
+
+        
+
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700;900&display=swap" rel="stylesheet">
+
+        
+
+        <script>
+    window._fakeSocket = { on:function(){}, off:function(){}, emit:function(){}, connected:false, _fake:true };
+    window.io = window.io || function(){ return window._fakeSocket; };
+    </script>
+    <!-- FIX: Removed redundant /socket.io/socket.io.js - GitHub Pages has no Socket.IO server, CDN version loaded later -->
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        
+
+        <link rel="stylesheet" href="style.css">
+
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 </head>
-<body>
 
-<!-- System Overlays -->
-<div id="socket-status" class="debug-chip debug-right">Connecting...</div>
-<div id="gadget-debug" class="debug-chip debug-center">M3SH Fixed</div>
+    <body>
+<div id="socket-status" style="position:fixed;top:2px;right:5px;background:rgba(0,0,0,0.9);color:#ffaa00;padding:3px 8px;font-size:9px;font-family:monospace;border:1px solid #ffaa00;z-index:100000;pointer-events:none;border-radius:4px;display:none">Connecting...</div>
+<div id="gadget-debug" style="position:fixed;top:2px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.9);color:#00e5ff;padding:3px 10px;font-size:10px;font-family:monospace;border:1px solid #00e5ff;z-index:100000;pointer-events:none;border-radius:4px;display:none">M3SH Fixed</div>
 
-<canvas id="bgCanvas" class="bg-canvas"></canvas>
 
-<div id="cyber-warp-door" class="hidden">
-    <div class="warp-panel panel-top"></div>
-    <div class="warp-panel panel-bottom"></div>
-    <div class="warp-center-laser"></div>
-    <div class="warp-status-text">RE-ROUTING TO COMMAND CENTER...</div>
-</div>
 
-<!-- BOOT -->
-<div id="boot-overlay" class="god-boot-screen">
-    <button id="fullscreen-btn" class="fullscreen-btn" onclick="window.toggleFullScreen()">[ ] ENTER FULLSCREEN</button>
-    <div class="boot-lightning"></div>
-    <div class="boot-lightning"></div>
-    <div class="boot-blue-flash"></div>
-    <div class="boot-content">
-        <div class="boot-logo-ring">
-            <img src="https://img.icons8.com/color/96/000000/artificial-intelligence.png" class="boot-ai-icon" alt="AI">
+
+
+        <canvas id="bgCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-10;"></canvas>
+
+        ```
+        <div id="cyber-warp-door" class="hidden">
+            <div class="warp-panel panel-top"></div>
+            <div class="warp-panel panel-bottom"></div>
+            <div class="warp-center-laser"></div>
+            <div class="warp-status-text">RE-ROUTING TO COMMAND CENTER...</div>
         </div>
-        <h1 class="boot-glitch-title" data-text="SYSTEM STANDBY">SYSTEM STANDBY</h1>
-        <p class="boot-subtitle">AWAITING COMMANDER AUTHORIZATION</p>
-        <button id="btn-master-start" class="god-btn" onclick="window.startSystem()">
-            <span class="btn-text">INITIALIZE SYSTEM</span>
-            <div class="btn-scanner"></div>
+
+        
+
+
+
+
+
+
+        
+
+
+
+        <div id="boot-overlay" class="god-boot-screen">
+            <button id="fullscreen-btn" onclick="window.toggleFullScreen()" style="position: absolute; top: 20px; right: 20px; z-index: 9999999; background: rgba(0, 229, 255, 0.1); border: 1px solid #00e5ff; color: #00e5ff; padding: 8px 15px; cursor: pointer; font-family: 'Orbitron'; font-size: 12px; letter-spacing: 2px; border-radius: 4px; box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);">
+                [ ] ENTER FULLSCREEN
+            </button>
+
+            <div class="boot-lightning"></div>
+            <div class="boot-lightning"></div>
+            <div class="boot-blue-flash"></div>
+            
+            <div class="boot-content">
+                <div class="boot-logo-ring">
+                    <img src="https://img.icons8.com/color/96/000000/artificial-intelligence.png" class="boot-ai-icon">
+                </div>
+                <h1 class="boot-glitch-title" data-text="SYSTEM STANDBY">SYSTEM STANDBY</h1>
+                <p class="boot-subtitle">AWAITING COMMANDER AUTHORIZATION</p>
+                
+                <button id="btn-master-start" class="god-btn" onclick="window.startSystem()">
+                    <span class="btn-text">INITIALIZE SYSTEM</span>
+                    <div class="btn-scanner"></div>
+                </button>
+            </div>
+        </div>
+
+
+
+        <div id="cinematic-intro">
+
+            <div class="space-bg"></div>
+
+            <div class="stars-1"></div>
+
+            <div class="stars-2"></div>
+
+            <div class="nebula-layer"></div>
+
+            
+
+            <div id="war-container"></div> 
+
+            
+
+            <div class="intro-ui">
+
+                <div class="logo-wrapper">
+
+                    <h1 class="defender-logo" data-text="MATH DEFENDER">MATH DEFENDER</h1>
+
+                    <div class="logo-scanline"></div>
+
+                </div>
+
+                <div class="subtitle-text">HUMANITY'S LAST STAND</div>
+
+                
+
+                <div class="loading-system">
+
+                    <div class="tech-bar">
+
+                        <div class="tech-fill"></div>
+
+                    </div>
+
+                    <div class="loading-status">ESTABLISHING UPLINK...</div>
+
+                </div>
+
+            </div>
+
+            
+
+            <div class="screen-flash"></div>
+
+            <div class="vignette-overlay"></div>
+
+        </div>
+
+
+
+        <div id="story-overlay" class="hidden">
+
+            <div class="scanline-bg"></div>
+
+            
+
+            <div class="comm-panel">
+
+                <div class="comm-header">
+
+                    <span class="blink">● LIVE FEED</span>
+
+                    <span>SECURE CHANNEL: ALPHA-1</span>
+
+                </div>
+
+                
+
+                <div class="comm-content">
+
+                    <div class="avatar-box">
+
+                        <div class="sound-wave">
+
+                            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+
+                        </div>
+
+                        <div class="commander-label">CMDR. VECTOR</div>
+
+                    </div>
+
+
+
+                    <div class="dialogue-box">
+
+                        <p id="story-text"></p>
+
+                        <div id="tutorial-visual" class="hidden"></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="comm-footer">
+
+                    <button class="btn text-only" onclick="window.skipStory()">SKIP BRIEFING</button>
+
+                    <button class="btn secondary" id="next-story-btn" onclick="window.nextStoryStep()">ACKNOWLEDGE [ENTER]</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div id="game-wrapper">
+
+            <div id="vr-grid-bg"></div>
+
+            <div id="panopticon-alert">
+
+                <div class="cyber-eye">👁️‍🗨️</div>
+
+                <div class="alert-text">COMMANDER IS MONITORING YOUR TERMINAL</div>
+
+            </div>
+
+
+
+        
+
+            <div id="glitch-overlay" class="hidden"></div>
+
+            <canvas id="gameCanvas"></canvas>
+
+
+
+            <div id="ui-layer">
+
+                <div id="start-countdown" class="hidden" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-family:'Orbitron'; font-size:150px; color:#00e5ff; text-shadow:0 0 50px cyan; z-index:9999; pointer-events:none;">3</div>
+
+                
+
+                <div id="hud-top" class="tactical-visor">
+
+                    <div class="visor-panel left-visor">
+
+                        <div class="visor-data">
+
+                            <span class="label">SYS_LEVEL</span>
+
+                            <span id="level-txt" class="value neon-blue">1</span>
+
+                        </div>
+
+                        <div id="xp-bar-container" class="cyber-track">
+
+                            <div id="xp-bar-fill" class="cyber-fill"></div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="visor-panel center-visor">
+
+                        <span class="label" style="color: #ff0055;">HULL INTEGRITY</span>
+
+                        <span id="health-txt" class="value neon-red" style="font-size: 32px;">100%</span>
+
+                        <div id="boss-warning" class="hidden blink" style="color: #ffd700; font-family: 'Orbitron'; font-size: 14px; letter-spacing: 4px; margin-top: 5px;">⚠️ SECTOR BOSS DETECTED ⚠️</div>
+
+                    </div>
+
+
+
+                    <div class="visor-panel right-visor">
+
+                        <div class="visor-data">
+
+                            <span class="label">COMBAT SCORE</span>
+
+                            <span id="score-txt" class="value neon-green">0</span>
+
+                        </div>
+
+                        <div class="visor-data">
+
+                            <span class="label">CREDITS</span>
+
+                            <span class="value neon-gold">💰 <span id="coins-txt">200</span></span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div id="boss-hud" class="hidden">
+
+                    <span id="boss-name">MOTHERSHIP OMEGA</span>
+
+                    <div id="boss-hp-bar"><div id="boss-hp-fill"></div></div>
+
+                </div>
+
+
+
+                <div id="side-feed" class="radar-collapsed">
+
+                    <div class="radar-handle">
+
+                        <span class="blink" style="color: #ff0055;">●</span> RADAR
+
+                    </div>
+
+                    <div id="live-leaderboard" class="glass-panel">
+
+                        <h4 style="color: #00e5ff; border-bottom: 1px solid #00e5ff; padding-bottom: 5px;">LIVE AGENT RANKINGS</h4>
+
+                        <ul id="leaderboard-list"></ul>
+
+                    </div>
+
+                    <div id="battle-feed"></div>
+
+                </div>
+
+
+
+                <div id="hud-bottom" class="command-console">
+
+                    
+
+                    <div class="console-wing">
+
+                        <button class="tactical-btn" onclick="window.toggleMute()" title="Audio System"><span id="mute-btn">🔊</span></button>
+
+                        <button class="tactical-btn" onclick="window.toggleVoice()" title="Voice Comms"><span id="mic-btn">🎙️</span></button>
+
+                        <button class="tactical-btn" onclick="window.togglePause()" title="Pause System">⏸️</button>
+
+                        <button class="tactical-btn alert-btn" id="btn-help" onclick="window.toggleHelp()" title="Request Backup">✋</button>
+
+                    </div>
+
+                    
+
+                    <div id="input-container" class="console-core">
+
+                        <div class="core-hologram">
+
+                            <form id="game-form" onsubmit="return false;">
+
+                                <input type="tel" id="player-input" autocomplete="off" placeholder="AWAITING INPUT..." autofocus>
+
+                            </form>
+
+                        </div>
+
+                        <div class="input-hint">TARGETING SYSTEM ACTIVE // PRESS ENTER TO FIRE</div>
+
+                    </div>
+
+
+    <div class="console-wing">
+        <button class="trigger-btn emp-trigger" onclick="window.activateEMP()">
+            <div class="trigger-icon">⚡</div>
+            <div class="trigger-info">
+                <span class="t-name">EMP</span>
+                <span class="t-key">[SPACE] 250🪙</span> 
+            </div>
+        </button>
+        <button class="trigger-btn slow-trigger" onclick="window.activateSlowMo()">
+            <div class="trigger-icon">⏳</div>
+            <div class="trigger-info">
+                <span class="t-name">SLOW</span>
+                <span class="t-key">[SHIFT] 100🪙</span>
+            </div>
         </button>
     </div>
-</div>
 
-<!-- CINEMATIC INTRO - preserved -->
-<div id="cinematic-intro">
-    <div class="space-bg"></div>
-    <div class="stars-1"></div>
-    <div class="stars-2"></div>
-    <div class="nebula-layer"></div>
-    <div id="war-container"></div>
-    <div class="intro-ui">
-        <div class="logo-wrapper">
-            <h1 class="defender-logo" data-text="MATH DEFENDER">MATH DEFENDER</h1>
-            <div class="logo-scanline"></div>
-        </div>
-        <div class="subtitle-text">HUMANITY'S LAST STAND</div>
-        <div class="loading-system">
-            <div class="tech-bar"><div class="tech-fill"></div></div>
-            <div class="loading-status">ESTABLISHING UPLINK...</div>
-        </div>
-    </div>
-    <div class="screen-flash"></div>
-    <div class="vignette-overlay"></div>
-</div>
+                    
 
-<!-- STORY -->
-<div id="story-overlay" class="hidden">
-    <div class="scanline-bg"></div>
-    <div class="comm-panel">
-        <div class="comm-header">
-            <span class="blink">● LIVE FEED</span>
-            <span>SECURE CHANNEL: ALPHA-1</span>
-        </div>
-        <div class="comm-content">
-            <div class="avatar-box">
-                <div class="sound-wave"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-                <div class="commander-label">CMDR. VECTOR</div>
-            </div>
-            <div class="dialogue-box">
-                <p id="story-text"></p>
-                <div id="tutorial-visual" class="hidden"></div>
-            </div>
-        </div>
-        <div class="comm-footer">
-            <button class="btn text-only" onclick="window.skipStory()">SKIP BRIEFING</button>
-            <button class="btn secondary" id="next-story-btn" onclick="window.nextStoryStep()">ACKNOWLEDGE [ENTER]</button>
-        </div>
-    </div>
-</div>
-
-<!-- GAME WRAPPER -->
-<div id="game-wrapper">
-    <div id="vr-grid-bg"></div>
-    <div id="panopticon-alert" class="panopticon">
-        <div class="cyber-eye">👁️‍🗨️</div>
-        <div class="alert-text">COMMANDER IS MONITORING YOUR TERMINAL</div>
-    </div>
-    <div id="glitch-overlay" class="hidden"></div>
-    <canvas id="gameCanvas"></canvas>
-
-    <div id="ui-layer">
-        <div id="start-countdown" class="countdown hidden">3</div>
-
-        <div id="hud-top" class="tactical-visor">
-            <div class="visor-panel left-visor">
-                <span class="label">SYS_LEVEL</span>
-                <span id="level-txt" class="value neon-blue">1</span>
-                <div id="xp-bar-container" class="cyber-track"><div id="xp-bar-fill" class="cyber-fill"></div></div>
-            </div>
-            <div class="visor-panel center-visor">
-                <span class="label label-red">HULL INTEGRITY</span>
-                <span id="health-txt" class="value neon-red value-lg">100%</span>
-                <div id="boss-warning" class="hidden blink warning-gold">⚠️ SECTOR BOSS DETECTED ⚠️</div>
-            </div>
-            <div class="visor-panel right-visor">
-                <div class="visor-data">
-                    <span class="label">COMBAT SCORE</span>
-                    <span id="score-txt" class="value neon-green">0</span>
                 </div>
-                <div class="visor-data">
-                    <span class="label">CREDITS</span>
-                    <span class="value neon-gold">💰 <span id="coins-txt">200</span></span>
+
+
+
+                <div id="virtual-numpad">
+
+                    <div class="numpad-row">
+
+                        <button class="num-btn" onclick="window.pressKey('1')">1</button>
+
+                        <button class="num-btn" onclick="window.pressKey('2')">2</button>
+
+                        <button class="num-btn" onclick="window.pressKey('3')">3</button>
+
+                    </div>
+
+                    <div class="numpad-row">
+
+                        <button class="num-btn" onclick="window.pressKey('4')">4</button>
+
+                        <button class="num-btn" onclick="window.pressKey('5')">5</button>
+
+                        <button class="num-btn" onclick="window.pressKey('6')">6</button>
+
+                    </div>
+
+                    <div class="numpad-row">
+
+                        <button class="num-btn" onclick="window.pressKey('7')">7</button>
+
+                        <button class="num-btn" onclick="window.pressKey('8')">8</button>
+
+                        <button class="num-btn" onclick="window.pressKey('9')">9</button>
+
+                    </div>
+
+                    <div class="numpad-row">
+
+                        <button class="num-btn clear-btn" onclick="window.pressClear()">C</button>
+
+                        <button class="num-btn" onclick="window.pressKey('0')">0</button>
+
+                        <button class="num-btn" onclick="window.pressKey('-')">-</button>
+
+                        <button class="num-btn fire-btn" onclick="window.pressEnter()">🔥</button>
+
+                    </div>
+
                 </div>
-            </div>
-        </div>
 
-        <div id="boss-hud" class="hidden">
-            <span id="boss-name">MOTHERSHIP OMEGA</span>
-            <div id="boss-hp-bar"><div id="boss-hp-fill"></div></div>
-        </div>
 
-        <div id="side-feed" class="radar-collapsed">
-            <div class="radar-handle"><span class="blink blink-red">●</span> RADAR</div>
-            <div id="live-leaderboard" class="glass-panel">
-                <h4 class="radar-title">LIVE AGENT RANKINGS</h4>
-                <ul id="leaderboard-list"></ul>
-            </div>
-            <div id="battle-feed"></div>
-        </div>
 
-        <div id="hud-bottom" class="command-console">
-            <div class="console-wing">
-                <button class="tactical-btn" onclick="window.toggleMute()" title="Audio"><span id="mute-btn">🔊</span></button>
-                <button class="tactical-btn" onclick="window.toggleVoice()" title="Voice"><span id="mic-btn">🎙️</span></button>
-                <button class="tactical-btn" onclick="window.togglePause()" title="Pause">⏸️</button>
-                <button class="tactical-btn alert-btn" id="btn-help" onclick="window.toggleHelp()" title="Help">✋</button>
-            </div>
-            <div id="input-container" class="console-core">
-                <div class="core-hologram">
-                    <form id="game-form" onsubmit="return false;">
-                        <input type="tel" id="player-input" autocomplete="off" placeholder="AWAITING INPUT..." autofocus>
-                    </form>
+                <div id="combo-container" class="hidden">
+
+                    <div id="combo-label">COMBO</div>
+
+                    <div id="combo-value">x0</div>
+
                 </div>
-                <div class="input-hint">TARGETING SYSTEM ACTIVE // PRESS ENTER TO FIRE</div>
-            </div>
-            <div class="console-wing">
-                <button class="trigger-btn emp-trigger" onclick="window.activateEMP()">
-                    <div class="trigger-icon">⚡</div>
-                    <div class="trigger-info"><span class="t-name">EMP</span><span class="t-key">[SPACE] 250🪙</span></div>
-                </button>
-                <button class="trigger-btn slow-trigger" onclick="window.activateSlowMo()">
-                    <div class="trigger-icon">⏳</div>
-                    <div class="trigger-info"><span class="t-name">SLOW</span><span class="t-key">[SHIFT] 100🪙</span></div>
-                </button>
-            </div>
-        </div>
 
-        <div id="virtual-numpad">
-            <div class="numpad-row">
-                <button class="num-btn" onclick="window.pressKey('1')">1</button>
-                <button class="num-btn" onclick="window.pressKey('2')">2</button>
-                <button class="num-btn" onclick="window.pressKey('3')">3</button>
-            </div>
-            <div class="numpad-row">
-                <button class="num-btn" onclick="window.pressKey('4')">4</button>
-                <button class="num-btn" onclick="window.pressKey('5')">5</button>
-                <button class="num-btn" onclick="window.pressKey('6')">6</button>
-            </div>
-            <div class="numpad-row">
-                <button class="num-btn" onclick="window.pressKey('7')">7</button>
-                <button class="num-btn" onclick="window.pressKey('8')">8</button>
-                <button class="num-btn" onclick="window.pressKey('9')">9</button>
-            </div>
-            <div class="numpad-row">
-                <button class="num-btn clear-btn" onclick="window.pressClear()">C</button>
-                <button class="num-btn" onclick="window.pressKey('0')">0</button>
-                <button class="num-btn" onclick="window.pressKey('-')">-</button>
-                <button class="num-btn fire-btn" onclick="window.pressEnter()">🔥</button>
-            </div>
-        </div>
 
-        <div id="combo-container" class="hidden">
-            <div id="combo-label">COMBO</div>
-            <div id="combo-value">x0</div>
-        </div>
-    </div>
-</div>
 
-<!-- === ALL ORIGINAL MODALS PRESERVED - injected below === -->
-<!-- The original file had 200+ modals. We inject them verbatim to guarantee compatibility -->
-<div id="original-modals-holder" style="display: contents;">
-id="training-modal" class="modal hidden">
+                <div id="training-modal" class="modal hidden">
 
                     <div class="modal-content neon-border" style="border-color: #00e5ff; box-shadow: 0 0 40px rgba(0, 229, 255, 0.2);">
 
@@ -2909,15 +3140,6 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 
-
-</div>
-
-<!-- Module Scripts -->
-<script type="module" src="gadget-detector.js"></script>
-<script type="module" src="m3sh-socket.js"></script>
-<script type="module" src="audio.js"></script>
-<script type="module" src="tactical-solver.js"></script>
-<script type="module" src="script.js"></script>
-
 </body>
-</html>
+
+    </html>
