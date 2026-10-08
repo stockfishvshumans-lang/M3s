@@ -1,0 +1,1 @@
+window.GadgetDetector={detect(){const w=innerWidth;let g;if(w<375)g='mobile-small';else if(w<=428)g='mobile';else g='desktop';return{g,width:w};},init(){}};window.GadgetDetector.init();
